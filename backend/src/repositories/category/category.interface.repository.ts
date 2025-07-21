@@ -1,9 +1,9 @@
-import { Category, ICategoryType } from "@/models";
+import { Category, CategoryAttributes } from "@/models";
 import { IPaginationResponse } from "@/types/api-response.types";
 import { Attributes, FindOptions } from "sequelize";
 
 export interface ICategoryRepository {
-  createCategory(data: Partial<ICategoryType>): Promise<Category>;
+  createCategory(data: Partial<CategoryAttributes>): Promise<Category>;
   fetchAllCategories(
     page: number,
     limit: number,

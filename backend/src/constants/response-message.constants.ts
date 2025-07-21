@@ -11,4 +11,10 @@ export const RESPONSE_MESSAGES = {
     SUB_CATEGORY_NOT_FOUND: "Sub Category Not Found",
     SUB_CATEGORY_UPDATED: "Sub Category Updated Successfully",
     SUB_CATEGORY_DELETED: "Sub Category Deleted Successfully",
+    BRANCH_CREATED: "Branch Created Successfully",
+    BRANCHES_FETCHED: "Branches Fetched Successfully",
+    BRANCH_FETCHED: "Branch Fetched Successfully",
+    BRANCH_NOT_FOUND: "Branch Not Found",
+    BRANCH_UPDATED: "Branch Updated Successfully",
+    BRANCH_DELETED: "Branch Deleted Successfully",
 };

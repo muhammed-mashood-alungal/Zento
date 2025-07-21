@@ -1,5 +1,5 @@
 import { BaseRepository } from "../base.repository";
-import { Category, ICategoryType } from "@/models";
+import { Category, CategoryAttributes } from "@/models";
 import { ICategoryRepository } from "./category.interface.repository";
 import { IPaginationResponse } from "@/types/api-response.types";
 import { Attributes, FindOptions } from "sequelize";
@@ -12,7 +12,7 @@ export class CategoryRepository
     super(Category);
   }
 
-  async createCategory(data: Partial<ICategoryType>): Promise<Category> {
+  async createCategory(data: Partial<CategoryAttributes>): Promise<Category> {
     return await this.create(data);
   }
 

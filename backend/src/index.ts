@@ -4,6 +4,7 @@ import { categoryRouter } from "./routes";
 import cookieParser from "cookie-parser";
 import { errorHandler } from "./middleware/error-handler.middleware";
 import { subCategoryRouter } from "./routes/sub-category.router";
+import { branchRouter } from "./routes/branch.router";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -18,7 +19,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 app.use("/category", categoryRouter);
-app.use("/sub-category", subCategoryRouter); 
+app.use("/sub-category", subCategoryRouter);
+app.use("/branch", branchRouter);
+
 
 app.use(errorHandler);
 

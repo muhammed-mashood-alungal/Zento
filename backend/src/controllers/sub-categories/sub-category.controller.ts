@@ -3,8 +3,9 @@ import { ISubCategoryService } from "@/services";
 import { successResponse } from "@/utils";
 import { NextFunction, Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
+import { ISubCategoryController } from "./sub-category.interface.controller";
 
-export class SubCategoryController {
+export class SubCategoryController implements ISubCategoryController {
   constructor(private subCategoryService: ISubCategoryService) {}
 
   async createSubCategory(

@@ -13,12 +13,3 @@ export interface CategoryCreationAttributes
   created_at?: Date;
   updated_at?: Date;
 }
-
-export interface ICategoryType {
-  id: number;
-  name: string;
-  description: string;
-  status: string;
-  created_at: Date;
-  updated_at: Date;
-}

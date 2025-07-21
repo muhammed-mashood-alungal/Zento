@@ -1,29 +1,29 @@
 import { NextFunction, Request, Response } from "express";
 
-export interface ISubCategoryController {
-  createSubCategory(
+export interface IBranchController {
+  getAllBranches(
     req: Request,
     res: Response,
     next: NextFunction
-  ): Promise<any>;
-  fetchAllSubCategories(
+  ): Promise<void>;
+  findByBranchId(
     req: Request,
     res: Response,
     next: NextFunction
-  ): Promise<any>;
-  findBySubCategoryId(
+  ): Promise<void>;
+  createBranch(
     req: Request,
     res: Response,
     next: NextFunction
-  ): Promise<any>;
-  editSubCategory(
+  ): Promise<void>;
+  updateBranch(
     req: Request,
     res: Response,
     next: NextFunction
-  ): Promise<any>;
-  deleteSubCategory(
+  ): Promise<void>;
+  deleteBranch(
     req: Request,
     res: Response,
     next: NextFunction
-  ): Promise<any>;
+  ): Promise<void>;
 }
