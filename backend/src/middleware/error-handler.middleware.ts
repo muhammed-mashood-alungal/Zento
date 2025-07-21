@@ -1,0 +1,22 @@
+import { HttpError } from "@/utils";
+import { NextFunction, Request, Response } from "express";
+import { StatusCodes } from "http-status-codes";
+import { ERROR_MESSAGES } from "@/constants";
+
+export const errorHandler = (
+  err: Error | HttpError,
+  req: Request,
+  res: Response,
+  _next: NextFunction
+) => {
+  let statusCode = StatusCodes.INTERNAL_SERVER_ERROR;
+  let message: string = ERROR_MESSAGES.SOMETHING_WENT_WRONG;
+
+  if (err instanceof HttpError) {
+    statusCode = err.statusCode;
+    message = err.message;
+  }
+  console.error(err);
+
+  res.status(statusCode).json({ error: message });
+};
