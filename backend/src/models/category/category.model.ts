@@ -1,5 +1,5 @@
 import { DataTypes, Model } from "sequelize";
-import { sequelize } from "../config";
+import { sequelize } from "../../config";
 import {
   CategoryAttributes,
   CategoryCreationAttributes,
@@ -10,12 +10,9 @@ export class Category
   implements CategoryAttributes
 {
   declare id: number;
-  declare grn_number: string;
-  declare grn_date: Date;
-  declare invoice_number: string;
-  declare vendor_id: number;
-  declare branch_id: number;
-  declare created_by: number;
+  declare name: string;
+  declare description: string;
+  declare status: string;
   declare created_at: Date;
   declare updated_at: Date;
 }
@@ -27,29 +24,21 @@ Category.init(
       primaryKey: true,
       autoIncrement: true,
     },
-    grn_number: {
-      type: DataTypes.CHAR,
+    name: {
+      type: DataTypes.STRING,
       allowNull: false,
+    }, 
+    description: {
+      type: DataTypes.STRING,
+      allowNull: true,
     },
-    grn_date: {
-      type: DataTypes.DATE,
+    status: {
+      type: DataTypes.STRING,
       allowNull: false,
-    },
-    invoice_number: {
-      type: DataTypes.CHAR,
-      allowNull: false,
-    },
-    vendor_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    branch_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    created_by: {
-      type: DataTypes.BIGINT,
-      allowNull: false,
+      validate: {
+        isIn: [["active", "inactive"]],
+      },
+      defaultValue: "active",
     },
     created_at: {
       type: DataTypes.DATE,
@@ -60,7 +49,7 @@ Category.init(
       type: DataTypes.DATE,
       allowNull: false,
       defaultValue: DataTypes.NOW,
-    },
+    },    
   },
   {
     sequelize,

@@ -1,11 +1,8 @@
 export interface CategoryAttributes {
   id: number;
-  grn_number: string;
-  grn_date: Date;
-  invoice_number: string;
-  vendor_id: number;
-  branch_id: number;
-  created_by: number;
+  name: string;
+  description: string;
+  status: string;
   created_at: Date;
   updated_at: Date;
 }
@@ -19,10 +16,9 @@ export interface CategoryCreationAttributes
 
 export interface ICategoryType {
   id: number;
-  grn_number: string;
-  grn_date: Date;
-  invoice_number: string;
-  vendor_id: number;
-  branch_id: number;
-  created_by: number;
+  name: string;
+  description: string;
+  status: string;
+  created_at: Date;
+  updated_at: Date;
 }
