@@ -32,4 +32,10 @@ export const RESPONSE_MESSAGES = {
     MANUFACTURER_DELETED: "Manufacturer Deleted Successfully",
     MANUFACTURER_STATUS_UPDATED: "Manufacturer Status Updated Successfully",
     MANUFACTURER_CREATION_FAILED: "Manufacturer Creation Failed",
+    GRN_CREATED: "GRN Created Successfully",
+    GRNS_FETCHED: "GRNs Fetched Successfully",
+    GRN_FETCHED: "GRN Fetched Successfully",
+    GRN_NOT_FOUND: "GRN Not Found",
+    GRN_UPDATED: "GRN Updated Successfully",
+    GRN_DELETED: "GRN Deleted Successfully",
 };

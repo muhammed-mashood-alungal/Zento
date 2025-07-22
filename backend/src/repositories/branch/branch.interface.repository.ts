@@ -3,8 +3,8 @@ import { IPaginationResponse } from "@/types";
 
 export interface IBranchRepository {
   createBranch(branchData: BranchCreationAttributes): Promise<Branch>;
-  getBranchById(id: number): Promise<Branch | null>;
-  getAllBranches(
+  findBranchById(id: number): Promise<Branch | null>;
+  fetchAllBranches(
     page: number,
     limit: number,
     options?: any

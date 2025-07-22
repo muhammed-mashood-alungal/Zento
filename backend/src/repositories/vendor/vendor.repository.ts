@@ -27,7 +27,7 @@ export class VendorRepository
   async findByVendorId(id: number): Promise<Vendor | null> {
     return await this.findById(id);
   }
-  async editVendor(
+  async updateVendor(
     id: number,
     vendor: Partial<VendorCreationAttributes>
   ): Promise<Vendor | null> {

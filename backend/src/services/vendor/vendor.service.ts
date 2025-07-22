@@ -27,7 +27,7 @@ export class VendorServices implements IVendorService {
     id: number,
     vendor: Partial<VendorCreationAttributes>
   ): Promise<Vendor | null> {
-    return this.vendorRepository.editVendor(id, vendor);
+    return this.vendorRepository.updateVendor(id, vendor);
   }
   async deleteVendor(id: number): Promise<number> {
     return this.vendorRepository.deleteVendor(id);

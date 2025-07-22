@@ -19,7 +19,7 @@ export class ManufacturerService implements IManufacturerService {
   }
 
   async getManufacturerById(id: number): Promise<Manufacturer | null> {
-    return this.manufacturerRepository.getManufacturerById(id);
+    return this.manufacturerRepository.findManufacturerById(id);
   }
   async updateManufacturer(
     id: number,
@@ -36,7 +36,7 @@ export class ManufacturerService implements IManufacturerService {
     limit: number,
     options?: any
   ): Promise<IPaginationResponse<Manufacturer>> {
-    return this.manufacturerRepository.getAllManufacturers(
+    return this.manufacturerRepository.fetchAllManufacturers(
       page,
       limit,
       options

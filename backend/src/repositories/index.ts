@@ -12,3 +12,6 @@ export * from "./vendor/vendor.interface.repository";
 
 export * from "./manufacturer/manufacturer.repository";
 export * from "./manufacturer/manufacturer.interface.repository";
+
+export * from "./grn/grn.repository";
+export * from "./grn/grn.interface.repository";

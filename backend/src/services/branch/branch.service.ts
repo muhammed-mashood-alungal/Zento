@@ -7,14 +7,14 @@ export class BranchService implements IBranchService {
   constructor(private branchRepository: IBranchRepository) {}
 
   async getBranchById(id: number): Promise<Branch | null> {
-    return await this.branchRepository.getBranchById(id);
+    return await this.branchRepository.findBranchById(id);
   }
   async getAllBranches(
     page: number,
     limit: number,
     options?: any
   ): Promise<IPaginationResponse<Branch>> {
-    return await this.branchRepository.getAllBranches(page, limit, options);
+    return await this.branchRepository.fetchAllBranches(page, limit, options);
   }
   async createBranch(
     branchData: BranchCreationAttributes

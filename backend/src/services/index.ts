@@ -12,3 +12,6 @@ export * from './vendor/vendor.interface.service'
 
 export * from './manufacturer/manufacturer.service'
 export * from './manufacturer/manufacturer.interface.service'
+
+export * from './grn/grn.service'
+export * from './grn/grn.interface.service'

@@ -11,7 +11,7 @@ export interface IVendorRepository {
     options?: any
   ): Promise<IPaginationResponse<Vendor>>;
   findByVendorId(id: number): Promise<Vendor | null>;
-  editVendor(
+  updateVendor(
     id: number,
     subCategory: Partial<VendorCreationAttributes>
   ): Promise<Vendor | null>;

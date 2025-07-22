@@ -20,7 +20,7 @@ export class ManufacturerRepository
   ): Promise<Manufacturer> {
     return await this.create(manufacturer);
   }
-  async getManufacturerById(id: number): Promise<Manufacturer | null> {
+  async findManufacturerById(id: number): Promise<Manufacturer | null> {
     return await this.findById(id);
   }
 
@@ -35,7 +35,7 @@ export class ManufacturerRepository
     return await this.deleteById(id);
   }
 
-  async getAllManufacturers(
+  async fetchAllManufacturers(
     page: number,
     limit: number,
     options: any

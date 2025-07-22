@@ -11,11 +11,11 @@ export class BranchRepository
     super(Branch);
   }
 
-  async getBranchById(id: number): Promise<Branch | null> {
+  async findBranchById(id: number): Promise<Branch | null> {
     return await this.findById(id);
   }
 
-  async getAllBranches(
+  async fetchAllBranches(
     page: number,
     limit: number,
     options: any

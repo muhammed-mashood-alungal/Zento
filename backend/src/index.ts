@@ -3,6 +3,7 @@ import { connectDB } from "./utils";
 import {
   branchRouter,
   categoryRouter,
+  grnRouter,
   manufacturerRouter,
   subCategoryRouter,
   vendorRouter,
@@ -26,7 +27,8 @@ app.use("/category", categoryRouter);
 app.use("/sub-category", subCategoryRouter);
 app.use("/branch", branchRouter);
 app.use("/vendor", vendorRouter);
-app.use("/manufacturer", manufacturerRouter); 
+app.use("/manufacturer", manufacturerRouter);
+app.use("grn", grnRouter);
 
 app.use(errorHandler);
 

@@ -14,7 +14,7 @@ export class SubCategoryService {
     id: number,
     subCategory: Partial<SubCategoryAttributes>
   ): Promise<SubCategory | null> {
-    return await this.subCategoryRepository.editSubCategory(id, subCategory);
+    return await this.subCategoryRepository.updateSubCategory(id, subCategory);
   }
 
   async fetchAllSubCategoriesofCategory(

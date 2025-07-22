@@ -13,3 +13,12 @@ export * from "./vendor/vendor.types";
 
 export * from "./manufacturer/manufacturer.model";
 export * from "./manufacturer/manufacturer.types";
+
+export * from "./asset/asset.model";
+export * from "./asset/asset.types";
+
+export * from "./grn-headers/grn-header.model";
+export * from "./grn-headers/grn-header.types";
+
+export * from "./grn-line-items/grn-line-items.model";
+export * from "./grn-line-items/grn-line-items.types";

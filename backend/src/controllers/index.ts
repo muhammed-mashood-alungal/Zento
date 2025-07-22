@@ -12,3 +12,6 @@ export * from './vendor/vendor.interface.controller'
 
 export * from './manufacturer/manufacturer.controller'
 export * from './manufacturer/manufacturer.interface.controller'
+
+export * from './grn/grn.controller'
+export * from './grn/grn.interface.controller'

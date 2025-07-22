@@ -32,7 +32,7 @@ export class SubCategoryRepository
     return this.findById(id);
   }
 
-  async editSubCategory(
+  async updateSubCategory(
     id: number,
     subCategory: Partial<SubCategoryCreationAttributes>
   ): Promise<SubCategory | null> {

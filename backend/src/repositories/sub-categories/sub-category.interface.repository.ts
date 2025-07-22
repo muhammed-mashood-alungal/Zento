@@ -15,7 +15,7 @@ export interface ISubCategoryRepository {
     limit: number
   ): Promise<IPaginationResponse<SubCategory>>;
   findBySubCategoryId(id: number): Promise<SubCategory | null>;
-  editSubCategory(
+  updateSubCategory(
     id: number,
     subCategory: Partial<SubCategoryCreationAttributes>
   ): Promise<SubCategory | null>;

@@ -9,13 +9,13 @@ export interface IManufacturerRepository {
   createManufacturer(
     manufacturer: ManufacturerCreationAttributes
   ): Promise<Manufacturer>;
-  getManufacturerById(id: number): Promise<Manufacturer | null>;
+  findManufacturerById(id: number): Promise<Manufacturer | null>;
   updateManufacturer(
     id: number,
     updates: Partial<ManufacturerAttributes>
   ): Promise<Manufacturer | null>;
   deleteManufacturer(id: number): Promise<number>;
-  getAllManufacturers(
+  fetchAllManufacturers(
     page: number,
     limit: number,
     options: any

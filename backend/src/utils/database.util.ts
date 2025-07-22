@@ -1,4 +1,5 @@
 import { sequelize } from "../config";
+import '@/models/associations'
 
 const connectDB = async () => {
   try {
