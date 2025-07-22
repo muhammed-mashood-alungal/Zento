@@ -1,7 +1,7 @@
 import { BaseRepository } from "../base.repository";
 import { Category, CategoryAttributes } from "@/models";
 import { ICategoryRepository } from "./category.interface.repository";
-import { IPaginationResponse } from "@/types/api-response.types";
+import { IPaginationResponse } from "@/types";
 import { Attributes, FindOptions } from "sequelize";
 
 export class CategoryRepository
@@ -24,9 +24,7 @@ export class CategoryRepository
     return await this.paginate(page, limit, options);
   }
 
-  async findByCategoryId(
-    id: string | number
-  ): Promise<Category | null> {
+  async findByCategoryId(id: string | number): Promise<Category | null> {
     return await this.findById(id);
   }
 

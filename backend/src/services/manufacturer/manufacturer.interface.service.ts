@@ -1,5 +1,9 @@
-import { Manufacturer, ManufacturerAttributes, ManufacturerCreationAttributes } from "@/models";
-import { IPaginationResponse } from "@/types/api-response.types";
+import {
+  Manufacturer,
+  ManufacturerAttributes,
+  ManufacturerCreationAttributes,
+} from "@/models";
+import { IPaginationResponse } from "@/types/pagination.types";
 
 export interface IManufacturerService {
   createManufacturer(

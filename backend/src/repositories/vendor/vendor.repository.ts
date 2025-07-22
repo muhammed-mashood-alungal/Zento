@@ -1,7 +1,7 @@
 import { Vendor, VendorAttributes, VendorCreationAttributes } from "@/models";
 import { IVendorRepository } from "./vendor.interface.repository";
 import { BaseRepository } from "../base.repository";
-import { IPaginationResponse } from "@/types/api-response.types";
+import { IPaginationResponse } from "@/types";
 
 export class VendorRepository
   extends BaseRepository<Vendor>
@@ -13,7 +13,7 @@ export class VendorRepository
 
   async createVendor(
     vendor: VendorCreationAttributes
-  ): Promise<VendorAttributes> {
+  ): Promise<Vendor> {
     return await this.create(vendor);
   }
 
@@ -24,7 +24,7 @@ export class VendorRepository
   ): Promise<IPaginationResponse<Vendor>> {
     return await this.paginate(page, limit, options);
   }
-  async findByVendorId(id: number): Promise<VendorAttributes | null> {
+  async findByVendorId(id: number): Promise<Vendor | null> {
     return await this.findById(id);
   }
   async editVendor(
@@ -38,7 +38,7 @@ export class VendorRepository
   }
 
   async changeVendorStatus(id: number, status: string): Promise<Vendor | null> {
-    const vendor = await this.updateById(id , {status});
+    const vendor = await this.updateById(id, { status });
     if (!vendor) {
       return null;
     }

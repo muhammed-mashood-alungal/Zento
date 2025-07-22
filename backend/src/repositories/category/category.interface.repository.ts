@@ -1,5 +1,5 @@
 import { Category, CategoryAttributes } from "@/models";
-import { IPaginationResponse } from "@/types/api-response.types";
+import { IPaginationResponse } from "@/types/pagination.types";
 import { Attributes, FindOptions } from "sequelize";
 
 export interface ICategoryRepository {
@@ -9,9 +9,7 @@ export interface ICategoryRepository {
     limit: number,
     options: any
   ): Promise<IPaginationResponse<Category>>;
-  findByCategoryId(
-    id: string | number,
-  ): Promise<Category | null>;
+  findByCategoryId(id: string | number): Promise<Category | null>;
   editCategory(
     id: string | number,
     values: Partial<Attributes<Category>>,

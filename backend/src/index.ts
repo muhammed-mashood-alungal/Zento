@@ -3,12 +3,12 @@ import { connectDB } from "./utils";
 import {
   branchRouter,
   categoryRouter,
+  manufacturerRouter,
   subCategoryRouter,
   vendorRouter,
 } from "@/routes";
 import cookieParser from "cookie-parser";
 import { errorHandler } from "./middleware/error-handler.middleware";
-import { manufacturerRouter } from "./routes/manufacturer.router";
 
 const app = express();
 const PORT = process.env.PORT || 3000;

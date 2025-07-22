@@ -1,6 +1,6 @@
 import { Vendor, VendorAttributes, VendorCreationAttributes } from "@/models";
-import { IVendorRepository } from "@/repositories/vendor/vendor.interface.repository";
-import { IPaginationResponse } from "@/types/api-response.types";
+import { IVendorRepository } from "@/repositories";
+import { IPaginationResponse } from "@/types";
 import { IVendorService } from "./vendor.interface.service";
 
 export class VendorServices implements IVendorService {
@@ -8,18 +8,18 @@ export class VendorServices implements IVendorService {
 
   async createVendor(
     vendor: VendorCreationAttributes
-  ): Promise<VendorAttributes> {
+  ): Promise<Vendor> {
     return this.vendorRepository.createVendor(vendor);
   }
 
   async fetchAllVendors(
     page: number,
     limit: number
-  ): Promise<IPaginationResponse<VendorAttributes>> {
+  ): Promise<IPaginationResponse<Vendor>> {
     return this.vendorRepository.fetchAllVendors(page, limit);
   }
 
-  async findByVendorId(id: number): Promise<VendorAttributes | null> {
+  async findByVendorId(id: number): Promise<Vendor | null> {
     return this.vendorRepository.findByVendorId(id);
   }
 

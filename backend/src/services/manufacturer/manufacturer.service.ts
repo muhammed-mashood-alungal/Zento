@@ -4,8 +4,8 @@ import {
   ManufacturerCreationAttributes,
 } from "@/models";
 import { IManufacturerRepository } from "@/repositories";
-import { IPaginationResponse } from "@/types/api-response.types";
-import { IManufacturerService } from "./manufacture.interface.service";
+import { IPaginationResponse } from "@/types";
+import { IManufacturerService } from "./manufacturer.interface.service";
 
 export class ManufacturerService implements IManufacturerService {
   constructor(

@@ -1,13 +1,13 @@
 import { SubCategory, SubCategoryAttributes } from "@/models";
 import { ISubCategoryRepository } from "@/repositories";
-import { IPaginationResponse } from "@/types/api-response.types";
+import { IPaginationResponse } from "@/types";
 
 export class SubCategoryService {
   constructor(private subCategoryRepository: ISubCategoryRepository) {}
 
   async createSubCategory(
     subCategory: SubCategoryAttributes
-  ): Promise<SubCategoryAttributes> {
+  ): Promise<SubCategory> {
     return await this.subCategoryRepository.createSubCategory(subCategory);
   }
   async updateSubCategory(
@@ -29,7 +29,7 @@ export class SubCategoryService {
     );
   }
 
-  async getSubCategoryById(id: number): Promise<SubCategoryAttributes | null> {
+  async getSubCategoryById(id: number): Promise<SubCategory | null> {
     return await this.subCategoryRepository.findBySubCategoryId(id);
   }
   async deleteSubCategory(id: number): Promise<number> {

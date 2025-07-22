@@ -1,10 +1,10 @@
 import { SubCategory, SubCategoryAttributes } from "@/models";
-import { IPaginationResponse } from "@/types/api-response.types";
+import { IPaginationResponse } from "@/types";
 
 export interface ISubCategoryService {
   createSubCategory(
     subCategory: SubCategoryAttributes
-  ): Promise<SubCategoryAttributes>;
+  ): Promise<SubCategory>;
   updateSubCategory(
     id: number,
     subCategory: Partial<SubCategoryAttributes>
@@ -14,6 +14,6 @@ export interface ISubCategoryService {
     page: number,
     limit: number
   ): Promise<IPaginationResponse<SubCategory>>;
-  getSubCategoryById(id: number): Promise<SubCategoryAttributes | null>;
+  getSubCategoryById(id: number): Promise<SubCategory | null>;
   deleteSubCategory(id: number): Promise<number>;
 }

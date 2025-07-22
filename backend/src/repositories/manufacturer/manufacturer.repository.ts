@@ -5,7 +5,7 @@ import {
 } from "@/models";
 import { IManufacturerRepository } from "./manufacturer.interface.repository";
 import { BaseRepository } from "../base.repository";
-import { IPaginationResponse } from "@/types/api-response.types";
+import { IPaginationResponse } from "@/types/pagination.types";
 
 export class ManufacturerRepository
   extends BaseRepository<Manufacturer>
@@ -20,9 +20,7 @@ export class ManufacturerRepository
   ): Promise<Manufacturer> {
     return await this.create(manufacturer);
   }
-  async getManufacturerById(
-    id: number
-  ): Promise<Manufacturer | null> {
+  async getManufacturerById(id: number): Promise<Manufacturer | null> {
     return await this.findById(id);
   }
 

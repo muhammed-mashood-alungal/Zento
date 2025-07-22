@@ -1,8 +1,8 @@
-import { IManufacturerService } from "@/services/manufacturer/manufacture.interface.service";
+import { IManufacturerService } from "@/services";
 import { IManufacturerController } from "./manufacturer.interface.controller";
 import { Request, Response, NextFunction } from "express";
 import { StatusCodes } from "http-status-codes";
-import { ERROR_MESSAGES, RESPONSE_MESSAGES } from "@/constants";
+import { RESPONSE_MESSAGES } from "@/constants";
 import { successResponse } from "@/utils";
 
 export class ManufacturerController implements IManufacturerController {

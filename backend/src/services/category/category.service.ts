@@ -1,13 +1,15 @@
 import { ICategoryRepository } from "@/repositories";
 import { ICategoryServices } from "./category.interface.service";
-import { Category, CategoryAttributes,  } from "@/models";
-import { IPaginationResponse } from "@/types/api-response.types";
+import { Category, CategoryAttributes } from "@/models";
+import { IPaginationResponse } from "@/types";
 import { Attributes, FindOptions } from "sequelize";
 
 export class CategoryServices implements ICategoryServices {
   constructor(private categoryRepository: ICategoryRepository) {}
 
-  async createCategoryService(categoryData: CategoryAttributes): Promise<Category> {
+  async createCategoryService(
+    categoryData: CategoryAttributes
+  ): Promise<Category> {
     return await this.categoryRepository.createCategory(categoryData);
   }
   async fetchAllCategories(

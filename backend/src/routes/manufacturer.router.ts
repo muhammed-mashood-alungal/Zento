@@ -1,8 +1,8 @@
 import { Router } from "express";
 
-import { ManufacturerController } from "@/controllers/manufacturer/manufacturer.controller";
-import { ManufacturerRepository } from "@/repositories/manufacturer/manufacturer.repository";
-import { ManufacturerService } from "@/services/manufacturer/manufacturer.service";
+import { ManufacturerController } from "@/controllers";
+import { ManufacturerRepository } from "@/repositories";
+import { ManufacturerService } from "@/services";
 
 const manufacturerRouter = Router();
 

@@ -1,13 +1,13 @@
 import { Vendor, VendorAttributes, VendorCreationAttributes } from "@/models";
-import { IPaginationResponse } from "@/types/api-response.types";
+import { IPaginationResponse } from "@/types";
 
 export interface IVendorService {
-  createVendor(vendor: VendorCreationAttributes): Promise<VendorAttributes>;
+  createVendor(vendor: VendorCreationAttributes): Promise<Vendor>;
   fetchAllVendors(
     page: number,
     limit: number
-  ): Promise<IPaginationResponse<VendorAttributes>>;
-  findByVendorId(id: number): Promise<VendorAttributes | null>;
+  ): Promise<IPaginationResponse<Vendor>>;
+  findByVendorId(id: number): Promise<Vendor | null>;
   editVendor(
     id: number,
     vendor: Partial<VendorCreationAttributes>

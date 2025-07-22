@@ -1,20 +1,17 @@
-import {
-  BranchAttributes,
-  BranchCreationAttributes,
-} from "@/models";
-import { IPaginationResponse } from "@/types/api-response.types";
+import { Branch, BranchAttributes, BranchCreationAttributes } from "@/models";
+import { IPaginationResponse } from "@/types";
 
 export interface IBranchService {
-  createBranch(branchData: BranchCreationAttributes): Promise<BranchAttributes>;
-  getBranchById(id: number): Promise<BranchAttributes | null>;
+  createBranch(branchData: BranchCreationAttributes): Promise<Branch>;
+  getBranchById(id: number): Promise<Branch | null>;
   getAllBranches(
     page: number,
     limit: number,
     options?: any
-  ): Promise<IPaginationResponse<BranchAttributes>>;
+  ): Promise<IPaginationResponse<Branch>>;
   updateBranch(
     id: number,
     branchData: Partial<BranchAttributes>
-  ): Promise<BranchAttributes | null>;
+  ): Promise<Branch | null>;
   deleteBranch(id: number): Promise<void>;
 }
