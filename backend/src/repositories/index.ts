@@ -6,3 +6,6 @@ export * from "./sub-categories/sub-category.interface.repository";
 
 export * from "./branch/branch.repository";
 export * from "./branch/branch.interface.repository";
+
+export * from "./vendor/vendor.repository";
+export * from "./vendor/vendor.interface.repository";

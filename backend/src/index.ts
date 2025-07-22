@@ -1,10 +1,8 @@
 import express from "express";
 import { connectDB } from "./utils";
-import { categoryRouter } from "./routes";
+import { branchRouter, categoryRouter, subCategoryRouter, vendorRouter } from "@/routes";
 import cookieParser from "cookie-parser";
 import { errorHandler } from "./middleware/error-handler.middleware";
-import { subCategoryRouter } from "./routes/sub-category.router";
-import { branchRouter } from "./routes/branch.router";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -20,7 +18,8 @@ app.use(cookieParser());
 
 app.use("/category", categoryRouter);
 app.use("/sub-category", subCategoryRouter);
-app.use("/branch", branchRouter);
+app.use("/branch", branchRouter)
+app.use("/vendor", vendorRouter);
 
 
 app.use(errorHandler);

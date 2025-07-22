@@ -17,4 +17,11 @@ export const RESPONSE_MESSAGES = {
     BRANCH_NOT_FOUND: "Branch Not Found",
     BRANCH_UPDATED: "Branch Updated Successfully",
     BRANCH_DELETED: "Branch Deleted Successfully",
+    VENDOR_CREATED: "Vendor Created Successfully",
+    VENDORS_FETCHED: "Vendors Fetched Successfully",
+    VENDOR_FETCHED: "Vendor Fetched Successfully",
+    VENDOR_NOT_FOUND: "Vendor Not Found",
+    VENDOR_UPDATED: "Vendor Updated Successfully",
+    VENDOR_DELETED: "Vendor Deleted Successfully",
+    VENDOR_STATUS_UPDATED: "Vendor Status Updated Successfully",
 };

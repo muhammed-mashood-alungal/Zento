@@ -1,8 +1,4 @@
-import { SubCategory } from "@/models";
-import {
-  SubCategoryAttributes,
-  SubCategoryCreationAttributes,
-} from "@/models/sub-categories/sub-category.types";
+import { SubCategory, SubCategoryAttributes, SubCategoryCreationAttributes } from "@/models";
 import { IPaginationResponse } from "@/types/api-response.types";
 
 export interface ISubCategoryRepository {

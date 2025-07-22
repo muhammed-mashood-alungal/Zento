@@ -7,3 +7,6 @@ export * from "./sub-categories/sub-category.types";
 
 export * from "./branch/branch.model";
 export * from "./branch/branch.types";
+
+export * from "./vendor/vendor.model";
+export * from "./vendor/vendor.types";

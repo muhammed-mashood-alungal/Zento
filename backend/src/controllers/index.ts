@@ -6,3 +6,6 @@ export * from './sub-categories/sub-category.interface.controller'
 
 export * from './branch/branch.controller'
 export * from './branch/branch.interface.controller'
+
+export * from './vendor/vendor.controller'
+export * from './vendor/vendor.interface.controller'
