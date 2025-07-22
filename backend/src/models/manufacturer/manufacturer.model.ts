@@ -1,52 +1,36 @@
 import { DataTypes, Model } from "sequelize";
+import { sequelize } from "../../config";
+import {
+  ManufacturerAttributes,
+  ManufacturerCreationAttributes,
+} from "./manufacturer.types";
 
-import { sequelize } from "@/config";
-import { VendorAttributes, VendorCreationAttributes } from "./vendor.types";
-
-export class Vendor
-  extends Model<VendorAttributes, VendorCreationAttributes>
-  implements VendorAttributes
+export class Manufacturer
+  extends Model<ManufacturerAttributes, ManufacturerCreationAttributes>
+  implements ManufacturerAttributes
 {
   declare id: number;
-  declare contact_person: string;
-  declare phone: string;
-  declare email: string;
-  declare gst_number: string;
-  declare manufacturer_name: string;
+  declare name: string;
+  declare description: string;
   declare status: string;
   declare created_at: Date;
   declare updated_at: Date;
 }
 
-Vendor.init(
+Manufacturer.init(
   {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
       autoIncrement: true,
     },
-    contact_person: {
+    name: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    phone: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    email: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        isEmail: true,
-      },
-    },
-    gst_number: {
+    description: {
       type: DataTypes.STRING,
       allowNull: true,
-    },
-    manufacturer_name: {
-      type: DataTypes.STRING,
-      allowNull: false,
     },
     status: {
       type: DataTypes.STRING,
@@ -69,8 +53,8 @@ Vendor.init(
   },
   {
     sequelize,
-    modelName: "Vendor",
-    tableName: "vendors",
+    modelName: "Category",
+    tableName: "categories",
     timestamps: true,
     createdAt: "created_at",
     updatedAt: "updated_at",

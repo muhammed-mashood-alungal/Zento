@@ -38,11 +38,10 @@ export class VendorRepository
   }
 
   async changeVendorStatus(id: number, status: string): Promise<Vendor | null> {
-    const vendor = await this.findById(id);
+    const vendor = await this.updateById(id , {status});
     if (!vendor) {
       return null;
     }
-    vendor.status = status;
-    return await vendor.save();
+    return vendor;
   }
 }

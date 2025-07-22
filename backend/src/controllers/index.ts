@@ -9,3 +9,6 @@ export * from './branch/branch.interface.controller'
 
 export * from './vendor/vendor.controller'
 export * from './vendor/vendor.interface.controller'
+
+export * from './manufacturer/manufacturer.controller'
+export * from './manufacturer/manufacturer.interface.controller'

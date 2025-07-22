@@ -24,4 +24,12 @@ export const RESPONSE_MESSAGES = {
     VENDOR_UPDATED: "Vendor Updated Successfully",
     VENDOR_DELETED: "Vendor Deleted Successfully",
     VENDOR_STATUS_UPDATED: "Vendor Status Updated Successfully",
+    MANUFACTURER_CREATED: "Manufacturer Created Successfully",
+    MANUFACTURERS_FETCHED: "Manufacturers Fetched Successfully",
+    MANUFACTURER_FETCHED: "Manufacturer Fetched Successfully",
+    MANUFACTURER_NOT_FOUND: "Manufacturer Not Found",
+    MANUFACTURER_UPDATED: "Manufacturer Updated Successfully",
+    MANUFACTURER_DELETED: "Manufacturer Deleted Successfully",
+    MANUFACTURER_STATUS_UPDATED: "Manufacturer Status Updated Successfully",
+    MANUFACTURER_CREATION_FAILED: "Manufacturer Creation Failed",
 };

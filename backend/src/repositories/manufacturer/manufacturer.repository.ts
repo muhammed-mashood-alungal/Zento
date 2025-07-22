@@ -1,0 +1,59 @@
+import {
+  Manufacturer,
+  ManufacturerAttributes,
+  ManufacturerCreationAttributes,
+} from "@/models";
+import { IManufacturerRepository } from "./manufacturer.interface.repository";
+import { BaseRepository } from "../base.repository";
+import { IPaginationResponse } from "@/types/api-response.types";
+
+export class ManufacturerRepository
+  extends BaseRepository<Manufacturer>
+  implements IManufacturerRepository
+{
+  constructor() {
+    super(Manufacturer);
+  }
+
+  async createManufacturer(
+    manufacturer: ManufacturerCreationAttributes
+  ): Promise<Manufacturer> {
+    return await this.create(manufacturer);
+  }
+  async getManufacturerById(
+    id: number
+  ): Promise<Manufacturer | null> {
+    return await this.findById(id);
+  }
+
+  async updateManufacturer(
+    id: number,
+    manufacturer: Partial<Manufacturer>
+  ): Promise<Manufacturer | null> {
+    return await this.updateById(id, manufacturer);
+  }
+
+  async deleteManufacturer(id: number): Promise<number> {
+    return await this.deleteById(id);
+  }
+
+  async getAllManufacturers(
+    page: number,
+    limit: number,
+    options: any
+  ): Promise<IPaginationResponse<Manufacturer>> {
+    return await this.paginate(page, limit, options);
+  }
+
+  async changeManufacturerStatus(
+    id: number,
+    status: string
+  ): Promise<Manufacturer | null> {
+    const manufacturer = await this.updateById(id, { status });
+
+    if (!manufacturer) {
+      return null;
+    }
+    return manufacturer;
+  }
+}

@@ -10,3 +10,6 @@ export * from "./branch/branch.types";
 
 export * from "./vendor/vendor.model";
 export * from "./vendor/vendor.types";
+
+export * from "./manufacturer/manufacturer.model";
+export * from "./manufacturer/manufacturer.types";

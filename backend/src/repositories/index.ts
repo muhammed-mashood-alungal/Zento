@@ -9,3 +9,6 @@ export * from "./branch/branch.interface.repository";
 
 export * from "./vendor/vendor.repository";
 export * from "./vendor/vendor.interface.repository";
+
+export * from "./manufacturer/manufacturer.repository";
+export * from "./manufacturer/manufacturer.interface.repository";
