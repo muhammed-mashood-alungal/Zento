@@ -2,6 +2,7 @@ import { RESPONSE_MESSAGES } from "@/constants";
 import { HttpError } from "@/utils";
 import { NextFunction, Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
+import { success } from "zod";
 
 export const errorHandler = (
   err: Error | HttpError,
@@ -18,5 +19,5 @@ export const errorHandler = (
   }
   console.error(err);
 
-  res.status(statusCode).json({ error: message });
+  res.status(statusCode).json({success : false , error: message });
 };

@@ -23,5 +23,6 @@ export interface IManufacturerRepository {
   changeManufacturerStatus(
     id: number,
     status: string
-  ): Promise<Manufacturer | null>;
+  ): Promise<Manufacturer | null>; 
+  isManufacturerExist(name : string) : Promise<boolean>
 }

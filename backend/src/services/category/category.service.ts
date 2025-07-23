@@ -3,6 +3,9 @@ import { ICategoryServices } from "./category.interface.service";
 import { Category, CategoryAttributes } from "@/models";
 import { IPaginationResponse } from "@/types";
 import { Attributes, FindOptions } from "sequelize";
+import { createHttpsError } from "@/utils";
+import { StatusCodes } from "http-status-codes";
+import { RESPONSE_MESSAGES } from "@/constants";
 
 export class CategoryServices implements ICategoryServices {
   constructor(private categoryRepository: ICategoryRepository) {}
@@ -10,6 +13,16 @@ export class CategoryServices implements ICategoryServices {
   async createCategoryService(
     categoryData: CategoryAttributes
   ): Promise<Category> {
+    const isExist = await this.categoryRepository.isCategoryExists(
+      categoryData.name
+    );
+    console.log(isExist);
+    if (isExist) {
+      throw createHttpsError(
+        StatusCodes.CONFLICT,
+        RESPONSE_MESSAGES.CATEGORY_EXISTS
+      );
+    }
     return await this.categoryRepository.createCategory(categoryData);
   }
   async fetchAllCategories(

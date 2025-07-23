@@ -14,4 +14,5 @@ export interface IBranchRepository {
     branchData: Partial<Branch>
   ): Promise<Branch | null>;
   deleteBranch(id: number): Promise<void>;
+  isBranchExistWithName(name : string) : Promise<boolean>
 }

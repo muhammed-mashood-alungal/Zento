@@ -20,4 +20,5 @@ export interface ISubCategoryRepository {
     subCategory: Partial<SubCategoryCreationAttributes>
   ): Promise<SubCategory | null>;
   deleteSubCategory(id: number): Promise<number>;
+  isSubCategoryExist(category_id : number ,name : string) :Promise<boolean>
 }

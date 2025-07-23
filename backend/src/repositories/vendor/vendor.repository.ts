@@ -11,9 +11,7 @@ export class VendorRepository
     super(Vendor);
   }
 
-  async createVendor(
-    vendor: VendorCreationAttributes
-  ): Promise<Vendor> {
+  async createVendor(vendor: VendorCreationAttributes): Promise<Vendor> {
     return await this.create(vendor);
   }
 
@@ -35,5 +33,9 @@ export class VendorRepository
   }
   async deleteVendor(id: number): Promise<number> {
     return await this.deleteById(id);
+  }
+
+  async isVendorEmailExist(email: string): Promise<boolean> {
+    return (await this.count({ where: { email } })) != 0;
   }
 }

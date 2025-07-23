@@ -28,6 +28,7 @@ GRNHeader.init(
     grn_number: {
       type: DataTypes.STRING,
       allowNull: false,
+      unique : true
     },
     grn_date: {
       type: DataTypes.DATE,

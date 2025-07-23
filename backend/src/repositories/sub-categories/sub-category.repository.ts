@@ -26,9 +26,9 @@ export class SubCategoryRepository
   }
 
   async findBySubCategoryId(id: number): Promise<SubCategory | null> {
-    const res =  await this.findOne({ where: { category_id: id } , raw : true});
-    console.log(res)
-    return res
+    const res = await this.findOne({ where: { category_id: id }, raw: true });
+    console.log(res);
+    return res;
   }
 
   async updateSubCategory(
@@ -39,5 +39,8 @@ export class SubCategoryRepository
   }
   async deleteSubCategory(id: number): Promise<number> {
     return await this.deleteById(id);
+  }
+  async isSubCategoryExist(category_id : number ,name: string): Promise<boolean> {
+    return (await this.count({ where: { name  , category_id} })) != 0;
   }
 }

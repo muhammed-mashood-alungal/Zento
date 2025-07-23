@@ -6,6 +6,9 @@ import {
 import { IManufacturerRepository } from "@/repositories";
 import { IPaginationResponse } from "@/types";
 import { IManufacturerService } from "./manufacturer.interface.service";
+import { createHttpsError } from "@/utils";
+import { StatusCodes } from "http-status-codes";
+import { RESPONSE_MESSAGES } from "@/constants";
 
 export class ManufacturerService implements IManufacturerService {
   constructor(
@@ -15,6 +18,10 @@ export class ManufacturerService implements IManufacturerService {
   async createManufacturer(
     manufacturer: ManufacturerCreationAttributes
   ): Promise<Manufacturer | null> {
+    const isExist = await this.manufacturerRepository.isManufacturerExist(manufacturer.name)
+    if(isExist){
+      throw createHttpsError(StatusCodes.CONFLICT,RESPONSE_MESSAGES.MANUFACTURER_EXISTS)
+    }
     return await this.manufacturerRepository.createManufacturer(manufacturer);
   }
 

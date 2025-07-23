@@ -42,4 +42,8 @@ export class CategoryRepository
   ): Promise<number> {
     return await this.deleteById(id, options);
   }
+
+  async isCategoryExists(name: string): Promise<boolean> {
+    return await this.count({ where: { name } }) != 0;
+  }
 }

@@ -37,6 +37,7 @@ export class ManufacturerRepository
     return await this.deleteById(id);
   }
 
+
   async fetchAllManufacturers(
     page: number,
     limit: number,
@@ -55,5 +56,9 @@ export class ManufacturerRepository
       return null;
     }
     return manufacturer;
+  }
+
+  async isManufacturerExist(name: string): Promise<boolean> {
+    return await this.count({where : {name }}) != 0
   }
 }

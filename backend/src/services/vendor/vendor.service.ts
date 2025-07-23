@@ -1,14 +1,24 @@
-import { Vendor,VendorCreationAttributes } from "@/models";
+import { Vendor, VendorCreationAttributes } from "@/models";
 import { IVendorRepository } from "@/repositories";
 import { IPaginationResponse } from "@/types";
 import { IVendorService } from "./vendor.interface.service";
+import { createHttpsError } from "@/utils";
+import { StatusCodes } from "http-status-codes";
+import { RESPONSE_MESSAGES } from "@/constants";
 
 export class VendorServices implements IVendorService {
   constructor(private vendorRepository: IVendorRepository) {}
 
-  async createVendor(
-    vendor: VendorCreationAttributes
-  ): Promise<Vendor> {
+  async createVendor(vendor: VendorCreationAttributes): Promise<Vendor> {
+    const isExist = await this.vendorRepository.isVendorEmailExist(
+      vendor.email
+    );
+    if (isExist) {
+      throw createHttpsError(
+        StatusCodes.CONFLICT,
+        RESPONSE_MESSAGES.VENDOR_EXISTS
+      );
+    }
     return this.vendorRepository.createVendor(vendor);
   }
 

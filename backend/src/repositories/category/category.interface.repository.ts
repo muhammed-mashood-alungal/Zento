@@ -19,4 +19,5 @@ export interface ICategoryRepository {
     id: string | number,
     options?: FindOptions<Attributes<Category>>
   ): Promise<number>;
+  isCategoryExists(name : string) : Promise<boolean>
 }

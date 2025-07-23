@@ -16,4 +16,5 @@ export interface IVendorRepository {
     subCategory: Partial<VendorCreationAttributes>
   ): Promise<Vendor | null>;
   deleteVendor(id: number): Promise<number>;
+  isVendorEmailExist(email : string) : Promise<boolean>
 }

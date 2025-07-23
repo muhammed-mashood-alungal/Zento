@@ -37,4 +37,7 @@ export class BranchRepository
   async deleteBranch(id: number): Promise<void> {
     await this.deleteById(id);
   }
+  async isBranchExistWithName(name: string): Promise<boolean> {
+    return await this.count({ where: { name } }) != 0;
+  }
 }

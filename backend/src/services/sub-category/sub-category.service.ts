@@ -1,6 +1,9 @@
+import { RESPONSE_MESSAGES } from "@/constants";
 import { SubCategory, SubCategoryAttributes } from "@/models";
 import { ISubCategoryRepository } from "@/repositories";
 import { IPaginationResponse } from "@/types";
+import { createHttpsError } from "@/utils";
+import { StatusCodes } from "http-status-codes";
 
 export class SubCategoryService {
   constructor(private subCategoryRepository: ISubCategoryRepository) {}
@@ -8,6 +11,10 @@ export class SubCategoryService {
   async createSubCategory(
     subCategory: SubCategoryAttributes
   ): Promise<SubCategory> {
+    const isExist = await this.subCategoryRepository.isSubCategoryExist(subCategory.category_id , subCategory.name)
+    if(isExist){
+      throw createHttpsError(StatusCodes.CONFLICT , RESPONSE_MESSAGES.SUB_CATEGORY_EXISTS)
+    }
     return await this.subCategoryRepository.createSubCategory(subCategory);
   }
   async updateSubCategory(
