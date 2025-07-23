@@ -36,12 +36,4 @@ export class VendorRepository
   async deleteVendor(id: number): Promise<number> {
     return await this.deleteById(id);
   }
-
-  async changeVendorStatus(id: number, status: string): Promise<Vendor | null> {
-    const vendor = await this.updateById(id, { status });
-    if (!vendor) {
-      return null;
-    }
-    return vendor;
-  }
 }

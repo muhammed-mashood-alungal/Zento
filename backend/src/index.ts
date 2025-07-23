@@ -9,7 +9,7 @@ import {
   vendorRouter,
 } from "@/routes";
 import cookieParser from "cookie-parser";
-import { errorHandler } from "./middleware/error-handler.middleware";
+import { errorHandler } from "@/middleware";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -23,12 +23,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-app.use("/category", categoryRouter);
-app.use("/sub-category", subCategoryRouter);
-app.use("/branch", branchRouter);
-app.use("/vendor", vendorRouter);
-app.use("/manufacturer", manufacturerRouter);
-app.use("grn", grnRouter);
+app.use("/api/v1/category", categoryRouter);
+app.use("/api/v1/sub-category", subCategoryRouter);
+app.use("/api/v1/branch", branchRouter);
+app.use("/api/v1/vendor", vendorRouter);
+app.use("/api/v1/manufacturer", manufacturerRouter);
+app.use("/api/v1/grn", grnRouter);
 
 app.use(errorHandler);
 

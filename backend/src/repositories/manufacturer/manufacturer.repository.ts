@@ -18,6 +18,8 @@ export class ManufacturerRepository
   async createManufacturer(
     manufacturer: ManufacturerCreationAttributes
   ): Promise<Manufacturer> {
+    console.log('CREATING MANUFACTOR')
+    console.log(manufacturer)
     return await this.create(manufacturer);
   }
   async findManufacturerById(id: number): Promise<Manufacturer | null> {
@@ -45,7 +47,7 @@ export class ManufacturerRepository
 
   async changeManufacturerStatus(
     id: number,
-    status: string
+    status: 'active' | 'inactive'
   ): Promise<Manufacturer | null> {
     const manufacturer = await this.updateById(id, { status });
 

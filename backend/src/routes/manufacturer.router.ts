@@ -3,6 +3,8 @@ import { Router } from "express";
 import { ManufacturerController } from "@/controllers";
 import { ManufacturerRepository } from "@/repositories";
 import { ManufacturerService } from "@/services";
+import { validate } from "@/middleware";
+import { ManufacturerSchema } from "@/schemas/manufacturer.schema";
 
 const manufacturerRouter = Router();
 
@@ -11,7 +13,8 @@ const manufacturerService = new ManufacturerService(manufacturerRepository);
 const manufacturerController = new ManufacturerController(manufacturerService);
 
 manufacturerRouter.post(
-  "/",
+  "/create",
+  validate(ManufacturerSchema),
   manufacturerController.createManufacturer.bind(manufacturerController)
 );
 manufacturerRouter.get(
@@ -19,11 +22,12 @@ manufacturerRouter.get(
   manufacturerController.getManufacturerById.bind(manufacturerController)
 );
 manufacturerRouter.put(
-  "/:id",
+  "/update/:id",
+  validate(ManufacturerSchema),
   manufacturerController.updateManufacturer.bind(manufacturerController)
 );
 manufacturerRouter.delete(
-  "/:id",
+  "/delete/:id",
   manufacturerController.deleteManufacturer.bind(manufacturerController)
 );
 manufacturerRouter.get(

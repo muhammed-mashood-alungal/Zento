@@ -14,7 +14,7 @@ export class ManufacturerController implements IManufacturerController {
     next: NextFunction
   ): Promise<void> {
     try {
-      const manufacturerData = req.body.manufacturer;
+      const manufacturerData = req.body;
       const newManufacturer = await this.manufacturerService.createManufacturer(
         manufacturerData
       );
@@ -27,7 +27,7 @@ export class ManufacturerController implements IManufacturerController {
       successResponse(
         res,
         StatusCodes.CREATED,
-        RESPONSE_MESSAGES.MANUFACTURER_CREATED,
+        RESPONSE_MESSAGES.MANUFACTURER_CREATED, 
         { manufacturer: newManufacturer }
       );
     } catch (error) {
@@ -67,7 +67,7 @@ export class ManufacturerController implements IManufacturerController {
   ): Promise<void> {
     try {
       const manufacturerId = parseInt(req.params.id);
-      const updates = req.body.manufacturer;
+      const updates = req.body;
       const updatedManufacturer =
         await this.manufacturerService.updateManufacturer(
           manufacturerId,

@@ -13,7 +13,7 @@ export class GRNHeader
     declare vendor_id: number;
     declare branch_id: number;
     declare total_amount: number;
-    declare status: "submit" | "draft";
+    declare mode: "submit" | "draft";
     declare created_at: Date;
     declare updated_at: Date;
 }
@@ -49,7 +49,7 @@ GRNHeader.init(
       type: DataTypes.FLOAT,
       allowNull: false,
     },
-    status: {
+    mode: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {

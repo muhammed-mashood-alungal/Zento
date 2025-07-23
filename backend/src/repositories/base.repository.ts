@@ -134,6 +134,7 @@ export abstract class BaseRepository<T extends Model> {
       ...options,
       limit,
       offset,
+      
     });
 
     return {

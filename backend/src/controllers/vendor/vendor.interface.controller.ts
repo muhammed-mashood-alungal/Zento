@@ -14,9 +14,4 @@ export interface IVendorController {
   ): Promise<void>;
   editVendor(req: Request, res: Response, next: NextFunction): Promise<void>;
   deleteVendor(req: Request, res: Response, next: NextFunction): Promise<void>;
-  changeVendorStatus(
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ): Promise<void>;
 }

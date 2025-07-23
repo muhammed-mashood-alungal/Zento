@@ -1,4 +1,4 @@
-import { Vendor, VendorAttributes, VendorCreationAttributes } from "@/models";
+import { Vendor,VendorCreationAttributes } from "@/models";
 import { IVendorRepository } from "@/repositories";
 import { IPaginationResponse } from "@/types";
 import { IVendorService } from "./vendor.interface.service";
@@ -31,8 +31,5 @@ export class VendorServices implements IVendorService {
   }
   async deleteVendor(id: number): Promise<number> {
     return this.vendorRepository.deleteVendor(id);
-  }
-  async changeVendorStatus(id: number, status: string): Promise<Vendor | null> {
-    return this.vendorRepository.changeVendorStatus(id, status);
   }
 }

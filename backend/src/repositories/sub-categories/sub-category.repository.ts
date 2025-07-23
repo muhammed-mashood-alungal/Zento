@@ -1,7 +1,4 @@
-import {
-  SubCategory,
-  SubCategoryCreationAttributes,
-} from "@/models";
+import { SubCategory, SubCategoryCreationAttributes } from "@/models";
 import { BaseRepository } from "../base.repository";
 import { ISubCategoryRepository } from "./sub-category.interface.repository";
 import { IPaginationResponse } from "@/types";
@@ -29,7 +26,9 @@ export class SubCategoryRepository
   }
 
   async findBySubCategoryId(id: number): Promise<SubCategory | null> {
-    return this.findById(id);
+    const res =  await this.findOne({ where: { category_id: id } , raw : true});
+    console.log(res)
+    return res
   }
 
   async updateSubCategory(

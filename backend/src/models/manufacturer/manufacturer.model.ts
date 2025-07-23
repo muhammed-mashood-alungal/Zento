@@ -12,7 +12,7 @@ export class Manufacturer
   declare id: number;
   declare name: string;
   declare description: string;
-  declare status: string;
+  declare status: 'active' | 'inactive';
   declare created_at: Date;
   declare updated_at: Date;
 }
@@ -53,8 +53,8 @@ Manufacturer.init(
   },
   {
     sequelize,
-    modelName: "Category",
-    tableName: "categories",
+    modelName: "Manufacturer",
+    tableName: "manufacturers",
     timestamps: true,
     createdAt: "created_at",
     updatedAt: "updated_at",

@@ -1,7 +1,7 @@
+import { RESPONSE_MESSAGES } from "@/constants";
 import { HttpError } from "@/utils";
 import { NextFunction, Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
-import { ERROR_MESSAGES } from "@/constants";
 
 export const errorHandler = (
   err: Error | HttpError,
@@ -10,7 +10,7 @@ export const errorHandler = (
   _next: NextFunction
 ) => {
   let statusCode = StatusCodes.INTERNAL_SERVER_ERROR;
-  let message: string = ERROR_MESSAGES.SOMETHING_WENT_WRONG;
+  let message: string = RESPONSE_MESSAGES.SOMETHING_WENT_WRONG;
 
   if (err instanceof HttpError) {
     statusCode = err.statusCode;

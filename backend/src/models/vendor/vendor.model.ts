@@ -12,8 +12,7 @@ export class Vendor
   declare phone: string;
   declare email: string;
   declare gst_number: string;
-  declare manufacturer_name: string;
-  declare status: string;
+  declare manufacturer_id: number;
   declare created_at: Date;
   declare updated_at: Date;
 }
@@ -44,17 +43,9 @@ Vendor.init(
       type: DataTypes.STRING,
       allowNull: true,
     },
-    manufacturer_name: {
-      type: DataTypes.STRING,
+    manufacturer_id: {
+      type: DataTypes.INTEGER,
       allowNull: false,
-    },
-    status: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        isIn: [["active", "inactive"]],
-      },
-      defaultValue: "active",
     },
     created_at: {
       type: DataTypes.DATE,

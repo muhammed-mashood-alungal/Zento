@@ -4,8 +4,7 @@ export interface VendorAttributes {
   phone: string;
   email: string;
   gst_number: string;
-  manufacturer_name: string;
-  status: string;
+  manufacturer_id: number;
   created_at: Date;
   updated_at: Date;
 }

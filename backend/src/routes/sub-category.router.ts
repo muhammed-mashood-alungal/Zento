@@ -3,6 +3,8 @@ import { Router } from "express";
 import { SubCategoryController } from "@/controllers";
 import { SubCategoryRepository } from "@/repositories";
 import { SubCategoryService } from "@/services";
+import { SubCategorySchema } from "@/schemas/sub-category.schema";
+import { validate } from "@/middleware";
 const subCategoryRouter = Router();
 
 const subCategoryRepository = new SubCategoryRepository();
@@ -11,6 +13,7 @@ const subCategoryController = new SubCategoryController(subCategoryService);
 
 subCategoryRouter.post(
   "/create",
+  validate(SubCategorySchema),
   subCategoryController.createSubCategory.bind(subCategoryController)
 );
 subCategoryRouter.get(
@@ -22,11 +25,12 @@ subCategoryRouter.get(
   subCategoryController.findBySubCategoryId.bind(subCategoryController)
 );
 subCategoryRouter.put(
-  "/:category_id/:id",
+  "/update/:category_id/:id",
+  validate(SubCategorySchema),
   subCategoryController.editSubCategory.bind(subCategoryController)
 );
 subCategoryRouter.delete(
-  "/:category_id/:id",
+  "/delete/:category_id/:id",
   subCategoryController.deleteSubCategory.bind(subCategoryController)
 );
 export { subCategoryRouter };

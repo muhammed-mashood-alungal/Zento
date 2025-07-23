@@ -56,13 +56,13 @@ export class BranchController implements IBranchController {
     next: NextFunction
   ): Promise<void> {
     try {
-      const branchData = req.body.branch;
+      const branchData = req.body;
       const newBranch = await this.branchServices.createBranch(branchData);
       successResponse(
         res,
         StatusCodes.CREATED,
         RESPONSE_MESSAGES.BRANCH_CREATED,
-        { newBranch }
+        { newBranch } 
       );
     } catch (error) {
       next(error);
@@ -75,7 +75,7 @@ export class BranchController implements IBranchController {
   ): Promise<void> {
     try {
       const branchId = parseInt(req.params.id);
-      const branchData = req.body.branch;
+      const branchData = req.body;
       const updatedBranch = await this.branchServices.updateBranch(
         branchId,
         branchData

@@ -53,7 +53,7 @@ export class GRNController implements GRNController {
     next: NextFunction
   ): Promise<void> {
     try {
-      const grnData = req.body.grn;
+      const grnData = req.body;
       const newGRN = await this.grnService.createGRN(grnData);
       successResponse(res, StatusCodes.CREATED, RESPONSE_MESSAGES.GRN_CREATED, {
         grn: newGRN,
@@ -69,7 +69,7 @@ export class GRNController implements GRNController {
   ): Promise<void> {
     try {
       const grnId = parseInt(req.params.id);
-      const grnData = req.body.grn;
+      const grnData = req.body;
       const updatedGRN = await this.grnService.updateGRN(grnId, grnData);
       successResponse(res, StatusCodes.OK, RESPONSE_MESSAGES.GRN_UPDATED, {
         grn: updatedGRN,

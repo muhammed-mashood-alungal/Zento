@@ -8,7 +8,7 @@ export interface GRNHeaderAttributes {
   vendor_id: number;
   branch_id: number;
   total_amount: number;
-  status: "submit" | "draft";
+  mode: "submit" | "draft";
   created_at: Date;
   updated_at: Date;
 }

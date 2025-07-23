@@ -14,7 +14,7 @@ export class CategoryController implements ICategoryController {
     next: NextFunction
   ): Promise<any> {
     try {
-      const category = req.body.category;
+      const category = req.body;
       const newCategory = await this.categoryService.createCategoryService(
         category
       );
@@ -23,7 +23,7 @@ export class CategoryController implements ICategoryController {
         res,
         StatusCodes.CREATED,
         RESPONSE_MESSAGES.CATEGORY_CREATED,
-        { newCategory }
+        { newCategory } 
       );
     } catch (error) {
       next(error);

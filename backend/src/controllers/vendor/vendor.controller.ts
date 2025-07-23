@@ -14,7 +14,7 @@ export class VendorController implements IVendorController {
     next: NextFunction
   ): Promise<void> {
     try {
-      const vendorData = req.body.vendor;
+      const vendorData = req.body;
       const vendor = await this.vendorService.createVendor(vendorData);
       successResponse(
         res,
@@ -76,7 +76,7 @@ export class VendorController implements IVendorController {
   ): Promise<void> {
     try {
       const vendorId = parseInt(req.params.id);
-      const vendorData = req.body.vendor;
+      const vendorData = req.body;
       const updatedVendor = await this.vendorService.editVendor(
         vendorId,
         vendorData
@@ -111,34 +111,6 @@ export class VendorController implements IVendorController {
       successResponse(res, StatusCodes.OK, RESPONSE_MESSAGES.VENDOR_DELETED, {
         deletedCount,
       });
-    } catch (error) {
-      next(error);
-    }
-  }
-  async changeVendorStatus(
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ): Promise<void> {
-    try {
-      const vendorId = parseInt(req.params.id);
-      const { status } = req.body.status;
-      const updatedVendor = await this.vendorService.changeVendorStatus(
-        vendorId,
-        status
-      );
-      if (!updatedVendor) {
-        res.status(StatusCodes.NOT_FOUND).json({
-          message: RESPONSE_MESSAGES.VENDOR_NOT_FOUND,
-        });
-        return;
-      }
-      successResponse(
-        res,
-        StatusCodes.OK,
-        RESPONSE_MESSAGES.VENDOR_STATUS_UPDATED,
-        { updatedVendor }
-      );
     } catch (error) {
       next(error);
     }

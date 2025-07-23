@@ -1,6 +1,8 @@
 
 import { CategoryController } from "@/controllers";
+import { validate } from "@/middleware";
 import { CategoryRepository } from "@/repositories";
+import { CategorySchema } from "@/schemas/category.schema";
 import { CategoryServices } from "@/services";
 import { Router } from "express";
 
@@ -12,6 +14,7 @@ const categoryController = new CategoryController(categoryService);
 
 categoryRouter.post(
   "/create",
+  validate(CategorySchema),
   categoryController.createCategory.bind(categoryController)
 );
 categoryRouter.get(
@@ -23,11 +26,12 @@ categoryRouter.get(
   categoryController.findByCategoryId.bind(categoryController)
 );
 categoryRouter.put(
-  "/:id",
+  "/update/:id",
+  validate(CategorySchema),
   categoryController.editCategory.bind(categoryController)
 );
 categoryRouter.delete(
-  "/:id",
+  "/delete/:id",
   categoryController.deleteCategory.bind(categoryController)
 );
 

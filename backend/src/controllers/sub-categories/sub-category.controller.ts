@@ -14,7 +14,7 @@ export class SubCategoryController implements ISubCategoryController {
     next: NextFunction
   ): Promise<any> {
     try {
-      const { categoryDetails } = req.body;
+      const categoryDetails = req.body;
 
       const subCategory = await this.subCategoryService.createSubCategory(
         categoryDetails
@@ -49,7 +49,7 @@ export class SubCategoryController implements ISubCategoryController {
         res,
         StatusCodes.OK,
         RESPONSE_MESSAGES.SUB_CATEGORIES_FETCHED,
-        subCategories
+        { subCategories }
       );
     } catch (error) {
       next(error);
@@ -77,7 +77,7 @@ export class SubCategoryController implements ISubCategoryController {
         res,
         StatusCodes.OK,
         RESPONSE_MESSAGES.SUB_CATEGORY_FETCHED,
-        subCategory
+        {subCategory}
       );
     } catch (error) {
       next(error);
