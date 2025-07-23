@@ -4,11 +4,9 @@ export interface AssetAttributes {
   grn_line_item_id: number;
   sub_category_id: number;
   branch_id: number;
-  serial_number: string;
-  manufacturer_id: number;
   purchase_date: Date;
-  warranty_expiry_date: Date;
-  status: "Active" | "Under Maintenance" | "Retired";
+  status: "Assigned" | 'Pending' | 'Not-Assigned';
+  condition: "Ok" | "Under Maintenance" | "Retired";
   created_at: Date;
   updated_at: Date;
 }

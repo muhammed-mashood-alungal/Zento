@@ -91,4 +91,22 @@ export class GRNController implements GRNController {
       next(error);
     }
   }
+  async generateGRNNumber(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> {
+    try {
+      const grnNumber = await this.grnService.generateGRNNumber();
+
+      successResponse(
+        res,
+        StatusCodes.OK,
+        RESPONSE_MESSAGES.GRN_NUMBER_CREATED,
+        { grnNumber }
+      );
+    } catch (error) {
+      next(error);
+    }
+  }
 }

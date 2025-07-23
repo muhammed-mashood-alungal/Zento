@@ -6,4 +6,5 @@ export interface IGRNController {
     createGRN(req: Request, res: Response, next: NextFunction): Promise<void>;
     updateGRN(req: Request, res: Response, next: NextFunction): Promise<void>
     deleteGRN(req: Request, res: Response, next: NextFunction): Promise<void>;
+    generateGRNNumber(req: Request, res: Response, next: NextFunction): Promise<void>;
 }

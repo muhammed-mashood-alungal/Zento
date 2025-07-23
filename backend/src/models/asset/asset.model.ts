@@ -11,11 +11,9 @@ export class Asset
   declare grn_line_item_id: number;
   declare sub_category_id: number;
   declare branch_id: number;
-  declare serial_number: string;
-  declare manufacturer_id: number;
   declare purchase_date: Date;
-  declare warranty_expiry_date: Date;
-  declare status: "Active" | "Under Maintenance" | "Retired";
+  declare status: "Assigned" | "Pending" | "Not-Assigned";
+  declare condition: "Ok" | "Under Maintenance" | "Retired";
   declare created_at: Date;
   declare updated_at: Date;
 }
@@ -43,29 +41,25 @@ Asset.init(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    serial_number: {
-      type: DataTypes.STRING,
-      allowNull: true,
-    },
-    manufacturer_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
     purchase_date: {
       type: DataTypes.DATE,
       allowNull: false,
     },
-    warranty_expiry_date: {
-      type: DataTypes.DATE,
-      allowNull: true,
+    condition: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        isIn: [["Ok" , "Under Maintenance" , "Retired"]],
+      },
+      defaultValue: "Ok",
     },
     status: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        isIn: [["Active", "Under Maintenance", "Retired"]],
+        isIn: [["Assigned" , "Pending" , "Not-Assigned"]],
       },
-      defaultValue: "Active",
+      defaultValue: "Ok",
     },
     created_at: {
       type: DataTypes.DATE,

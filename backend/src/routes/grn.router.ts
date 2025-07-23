@@ -18,6 +18,7 @@ grnRouter.post(
   grnController.createGRN.bind(grnController)
 );
 grnRouter.get("/", grnController.fetchAllGRNs.bind(grnController));
+
 grnRouter.get("/:id", grnController.findGRNById.bind(grnController));
 grnRouter.put(
   "/update/:id",
@@ -25,5 +26,7 @@ grnRouter.put(
   grnController.updateGRN.bind(grnController)
 );
 grnRouter.delete("/delete/:id", grnController.deleteGRN.bind(grnController));
+grnRouter.post('/generate-grn-number', grnController.generateGRNNumber.bind(grnController))
+
 
 export { grnRouter };

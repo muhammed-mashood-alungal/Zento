@@ -10,6 +10,7 @@ export class Branch
   declare name: string;
   declare location: string;
   declare pincode: string;
+  declare code : string;
   declare isOpen: boolean;
   declare created_at: Date;
   declare updated_at: Date;
@@ -34,6 +35,11 @@ Branch.init(
     pincode: {
       type: DataTypes.STRING,
       allowNull: false,
+    },
+    code :{
+      type : DataTypes.STRING,
+      allowNull : false,
+      unique : true
     },
     isOpen: {
       type: DataTypes.BOOLEAN,

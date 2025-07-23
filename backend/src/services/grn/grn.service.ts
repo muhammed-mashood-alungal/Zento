@@ -2,6 +2,7 @@ import { GRNAttributes, GRNCreationAttributes } from "@/models";
 import { IGRNService } from "./grn.interface.service";
 import { IPaginationResponse } from "@/types";
 import { IGRNRepository } from "@/repositories";
+import { v4 as uuid } from "uuid";
 
 export class GrnService implements IGRNService {
   constructor(private grnRepository: IGRNRepository) {}
@@ -28,5 +29,21 @@ export class GrnService implements IGRNService {
     options?: any
   ): Promise<IPaginationResponse<GRNAttributes>> {
     return await this.grnRepository.fetchAllGRNs(page, limit, options);
+  }
+
+  async generateGRNNumber(): Promise<string> {
+    let exists = null;
+    let grnNumber: string;
+    do {
+      const today = new Date();
+      const YYYY = today.getFullYear().toString().padStart(4, "0").trim();
+      const MM = today.getMonth().toString().padStart(2, "0").trim();
+
+      const XXX = uuid().slice(-3).toUpperCase();
+      grnNumber = `GRN-${YYYY + MM}-${XXX}`;
+      exists = await this.grnRepository.findGRNByNumber(grnNumber)
+    } while (exists);
+
+    return grnNumber;
   }
 }

@@ -1,4 +1,9 @@
 import {
+  Asset,
+  AssetAttributes,
+  AssetCreationAttributes,
+  Branch,
+  BranchAttributes,
   GRNAttributes,
   GRNCreationAttributes,
   GRNHeader,
@@ -12,10 +17,12 @@ import { IGRNRepository } from "./grn.interface.repository";
 export class GrnRepository implements IGRNRepository {
   private grnHeaderRepo: typeof GRNHeader;
   private grnItemRepo: typeof GRNLineItems;
+  private asset: typeof Asset;
 
   constructor() {
     this.grnHeaderRepo = GRNHeader;
     this.grnItemRepo = GRNLineItems;
+    this.asset = Asset;
   }
 
   async createGRN(grnData: GRNCreationAttributes): Promise<GRNAttributes> {
@@ -31,6 +38,7 @@ export class GrnRepository implements IGRNRepository {
       }));
 
       await this.grnItemRepo.bulkCreate(grnLineItems, { transaction });
+
       await transaction.commit();
       return {
         ...grnHeader.get(),
@@ -163,5 +171,21 @@ export class GrnRepository implements IGRNRepository {
       await transaction.rollback();
       throw error;
     }
+  }
+
+  async findGRNByNumber(grn_number: string): Promise<GRNAttributes> {
+    const grn: unknown = await this.grnHeaderRepo.findOne({
+      where: { grn_number },
+      include: [
+        {
+          model: GRNLineItems,
+          as: "line_items",
+        },
+        "vendor",
+        "branch",
+      ],
+    });
+
+    return grn as GRNAttributes | null;
   }
 }

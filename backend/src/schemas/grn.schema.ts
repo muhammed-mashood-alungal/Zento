@@ -29,8 +29,8 @@ const submitSchema = z.object({
   header: z.object({
     grn_number: z.string(),
     grn_date: z.string(),
-    vendor_id: z.string(),
-    branch_id: z.string(),
+    vendor_id: z.number(),
+    branch_id: z.number(),
     invoice_number: z.string().max(30),
     total_amount: z.number(),
   }),

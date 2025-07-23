@@ -14,4 +14,5 @@ export interface IGRNService {
     grnData: Partial<GRNCreationAttributes>
   ): Promise<GRNAttributes | null>;
   deleteGRN(id: number): Promise<number>;
+  generateGRNNumber() : Promise<string>
 }

@@ -5,4 +5,5 @@ export const BranchSchema = z.object({
   location: z.string().min(2),
   pincode: z.string().regex(/^\d{6}$/),
   isOpen: z.boolean(),
+  code : z.string()
 });

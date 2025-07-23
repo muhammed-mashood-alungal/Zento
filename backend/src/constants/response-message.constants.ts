@@ -41,6 +41,7 @@ export const RESPONSE_MESSAGES = {
   GRN_NOT_FOUND: "GRN Not Found",
   GRN_UPDATED: "GRN Updated Successfully",
   GRN_DELETED: "GRN Deleted Successfully",
+  GRN_NUMBER_CREATED:'GRN Number Created',
   VENDOR_EXISTS: "Vendor with This Name Already Exists!",
   BRANCH_EXISTS: "Branch with This Name Already Exists!",
   MANUFACTURER_EXISTS: "Manufacturer with This Name Already Exists!",
