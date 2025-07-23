@@ -16,7 +16,6 @@ export class CategoryServices implements ICategoryServices {
     const isExist = await this.categoryRepository.isCategoryExists(
       categoryData.name
     );
-    console.log(isExist);
     if (isExist) {
       throw createHttpsError(
         StatusCodes.CONFLICT,

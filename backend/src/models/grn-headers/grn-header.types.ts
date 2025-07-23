@@ -20,13 +20,12 @@ export interface GRNHeaderCreationAttributes
   updated_at?: Date;
 }
 
-export interface GRNAttributes
-  extends GRNHeaderAttributes {
-    line_items: GRNLineItemAttributes[];
-  }
-
-export interface GRNCreationAttributes{
-    header: GRNHeaderCreationAttributes;
-    line_items: GRNLineItemAttributes[];
+export interface GRNAttributes extends GRNHeaderAttributes {
+  line_items: GRNLineItemAttributes[];
 }
 
+export interface GRNCreationAttributes {
+  mode: "submit" | "draft";
+  header: GRNHeaderCreationAttributes;
+  line_items: GRNLineItemAttributes[];
+}

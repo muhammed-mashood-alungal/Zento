@@ -29,9 +29,13 @@ export class GrnRepository implements IGRNRepository {
     const transaction = await sequelize.transaction();
 
     try {
-      const grnHeader = await this.grnHeaderRepo.create(grnData.header, {
-        transaction,
-      });
+      const grnHeader = await this.grnHeaderRepo.create(
+        { ...grnData.header, mode: grnData.mode },
+        {
+          transaction,
+        }
+      );
+
       const grnLineItems = grnData.line_items.map((item) => ({
         ...item,
         grn_header_id: grnHeader.id,

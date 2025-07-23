@@ -7,7 +7,7 @@ const lineItemsSchema = z.object({
   tax_percentage: z.number(),
   taxable_amount: z.number(),
   total_amount: z.number(),
-  grn_header_id: z.number(),
+  grn_header_id: z.number().optional(),
   sub_category_id: z.number(),
 });
 

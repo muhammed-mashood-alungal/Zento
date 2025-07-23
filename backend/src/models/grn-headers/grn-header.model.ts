@@ -56,7 +56,6 @@ GRNHeader.init(
       validate: {
         isIn: [["submit", "draft"]],
       },
-      defaultValue: "submit",
     },
     created_at: {
       type: DataTypes.DATE,

@@ -26,9 +26,8 @@ export class SubCategoryRepository
   }
 
   async findBySubCategoryId(id: number): Promise<SubCategory | null> {
-    const res = await this.findOne({ where: { category_id: id }, raw: true });
-    console.log(res);
-    return res;
+    return await this.findOne({ where: { category_id: id }, raw: true });
+    
   }
 
   async updateSubCategory(

@@ -1,7 +1,12 @@
 import { Sequelize } from "sequelize";
+import { env } from "@/config"; 
 
-export const sequelize = new Sequelize("hello_world", "root", "1234", {
-  host: "localhost",
-  dialect: "mysql",
-});
-
+export const sequelize = new Sequelize(
+  env.DATABASE_NAME,
+  env.DATABASE_USER,
+  env.DATABASE_PASSWORD,
+  {
+    host: env.DATABASE_HOST,
+    dialect: "mysql",
+  }
+);

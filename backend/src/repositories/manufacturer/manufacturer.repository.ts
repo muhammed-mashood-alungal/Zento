@@ -18,8 +18,6 @@ export class ManufacturerRepository
   async createManufacturer(
     manufacturer: ManufacturerCreationAttributes
   ): Promise<Manufacturer> {
-    console.log('CREATING MANUFACTOR')
-    console.log(manufacturer)
     return await this.create(manufacturer);
   }
   async findManufacturerById(id: number): Promise<Manufacturer | null> {
