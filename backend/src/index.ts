@@ -11,12 +11,9 @@ import {
 } from "@/routes";
 import cookieParser from "cookie-parser";
 import { errorHandler } from "@/middleware";
-
-
 import { env } from "@/config";
+
 dotenv.config();
-
-
 
 const app = express();
 
@@ -27,12 +24,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-app.use("/api/v1/category", categoryRouter);
-app.use("/api/v1/sub-category", subCategoryRouter);
-app.use("/api/v1/branch", branchRouter);
-app.use("/api/v1/vendor", vendorRouter);
-app.use("/api/v1/manufacturer", manufacturerRouter);
-app.use("/api/v1/grn", grnRouter);
+app.use("/api/v1/categories", categoryRouter);
+app.use("/api/v1/sub-categories", subCategoryRouter);
+app.use("/api/v1/branches", branchRouter);
+app.use("/api/v1/vendors", vendorRouter);
+app.use("/api/v1/manufacturers", manufacturerRouter);
+app.use("/api/v1/grns", grnRouter);
 
 app.use(errorHandler);
 
