@@ -1,10 +1,10 @@
 import { AxiosError } from "axios";
 import { cetagoryInstance } from "../api/axios-instance";
-import { type Category } from "../types/category.types";
+import { type Category, type CategoryFormData } from "../types/category.types";
 
 export const categoryServices = {
   createCategory: async (
-    categoryData: Category
+    categoryData: CategoryFormData
   ): Promise<Category> => {
     try {
       const response = await cetagoryInstance.post("/create", categoryData);
@@ -46,7 +46,7 @@ export const categoryServices = {
 
   editCategory: async (
     id: string,
-    categoryData: Partial<Category>
+    categoryData: CategoryFormData
   ): Promise<Category> => {
     try {
       const response = await cetagoryInstance.put(`/update/${id}`, categoryData);

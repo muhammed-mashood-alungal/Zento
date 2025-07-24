@@ -1,10 +1,10 @@
 
 export interface SubCategory {
   id: number;
-  categoryId: number;
+  category_id: number;
   name: string;
   description: string;
-  status: string;
+  status: "active" | "inactive";
 }
 
 

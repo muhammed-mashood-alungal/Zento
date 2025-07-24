@@ -14,6 +14,10 @@ import { manufacturerServices } from "../services/manufacturer.service";
 import type { Manufacturer } from "../types/manufacturer.types";
 import { vendorServices } from "../services/vendor.service";
 import type { Vendor } from "../types/vendor.types";
+import type { Category } from "../types/category.types";
+import type { SubCategory } from "../types/sub-category.types";
+import { categoryServices } from "../services/category.service";
+import { subCategoryServices } from "../services/sub-category.service";
 
 type masterContextType = {
   branches: Branch[];
@@ -22,6 +26,10 @@ type masterContextType = {
   setManufacturers: Dispatch<SetStateAction<Manufacturer[]>>;
   vendors: Vendor[];
   setVendors: Dispatch<SetStateAction<Vendor[]>>;
+  categories: Category[];
+  setCategories: Dispatch<SetStateAction<Category[]>>;
+  subCategories: SubCategory[];
+  setSubCategories: Dispatch<SetStateAction<SubCategory[]>>;
 };
 const masterDataContext = createContext<masterContextType | undefined>(
   undefined
@@ -37,6 +45,9 @@ export const MasterDataContextProvider: React.FC<MasterDataProviderProps> = ({
   const [branches, setBranches] = useState<Branch[]>([]);
   const [manufacturers, setManufacturers] = useState<Manufacturer[]>([]);
   const [vendors, setVendors] = useState<Vendor[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [subCategories, setSubCategories] = useState<SubCategory[]>([]);
+
   const fetchBranches = async () => {
     try {
       const branches = await branchServices.getAllBranches();
@@ -45,12 +56,13 @@ export const MasterDataContextProvider: React.FC<MasterDataProviderProps> = ({
       SnackbarUtils.error("Something Went Wrong while fetching Branches");
     }
   };
+
   const fetchManufacturers = async () => {
     try {
       const manufacturers = await manufacturerServices.getAllManufacturers();
       setManufacturers(manufacturers);
     } catch (error) {
-      SnackbarUtils.error("Something Went Wrong while fetching Branches");
+      SnackbarUtils.error("Something Went Wrong while fetching Maufacturers");
     }
   };
   const fetchVendors = async () => {
@@ -58,14 +70,31 @@ export const MasterDataContextProvider: React.FC<MasterDataProviderProps> = ({
       const vendors = await vendorServices.fetchAllVendors();
       setVendors(vendors);
     } catch (error) {
+      SnackbarUtils.error("Something Went Wrong while fetching Vedors");
+    }
+  };
+
+  const fetchCategories = async () => {
+    try {
+      const contegories = await categoryServices.fetchAllCategories();
+      let sub_arr: SubCategory[] = [];
+      for (let category of contegories) {
+        const sub = await subCategoryServices.getAllSubCategories(category.id);
+        sub_arr = [...sub_arr, ...sub];
+      }
+      setCategories(contegories);
+      setSubCategories(sub_arr);
+    } catch (error) {
       SnackbarUtils.error("Something Went Wrong while fetching Branches");
     }
   };
+
 
   useEffect(() => {
     fetchBranches();
     fetchManufacturers();
     fetchVendors();
+    fetchCategories();
   }, []);
 
   return (
@@ -77,6 +106,10 @@ export const MasterDataContextProvider: React.FC<MasterDataProviderProps> = ({
         setManufacturers,
         vendors,
         setVendors,
+        categories,
+        setCategories,
+        subCategories,
+        setSubCategories
       }}
     >
       {children}

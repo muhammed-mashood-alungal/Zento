@@ -1,10 +1,10 @@
 import { AxiosError } from "axios";
-import { type SubCategory } from "../types/sub-category.types";
+import { type SubCategory, type SubCategoryFormData } from "../types/sub-category.types";
 import { subCetagoryInstance } from "../api/axios-instance";
 
 export const subCategoryServices = {
   createSubCategory: async (
-    subCategoryData: SubCategory
+    subCategoryData: SubCategoryFormData
   ): Promise<SubCategory> => {
     try {
       const response = await subCetagoryInstance.post("/create", subCategoryData);
@@ -18,7 +18,7 @@ export const subCategoryServices = {
   },
 
   getAllSubCategories: async (
-    categoryId: number): Promise<{ data: SubCategory[]; total: number }> => {
+    categoryId: number): Promise<SubCategory[]> => {
     try {
       const response = await subCetagoryInstance.get(`/${categoryId}`);
       return response.data.subCategories;
@@ -48,7 +48,7 @@ export const subCategoryServices = {
   updateSubCategory: async (
     categoryId: number,
     subCategoryId: number,
-    updates: Partial<SubCategory>
+    updates: SubCategoryFormData
   ): Promise<SubCategory> => {
     try {
       const response = await subCetagoryInstance.put(

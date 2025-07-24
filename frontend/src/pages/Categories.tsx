@@ -15,52 +15,17 @@ import type {
 } from "../types/sub-category.types";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { categorySchema } from "../schemas/category.schema";
+import { categoryServices } from "../services/category.service";
+import { SnackbarUtils } from "../utils/snackbar.util";
+import { number } from "yup";
+import { subCategoryServices } from "../services/sub-category.service";
+import { subCategorySchema } from "../schemas/sub-category.schema";
+import ConfirmModal from "../components/common/ConfirmModal";
+import { useMasterData } from "../contexts/master-data.context";
 
 const Categories: React.FC = () => {
-  const [categories, setCategories] = useState<Category[]>([
-    {
-      id: 1,
-      name: "Electronics",
-      description: "Electronic devices and components",
-      status: "active",
-    },
-    {
-      id: 2,
-      name: "Furniture",
-      description: "Office and home furniture",
-      status: "active",
-    },
-    {
-      id: 3,
-      name: "Vehicles",
-      description: "Company vehicles and transportation",
-      status: "inactive",
-    },
-  ]);
-
-  const [subCategories, setSubCategories] = useState<SubCategory[]>([
-    {
-      id: 1,
-      categoryId: 1,
-      name: "Laptops",
-      description: "Portable computers",
-      status: "active",
-    },
-    {
-      id: 2,
-      categoryId: 1,
-      name: "Monitors",
-      description: "Display screens",
-      status: "active",
-    },
-    {
-      id: 3,
-      categoryId: 2,
-      name: "Desks",
-      description: "Work desks and tables",
-      status: "active",
-    },
-  ]);
+  const { categories, setCategories, subCategories, setSubCategories } =
+    useMasterData();
 
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(
     null
@@ -72,9 +37,10 @@ const Categories: React.FC = () => {
   const [editingItem, setEditingItem] = useState<Category | SubCategory | null>(
     null
   );
+  const [deletingItem, setDeletingItem] = useState<CardItem | null>(null);
 
   const categoryForm = useForm<CategoryFormData>({
-    resolver : yupResolver(categorySchema),
+    resolver: yupResolver(categorySchema),
     defaultValues: {
       name: "",
       description: "",
@@ -83,11 +49,12 @@ const Categories: React.FC = () => {
   });
 
   const subCategoryForm = useForm<SubCategoryFormData>({
+    resolver: yupResolver(subCategorySchema),
     defaultValues: {
       name: "",
       description: "",
       status: "active",
-      categoryId: 0,
+      category_id: 0,
     },
   });
 
@@ -110,7 +77,7 @@ const Categories: React.FC = () => {
       name: "",
       description: "",
       status: "active",
-      categoryId: selectedCategory.id,
+      category_id: selectedCategory.id,
     });
     setModalOpen(true);
   };
@@ -142,28 +109,52 @@ const Categories: React.FC = () => {
         name: subCategory.name,
         description: subCategory.description,
         status: subCategory.status,
-        categoryId: subCategory.categoryId,
+        category_id: subCategory.category_id,
       });
       setModalOpen(true);
     }
   };
 
-  const handleDeleteCategory = (item: CardItem) => {
-    setCategories(
-      categories.filter((c) => c.id.toString() !== item.id.toString())
-    );
-    // Also delete related subcategories
-    setSubCategories(
-      subCategories.filter(
-        (sc) => sc.categoryId.toString() !== item.id.toString()
-      )
-    );
+  const onDeleteClick = (item: CardItem) => {
+    setDeletingItem(item);
   };
 
-  const handleDeleteSubCategory = (item: CardItem) => {
-    setSubCategories(
-      subCategories.filter((sc) => sc.id.toString() !== item.id.toString())
-    );
+  const handleDeleteCategory = async () => {
+    try {
+      await categoryServices.deleteCategory(String(deletingItem?.id));
+      setCategories(
+        categories.filter(
+          (c) => c.id.toString() !== deletingItem?.id.toString()
+        )
+      );
+      setSubCategories(
+        subCategories.filter(
+          (sc) => sc.category_id.toString() !== deletingItem?.id.toString()
+        )
+      );
+      SnackbarUtils.success("Category Deleted !");
+    } catch (error) {
+      SnackbarUtils.error("Some error while deleting");
+    }
+    setDeletingItem(null)
+  };
+
+  const handleDeleteSubCategory = async () => {
+    try {
+      await subCategoryServices.deleteSubCategory(
+        Number(selectedCategory?.id),
+        Number(deletingItem?.id)
+      );
+      setSubCategories(
+        subCategories.filter(
+          (sc) => sc.id.toString() !== deletingItem?.id.toString()
+        )
+      );
+       SnackbarUtils.success("Category Deleted !");
+    } catch (error) {
+      SnackbarUtils.error("Some error while deleting");
+    }
+    setDeletingItem(null)
   };
 
   const handleViewCategory = (item: CardItem) => {
@@ -175,35 +166,55 @@ const Categories: React.FC = () => {
     }
   };
 
-  const onSubmitCategory = (data: CategoryFormData) => {
+  const onSubmitCategory = async (data: CategoryFormData) => {
     if (editingItem && modalType === "category") {
-      setCategories(
-        categories.map((c) => (c.id === editingItem.id ? { ...c, ...data } : c))
-      );
+      try {
+        await categoryServices.editCategory(String(editingItem.id), data);
+        SnackbarUtils.success("Category Updated Successfully!");
+        setCategories(
+          categories.map((c) =>
+            c.id === editingItem.id ? { ...c, ...data } : c
+          )
+        );
+      } catch (error: unknown) {
+        SnackbarUtils.error(error as string);
+      }
     } else {
-      const newCategory: Category = {
-        id: Math.max(...categories.map((c) => c.id), 0) + 1,
-        ...data,
-      };
-      setCategories([...categories, newCategory]);
+      try {
+        const newCategory = await categoryServices.createCategory(data);
+        SnackbarUtils.success("Category Created Successfully!");
+        setCategories([...categories, newCategory]);
+      } catch (error: unknown) {
+        SnackbarUtils.error(error as string);
+      }
     }
     setModalOpen(false);
     categoryForm.reset();
   };
 
-  const onSubmitSubCategory = (data: SubCategoryFormData) => {
+  const onSubmitSubCategory = async (data: SubCategoryFormData) => {
     if (editingItem && modalType === "subcategory") {
-      setSubCategories(
-        subCategories.map((sc) =>
-          sc.id === editingItem.id ? { ...sc, ...data } : sc
-        )
-      );
+      try {
+        await subCategoryServices.updateSubCategory(
+          data.category_id,
+          editingItem.id,
+          data
+        );
+        setSubCategories(
+          subCategories.map((sc) =>
+            sc.id === editingItem.id ? { ...sc, ...data } : sc
+          )
+        );
+        SnackbarUtils.success("SubCategory Updated Successfully");
+      } catch (error) {}
     } else {
-      const newSubCategory: SubCategory = {
-        id: Math.max(...subCategories.map((sc) => sc.id), 0) + 1,
-        ...data,
-      };
-      setSubCategories([...subCategories, newSubCategory]);
+      try {
+        const newSubCategory = await subCategoryServices.createSubCategory(
+          data
+        );
+        setSubCategories([...subCategories, newSubCategory]);
+        SnackbarUtils.success("SubCategory Created Successfully");
+      } catch (error) {}
     }
     setModalOpen(false);
     subCategoryForm.reset();
@@ -218,7 +229,7 @@ const Categories: React.FC = () => {
       {
         label: "Subcategories",
         value: subCategories
-          .filter((sc) => sc.categoryId === category.id)
+          .filter((sc) => sc.category_id === category.id)
           .length.toString(),
       },
     ],
@@ -226,7 +237,7 @@ const Categories: React.FC = () => {
 
   const subCategoryCardItems: CardItem[] = selectedCategory
     ? subCategories
-        .filter((sc) => sc.categoryId === selectedCategory.id)
+        .filter((sc) => sc.category_id === selectedCategory.id)
         .map((subCategory) => ({
           id: subCategory.id,
           title: subCategory.name,
@@ -291,9 +302,10 @@ const Categories: React.FC = () => {
       <CardGrid
         items={selectedCategory ? subCategoryCardItems : categoryCardItems}
         onEdit={selectedCategory ? handleEditSubCategory : handleEditCategory}
-        onDelete={
-          selectedCategory ? handleDeleteSubCategory : handleDeleteCategory
-        }
+        // onDelete={
+        //   selectedCategory ? handleDeleteSubCategory : handleDeleteCategory
+        // }
+        onDelete={onDeleteClick}
         onView={selectedCategory ? undefined : handleViewCategory}
         emptyMessage={
           selectedCategory
@@ -301,6 +313,13 @@ const Categories: React.FC = () => {
             : "No categories found. Create your first category!"
         }
       />
+
+      <ConfirmModal
+        open={Boolean(deletingItem)}
+        onClose={() => setDeletingItem(null)}
+        message={"Are you sure you want to delete this Category?"}
+        onOk={selectedCategory ? handleDeleteSubCategory : handleDeleteCategory}
+      ></ConfirmModal>
 
       <BaseModal
         open={modalOpen}
