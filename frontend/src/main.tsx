@@ -1,13 +1,21 @@
-import ReactDOM from 'react-dom/client';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
-import App from './App';
+import ReactDOM from "react-dom/client";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
+import App from "./App";
+import { SnackbarProvider } from "notistack";
+import { SnackbarUtilsConfigurator } from "./utils/snackbar.util";
 
-const theme = createTheme({ palette: { mode: 'dark' } });
+const theme = createTheme({ palette: { mode: "dark" } });
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
+ReactDOM.createRoot(document.getElementById("root")!).render(
   <ThemeProvider theme={theme}>
     <CssBaseline />
-    <App />
+    <SnackbarProvider
+      maxSnack={3}
+      anchorOrigin={{ vertical: "top", horizontal: "right" }}
+    >
+      <SnackbarUtilsConfigurator />
+      <App />
+    </SnackbarProvider>
   </ThemeProvider>
 );

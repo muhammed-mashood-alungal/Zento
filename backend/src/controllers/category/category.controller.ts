@@ -45,7 +45,7 @@ export class CategoryController implements ICategoryController {
         res,
         StatusCodes.OK,
         RESPONSE_MESSAGES.CATEGORIES_FETCHED,
-        categories
+        {categories}
       );
     } catch (error) {
       next(error);
