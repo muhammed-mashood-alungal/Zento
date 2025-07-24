@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   Drawer,
   List,
@@ -11,7 +11,7 @@ import {
   useTheme,
   useMediaQuery,
   Divider,
-} from '@mui/material';
+} from "@mui/material";
 import {
   Dashboard as DashboardIcon,
   Analytics as AnalyticsIcon,
@@ -19,24 +19,28 @@ import {
   Category as CategoryIcon,
   PrecisionManufacturing as ManufacturingIcon,
   Store as StoreIcon,
-} from '@mui/icons-material';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { useLayout } from '../../contexts/LayoutContext';
+} from "@mui/icons-material";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useLayout } from "../../contexts/layout.context";
 
 const drawerWidth = 280;
 
 const navigationItems = [
-  { text: 'Dashboard', icon: <DashboardIcon />, path: '/' },
-  { text: 'Branches', icon: <BusinessIcon />, path: '/branches' },
-  { text: 'Categories', icon: <CategoryIcon />, path: '/categories' },
-  { text: 'Manufacturers', icon: <ManufacturingIcon />, path: '/manufacturers' },
-  { text: 'Vendors', icon: <StoreIcon />, path: '/vendors' },
-  { text: 'Reports', icon: <AnalyticsIcon />, path: '/reports' },
+  { text: "Dashboard", icon: <DashboardIcon />, path: "/" },
+  { text: "Branches", icon: <BusinessIcon />, path: "/branches" },
+  { text: "Categories", icon: <CategoryIcon />, path: "/categories" },
+  {
+    text: "Manufacturers",
+    icon: <ManufacturingIcon />,
+    path: "/manufacturers",
+  },
+  { text: "Vendors", icon: <StoreIcon />, path: "/vendors" },
+  { text: "Reports", icon: <AnalyticsIcon />, path: "/reports" },
 ];
 
 const Sidebar: React.FC = () => {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const navigate = useNavigate();
   const location = useLocation();
   const { sidebarOpen, setSidebarOpen } = useLayout();
@@ -49,9 +53,7 @@ const Sidebar: React.FC = () => {
   };
 
   const drawer = (
-    <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-      
-      
+    <Box sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
       <List sx={{ flexGrow: 1, px: 1, py: 2 }}>
         {navigationItems.map((item) => (
           <ListItem key={item.text} disablePadding>
@@ -64,13 +66,13 @@ const Sidebar: React.FC = () => {
                 mb: 0.5,
               }}
             >
-              <ListItemIcon sx={{ color: 'inherit', minWidth: 40 }}>
+              <ListItemIcon sx={{ color: "inherit", minWidth: 40 }}>
                 {item.icon}
               </ListItemIcon>
-              <ListItemText 
+              <ListItemText
                 primary={item.text}
                 primaryTypographyProps={{
-                  fontSize: '0.9rem',
+                  fontSize: "0.9rem",
                   fontWeight: location.pathname === item.path ? 600 : 400,
                 }}
               />
@@ -80,7 +82,7 @@ const Sidebar: React.FC = () => {
       </List>
 
       <Divider />
-      
+
       <Box sx={{ p: 2 }}>
         <Typography variant="caption" color="text.secondary">
           Version 1.0.0
@@ -91,17 +93,17 @@ const Sidebar: React.FC = () => {
 
   return (
     <Drawer
-      variant={isMobile ? 'temporary' : 'persistent'}
+      variant={isMobile ? "temporary" : "persistent"}
       open={sidebarOpen}
       onClose={() => setSidebarOpen(false)}
       sx={{
         width: drawerWidth,
         flexShrink: 0,
-        '& .MuiDrawer-paper': {
+        "& .MuiDrawer-paper": {
           width: drawerWidth,
-          boxSizing: 'border-box',
-          border: 'none',
-          backgroundImage: 'none',
+          boxSizing: "border-box",
+          border: "none",
+          backgroundImage: "none",
         },
       }}
       ModalProps={{

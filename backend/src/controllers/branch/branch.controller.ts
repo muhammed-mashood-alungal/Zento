@@ -35,16 +35,12 @@ export class BranchController implements IBranchController {
     next: NextFunction
   ): Promise<void> {
     try {
-      const { page = 1, limit = 10 } = req.query;
-      const branches = await this.branchServices.getAllBranches(
-        Number(page),
-        Number(limit)
-      );
+      const branches = await this.branchServices.getAllBranches();
       successResponse(
         res,
         StatusCodes.OK,
         RESPONSE_MESSAGES.BRANCHES_FETCHED,
-        branches
+        {branches}
       );
     } catch (error) {
       next(error);

@@ -4,7 +4,7 @@ export interface Branch {
   location: string;
   pincode: string;
   code: string;
-  isOpen: boolean;
+  is_open: boolean;
 }
 
 export interface BranchFormData extends Omit<Branch, "id"> {}

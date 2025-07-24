@@ -20,7 +20,7 @@ export const branchServices = {
   getAllBranches: async (): Promise<Branch[]> => {
     try {
       const response = await branchInstance.get(`/`);
-      return response.data;
+      return response.data.branches;
     } catch (error: unknown) {
       const err = error as AxiosError<{ error: string }>;
       const errorMessage =

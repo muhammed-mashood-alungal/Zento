@@ -19,7 +19,12 @@ const app = express();
 
 const PORT = env.PORT || 5000;
 
-app.use(cors("*"));
+app.use(
+  cors({
+    origin: env.CLIENT_ORIGIN
+  })
+);
+
 connectDB();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

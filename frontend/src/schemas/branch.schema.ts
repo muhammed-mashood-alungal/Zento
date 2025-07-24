@@ -8,5 +8,5 @@ export const branchSchema = yup.object({
     .string()
     .matches(/^\d{6}$/, "Pincode must be a 6-digit number")
     .required("Pincode is required"),
-  isOpen: yup.boolean().required("Branch open status is required"),
+  is_open: yup.boolean().required("Branch open status is required"),
 });

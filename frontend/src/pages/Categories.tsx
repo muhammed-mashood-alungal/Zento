@@ -1,39 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import { Box, Typography, Button, Breadcrumbs, Link } from "@mui/material";
 import {
-  Box,
-  Typography,
-  Button,
-  Breadcrumbs,
-  Link,
-} from '@mui/material';
-import { Add as AddIcon, ArrowBack as ArrowBackIcon } from '@mui/icons-material';
-import { useForm, Controller } from 'react-hook-form';
-import BaseModal from '../components/common/BaseModal';
-import CardGrid, { type CardItem } from '../components/common/CardGrid';
-import CategoryForm from '../components/category/CategoryForm';
-import type { Category, CategoryFormData } from '../types/category.types';
-import type { SubCategory, SubCategoryFormData } from '../types/sub-category.types';
-
+  Add as AddIcon,
+  ArrowBack as ArrowBackIcon,
+} from "@mui/icons-material";
+import { useForm } from "react-hook-form";
+import BaseModal from "../components/common/BaseModal";
+import CardGrid, { type CardItem } from "../components/common/CardGrid";
+import CategoryForm from "../components/category/CategoryForm";
+import type { Category, CategoryFormData } from "../types/category.types";
+import type {
+  SubCategory,
+  SubCategoryFormData,
+} from "../types/sub-category.types";
 
 const Categories: React.FC = () => {
   const [categories, setCategories] = useState<Category[]>([
     {
       id: 1,
-      name: 'Electronics',
-      description: 'Electronic devices and components',
-      status: 'active',
+      name: "Electronics",
+      description: "Electronic devices and components",
+      status: "active",
     },
     {
       id: 2,
-      name: 'Furniture',
-      description: 'Office and home furniture',
-      status: 'active',
+      name: "Furniture",
+      description: "Office and home furniture",
+      status: "active",
     },
     {
       id: 3,
-      name: 'Vehicles',
-      description: 'Company vehicles and transportation',
-      status: 'inactive',
+      name: "Vehicles",
+      description: "Company vehicles and transportation",
+      status: "inactive",
     },
   ]);
 
@@ -41,76 +40,84 @@ const Categories: React.FC = () => {
     {
       id: 1,
       categoryId: 1,
-      name: 'Laptops',
-      description: 'Portable computers',
-      status: 'active',
+      name: "Laptops",
+      description: "Portable computers",
+      status: "active",
     },
     {
       id: 2,
       categoryId: 1,
-      name: 'Monitors',
-      description: 'Display screens',
-      status: 'active',
+      name: "Monitors",
+      description: "Display screens",
+      status: "active",
     },
     {
       id: 3,
       categoryId: 2,
-      name: 'Desks',
-      description: 'Work desks and tables',
-      status: 'active',
+      name: "Desks",
+      description: "Work desks and tables",
+      status: "active",
     },
   ]);
 
-  const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<Category | null>(
+    null
+  );
   const [modalOpen, setModalOpen] = useState(false);
-  const [modalType, setModalType] = useState<'category' | 'subcategory'>('category');
-  const [editingItem, setEditingItem] = useState<Category | SubCategory | null>(null);
+  const [modalType, setModalType] = useState<"category" | "subcategory">(
+    "category"
+  );
+  const [editingItem, setEditingItem] = useState<Category | SubCategory | null>(
+    null
+  );
 
   const categoryForm = useForm<CategoryFormData>({
     defaultValues: {
-      name: '',
-      description: '',
-      status: 'active',
+      name: "",
+      description: "",
+      status: "active",
     },
   });
 
   const subCategoryForm = useForm<SubCategoryFormData>({
     defaultValues: {
-      name: '',
-      description: '',
-      status: 'active',
+      name: "",
+      description: "",
+      status: "active",
       categoryId: 0,
     },
   });
 
   const handleCreateCategory = () => {
-    setModalType('category');
+    setModalType("category");
     setEditingItem(null);
     categoryForm.reset({
-      name: '',
-      description: '',
-      status: 'active',
+      name: "",
+      description: "",
+      status: "active",
     });
     setModalOpen(true);
   };
 
   const handleCreateSubCategory = () => {
     if (!selectedCategory) return;
-    setModalType('subcategory');
+    setModalType("subcategory");
     setEditingItem(null);
     subCategoryForm.reset({
-      name: '',
-      description: '',
-      status: 'active',
+      name: "",
+      description: "",
+      status: "active",
       categoryId: selectedCategory.id,
     });
     setModalOpen(true);
   };
 
   const handleEditCategory = (item: CardItem) => {
-    const category = categories.find(c => c.id.toString() === item.id.toString());
+    const category = categories.find(
+      (c) => c.id.toString() === item.id.toString()
+    );
     if (category) {
-      setModalType('category');
+      setModalType("category");
       setEditingItem(category);
       categoryForm.reset({
         name: category.name,
@@ -122,9 +129,11 @@ const Categories: React.FC = () => {
   };
 
   const handleEditSubCategory = (item: CardItem) => {
-    const subCategory = subCategories.find(sc => sc.id.toString() === item.id.toString());
+    const subCategory = subCategories.find(
+      (sc) => sc.id.toString() === item.id.toString()
+    );
     if (subCategory) {
-      setModalType('subcategory');
+      setModalType("subcategory");
       setEditingItem(subCategory);
       subCategoryForm.reset({
         name: subCategory.name,
@@ -137,32 +146,40 @@ const Categories: React.FC = () => {
   };
 
   const handleDeleteCategory = (item: CardItem) => {
-    setCategories(categories.filter(c => c.id.toString() !== item.id.toString()));
+    setCategories(
+      categories.filter((c) => c.id.toString() !== item.id.toString())
+    );
     // Also delete related subcategories
-    setSubCategories(subCategories.filter(sc => sc.categoryId.toString() !== item.id.toString()));
+    setSubCategories(
+      subCategories.filter(
+        (sc) => sc.categoryId.toString() !== item.id.toString()
+      )
+    );
   };
 
   const handleDeleteSubCategory = (item: CardItem) => {
-    setSubCategories(subCategories.filter(sc => sc.id.toString() !== item.id.toString()));
+    setSubCategories(
+      subCategories.filter((sc) => sc.id.toString() !== item.id.toString())
+    );
   };
 
   const handleViewCategory = (item: CardItem) => {
-    const category = categories.find(c => c.id.toString() === item.id.toString());
+    const category = categories.find(
+      (c) => c.id.toString() === item.id.toString()
+    );
     if (category) {
       setSelectedCategory(category);
     }
   };
 
   const onSubmitCategory = (data: CategoryFormData) => {
-    if (editingItem && modalType === 'category') {
-      setCategories(categories.map(c => 
-        c.id === editingItem.id 
-          ? { ...c, ...data }
-          : c
-      ));
+    if (editingItem && modalType === "category") {
+      setCategories(
+        categories.map((c) => (c.id === editingItem.id ? { ...c, ...data } : c))
+      );
     } else {
       const newCategory: Category = {
-        id: Math.max(...categories.map(c => c.id), 0) + 1,
+        id: Math.max(...categories.map((c) => c.id), 0) + 1,
         ...data,
       };
       setCategories([...categories, newCategory]);
@@ -172,15 +189,15 @@ const Categories: React.FC = () => {
   };
 
   const onSubmitSubCategory = (data: SubCategoryFormData) => {
-    if (editingItem && modalType === 'subcategory') {
-      setSubCategories(subCategories.map(sc => 
-        sc.id === editingItem.id 
-          ? { ...sc, ...data }
-          : sc
-      ));
+    if (editingItem && modalType === "subcategory") {
+      setSubCategories(
+        subCategories.map((sc) =>
+          sc.id === editingItem.id ? { ...sc, ...data } : sc
+        )
+      );
     } else {
       const newSubCategory: SubCategory = {
-        id: Math.max(...subCategories.map(sc => sc.id), 0) + 1,
+        id: Math.max(...subCategories.map((sc) => sc.id), 0) + 1,
         ...data,
       };
       setSubCategories([...subCategories, newSubCategory]);
@@ -189,23 +206,25 @@ const Categories: React.FC = () => {
     subCategoryForm.reset();
   };
 
-  const categoryCardItems: CardItem[] = categories.map(category => ({
+  const categoryCardItems: CardItem[] = categories.map((category) => ({
     id: category.id,
     title: category.name,
     description: category.description,
     status: category.status,
     metadata: [
-      { 
-        label: 'Subcategories', 
-        value: subCategories.filter(sc => sc.categoryId === category.id).length.toString() 
+      {
+        label: "Subcategories",
+        value: subCategories
+          .filter((sc) => sc.categoryId === category.id)
+          .length.toString(),
       },
     ],
   }));
 
-  const subCategoryCardItems: CardItem[] = selectedCategory 
+  const subCategoryCardItems: CardItem[] = selectedCategory
     ? subCategories
-        .filter(sc => sc.categoryId === selectedCategory.id)
-        .map(subCategory => ({
+        .filter((sc) => sc.categoryId === selectedCategory.id)
+        .map((subCategory) => ({
           id: subCategory.id,
           title: subCategory.name,
           description: subCategory.description,
@@ -215,10 +234,17 @@ const Categories: React.FC = () => {
 
   return (
     <Box>
-      <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 4 }}>
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          mb: 4,
+        }}
+      >
         <Box>
-          <Typography variant="h4" sx={{ fontWeight: 'bold', mb: 1 }}>
-            {selectedCategory ? 'Subcategories' : 'Category Management'}
+          <Typography variant="h4" sx={{ fontWeight: "bold", mb: 1 }}>
+            {selectedCategory ? "Subcategories" : "Category Management"}
           </Typography>
           {selectedCategory && (
             <Breadcrumbs>
@@ -226,7 +252,7 @@ const Categories: React.FC = () => {
                 component="button"
                 variant="body2"
                 onClick={() => setSelectedCategory(null)}
-                sx={{ textDecoration: 'none' }}
+                sx={{ textDecoration: "none" }}
               >
                 Categories
               </Link>
@@ -236,7 +262,7 @@ const Categories: React.FC = () => {
             </Breadcrumbs>
           )}
         </Box>
-        <Box sx={{ display: 'flex', gap: 2 }}>
+        <Box sx={{ display: "flex", gap: 2 }}>
           {selectedCategory && (
             <Button
               variant="outlined"
@@ -249,10 +275,12 @@ const Categories: React.FC = () => {
           <Button
             variant="contained"
             startIcon={<AddIcon />}
-            onClick={selectedCategory ? handleCreateSubCategory : handleCreateCategory}
+            onClick={
+              selectedCategory ? handleCreateSubCategory : handleCreateCategory
+            }
             sx={{ borderRadius: 2 }}
           >
-            {selectedCategory ? 'Add Subcategory' : 'Create Category'}
+            {selectedCategory ? "Add Subcategory" : "Create Category"}
           </Button>
         </Box>
       </Box>
@@ -260,12 +288,14 @@ const Categories: React.FC = () => {
       <CardGrid
         items={selectedCategory ? subCategoryCardItems : categoryCardItems}
         onEdit={selectedCategory ? handleEditSubCategory : handleEditCategory}
-        onDelete={selectedCategory ? handleDeleteSubCategory : handleDeleteCategory}
+        onDelete={
+          selectedCategory ? handleDeleteSubCategory : handleDeleteCategory
+        }
         onView={selectedCategory ? undefined : handleViewCategory}
         emptyMessage={
-          selectedCategory 
+          selectedCategory
             ? `No subcategories found for ${selectedCategory.name}. Create your first subcategory!`
-            : 'No categories found. Create your first category!'
+            : "No categories found. Create your first category!"
         }
       />
 
@@ -273,19 +303,27 @@ const Categories: React.FC = () => {
         open={modalOpen}
         onClose={() => setModalOpen(false)}
         title={
-          modalType === 'category'
-            ? (editingItem ? 'Edit Category' : 'Create New Category')
-            : (editingItem ? 'Edit Subcategory' : 'Create New Subcategory')
+          modalType === "category"
+            ? editingItem
+              ? "Edit Category"
+              : "Create New Category"
+            : editingItem
+            ? "Edit Subcategory"
+            : "Create New Subcategory"
         }
         onSubmit={
-          modalType === 'category'
+          modalType === "category"
             ? categoryForm.handleSubmit(onSubmitCategory)
             : subCategoryForm.handleSubmit(onSubmitSubCategory)
         }
         onCancel={() => setModalOpen(false)}
-        submitText={editingItem ? 'Update' : 'Create'}
+        submitText={editingItem ? "Update" : "Create"}
       >
-       <CategoryForm modalType={modalType} categoryForm={categoryForm} subCategoryForm={subCategoryForm} />
+        <CategoryForm
+          modalType={modalType}
+          categoryForm={categoryForm}
+          subCategoryForm={subCategoryForm}
+        />
       </BaseModal>
     </Box>
   );

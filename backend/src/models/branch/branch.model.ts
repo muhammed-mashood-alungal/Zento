@@ -10,8 +10,9 @@ export class Branch
   declare name: string;
   declare location: string;
   declare pincode: string;
-  declare code : string;
-  declare isOpen: boolean;
+  declare code: string;
+  declare is_open: boolean;
+  declare is_deleted: boolean;
   declare created_at: Date;
   declare updated_at: Date;
 }
@@ -26,7 +27,7 @@ Branch.init(
     name: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique : true
+      unique: true,
     },
     location: {
       type: DataTypes.STRING,
@@ -36,15 +37,19 @@ Branch.init(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    code :{
-      type : DataTypes.STRING,
-      allowNull : false,
-      unique : true
+    code: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
     },
-    isOpen: {
+    is_open: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: true,
+    },
+    is_deleted: {
+      type: DataTypes.BOOLEAN,
+      defaultValue:false
     },
     created_at: {
       type: DataTypes.DATE,

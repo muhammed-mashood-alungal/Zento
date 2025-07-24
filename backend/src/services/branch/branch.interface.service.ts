@@ -5,10 +5,8 @@ export interface IBranchService {
   createBranch(branchData: BranchCreationAttributes): Promise<Branch>;
   getBranchById(id: number): Promise<Branch | null>;
   getAllBranches(
-    page: number,
-    limit: number,
     options?: any
-  ): Promise<IPaginationResponse<Branch>>;
+  ): Promise<Branch[]>;
   updateBranch(
     id: number,
     branchData: Partial<BranchAttributes>

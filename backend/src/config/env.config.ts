@@ -16,5 +16,8 @@ export const env = {
     },
     get DATABASE_HOST(){
         return process.env.DATABASE_HOST
+    },
+    get CLIENT_ORIGIN(){
+        return process.env.CLIENT_ORIGIN
     }
 }

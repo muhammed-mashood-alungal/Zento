@@ -69,7 +69,7 @@ function BranchForm({control , errors} : FormProps<BranchFormData>) {
         </Grid>
         <Grid item xs={12}>
           <Controller
-            name="isOpen"
+            name="is_open"
             control={control}
             render={({ field }: { field: any }) => (
               <FormControlLabel

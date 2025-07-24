@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from "react";
 import {
   AppBar,
   Toolbar,
@@ -9,30 +9,28 @@ import {
   useMediaQuery,
   Avatar,
   Chip,
-} from '@mui/material';
+} from "@mui/material";
 import {
   Menu as MenuIcon,
   Notifications as NotificationsIcon,
   AccountCircle as AccountIcon,
-} from '@mui/icons-material';
-import { useLayout } from '../../contexts/LayoutContext';
+} from "@mui/icons-material";
+import { useLayout } from "../../contexts/layout.context";
 
 const Header: React.FC = () => {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const { toggleSidebar, sidebarOpen } = useLayout();
-
-  
 
   return (
     <AppBar
       position="fixed"
       sx={{
         zIndex: theme.zIndex.drawer + 1,
-        backgroundColor: 'background.paper',
-        borderBottom: '1px solid',
-        borderColor: 'divider',
-        boxShadow: 'none',
+        backgroundColor: "background.paper",
+        borderBottom: "1px solid",
+        borderColor: "divider",
+        boxShadow: "none",
       }}
     >
       <Toolbar>
@@ -50,21 +48,21 @@ const Header: React.FC = () => {
           Asset Management System
         </Typography>
 
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+        <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
           <Chip
             label="Online"
             size="small"
             color="success"
             variant="outlined"
-            sx={{ display: { xs: 'none', sm: 'flex' } }}
+            sx={{ display: { xs: "none", sm: "flex" } }}
           />
-          
+
           <IconButton color="inherit">
             <NotificationsIcon />
           </IconButton>
 
           <IconButton color="inherit">
-            <Avatar sx={{ width: 32, height: 32, bgcolor: 'primary.main' }}>
+            <Avatar sx={{ width: 32, height: 32, bgcolor: "primary.main" }}>
               <AccountIcon />
             </Avatar>
           </IconButton>

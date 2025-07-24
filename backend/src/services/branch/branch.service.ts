@@ -13,11 +13,9 @@ export class BranchService implements IBranchService {
     return await this.branchRepository.findBranchById(id);
   }
   async getAllBranches(
-    page: number,
-    limit: number,
     options?: any
-  ): Promise<IPaginationResponse<Branch>> {
-    return await this.branchRepository.fetchAllBranches(page, limit, options);
+  ): Promise<Branch[]> {
+    return await this.branchRepository.fetchAllBranches(options);
   }
   async createBranch(branchData: BranchCreationAttributes): Promise<Branch> {
     const isExist = await this.branchRepository.isBranchExistWithName(

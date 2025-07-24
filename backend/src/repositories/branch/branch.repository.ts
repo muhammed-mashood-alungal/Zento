@@ -15,12 +15,8 @@ export class BranchRepository
     return await this.findById(id);
   }
 
-  async fetchAllBranches(
-    page: number,
-    limit: number,
-    options: any
-  ): Promise<IPaginationResponse<Branch>> {
-    return await this.paginate(page, limit, options);
+  async fetchAllBranches(options?: any): Promise<Branch[]> {
+    return await this.findAll({ ...options, where: { is_deleted: false } });
   }
 
   async createBranch(branchData: Partial<Branch>): Promise<Branch> {
@@ -35,9 +31,12 @@ export class BranchRepository
   }
 
   async deleteBranch(id: number): Promise<void> {
-    await this.deleteById(id);
+    await this.updateById(id, {
+      is_deleted: true,
+    });
   }
+
   async isBranchExistWithName(name: string): Promise<boolean> {
-    return await this.count({ where: { name } }) != 0;
+    return (await this.count({ where: { name } })) != 0;
   }
 }
