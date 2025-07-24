@@ -1,9 +1,7 @@
 import {
   SubCategory,
-  SubCategoryAttributes,
   SubCategoryCreationAttributes,
 } from "@/models";
-import { IPaginationResponse } from "@/types";
 
 export interface ISubCategoryRepository {
   createSubCategory(
@@ -11,9 +9,7 @@ export interface ISubCategoryRepository {
   ): Promise<SubCategory>;
   fetchAllSubCategoriesofCategory(
     category_id: number,
-    page: number,
-    limit: number
-  ): Promise<IPaginationResponse<SubCategory>>;
+  ): Promise<SubCategory[]>;
   findBySubCategoryId(id: number): Promise<SubCategory | null>;
   updateSubCategory(
     id: number,

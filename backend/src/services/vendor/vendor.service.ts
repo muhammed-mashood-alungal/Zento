@@ -23,10 +23,8 @@ export class VendorServices implements IVendorService {
   }
 
   async fetchAllVendors(
-    page: number,
-    limit: number
-  ): Promise<IPaginationResponse<Vendor>> {
-    return this.vendorRepository.fetchAllVendors(page, limit);
+  ): Promise<Vendor[]> {
+    return this.vendorRepository.fetchAllVendors();
   }
 
   async findByVendorId(id: number): Promise<Vendor | null> {

@@ -25,13 +25,9 @@ export class CategoryServices implements ICategoryServices {
     return await this.categoryRepository.createCategory(categoryData);
   }
   async fetchAllCategories(
-    page: number,
-    limit: number,
     options: any = {}
-  ): Promise<IPaginationResponse<Category>> {
+  ): Promise<Category[]> {
     return await this.categoryRepository.fetchAllCategories(
-      page,
-      limit,
       options
     );
   }

@@ -1,15 +1,13 @@
-import { Vendor, VendorAttributes, VendorCreationAttributes } from "@/models";
-import { IPaginationResponse } from "@/types";
+import { Vendor,VendorCreationAttributes } from "@/models";
+
 
 export interface IVendorRepository {
   createVendor(
     subCategory: VendorCreationAttributes
   ): Promise<Vendor>;
   fetchAllVendors(
-    page: number,
-    limit: number,
     options?: any
-  ): Promise<IPaginationResponse<Vendor>>;
+  ): Promise<Vendor[]>;
   findByVendorId(id: number): Promise<Vendor | null>;
   updateVendor(
     id: number,

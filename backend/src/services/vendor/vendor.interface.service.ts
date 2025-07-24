@@ -4,9 +4,7 @@ import { IPaginationResponse } from "@/types";
 export interface IVendorService {
   createVendor(vendor: VendorCreationAttributes): Promise<Vendor>;
   fetchAllVendors(
-    page: number,
-    limit: number
-  ): Promise<IPaginationResponse<Vendor>>;
+  ): Promise<Vendor[]>;
   findByVendorId(id: number): Promise<Vendor | null>;
   editVendor(
     id: number,

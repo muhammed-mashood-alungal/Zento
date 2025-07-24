@@ -28,11 +28,9 @@ export class SubCategoryService {
     category_id: number,
     page: number,
     limit: number
-  ): Promise<IPaginationResponse<SubCategory>> {
+  ): Promise<SubCategory[]> {
     return await this.subCategoryRepository.fetchAllSubCategoriesofCategory(
       category_id,
-      page,
-      limit
     );
   }
 

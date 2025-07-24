@@ -17,11 +17,9 @@ export class CategoryRepository
   }
 
   async fetchAllCategories(
-    page: number,
-    limit: number,
     options: any = {}
-  ): Promise<IPaginationResponse<Category>> {
-    return await this.paginate(page, limit, options);
+  ): Promise<Category[]> {
+    return await this.findAll({...options , where : {is_deleted : false}});
   }
 
   async findByCategoryId(id: string | number): Promise<Category | null> {

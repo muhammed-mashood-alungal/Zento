@@ -11,9 +11,7 @@ export interface ISubCategoryService {
   ): Promise<SubCategory | null>;
   fetchAllSubCategoriesofCategory(
     category_id: number,
-    page: number,
-    limit: number
-  ): Promise<IPaginationResponse<SubCategory>>;
+  ): Promise<SubCategory[]>;
   getSubCategoryById(id: number): Promise<SubCategory | null>;
   deleteSubCategory(id: number): Promise<SubCategory>;
 }

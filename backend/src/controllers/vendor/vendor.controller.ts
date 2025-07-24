@@ -32,11 +32,7 @@ export class VendorController implements IVendorController {
     next: NextFunction
   ): Promise<void> {
     try {
-      const { page = 1, limit = 10 } = req.query;
-      const vendors = await this.vendorService.fetchAllVendors(
-        Number(page),
-        Number(limit)
-      );
+      const vendors = await this.vendorService.fetchAllVendors();
       successResponse(
         res,
         StatusCodes.OK,
@@ -101,7 +97,7 @@ export class VendorController implements IVendorController {
   ): Promise<void> {
     try {
       const vendorId = parseInt(req.params.id);
-      const deleted= await this.vendorService.deleteVendor(vendorId);
+      const deleted = await this.vendorService.deleteVendor(vendorId);
       if (!deleted) {
         res.status(StatusCodes.NOT_FOUND).json({
           message: RESPONSE_MESSAGES.VENDOR_NOT_FOUND,

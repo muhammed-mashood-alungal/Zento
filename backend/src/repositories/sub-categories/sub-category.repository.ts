@@ -19,10 +19,8 @@ export class SubCategoryRepository
 
   async fetchAllSubCategoriesofCategory(
     category_id: number,
-    page: number,
-    limit: number
-  ): Promise<IPaginationResponse<SubCategory>> {
-    return this.paginate(page, limit, { where: { category_id } });
+  ): Promise<SubCategory[]> {
+    return this.findAll({ where: { category_id ,is_deleted : false} });
   }
 
   async findBySubCategoryId(id: number): Promise<SubCategory | null> {

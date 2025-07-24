@@ -15,12 +15,8 @@ export class VendorRepository
     return await this.create(vendor);
   }
 
-  async fetchAllVendors(
-    page: number,
-    limit: number,
-    options?: any
-  ): Promise<IPaginationResponse<Vendor>> {
-    return await this.paginate(page, limit, options);
+  async fetchAllVendors(options?: any): Promise<Vendor[]> {
+    return await this.findAll({ ...options, where: { is_deleted: false } });
   }
   async findByVendorId(id: number): Promise<Vendor | null> {
     return await this.findById(id);
@@ -32,8 +28,8 @@ export class VendorRepository
     return await this.updateById(id, vendor);
   }
   async deleteVendor(id: number): Promise<Vendor> {
-    return await this.updateById(id,{
-      is_deleted : true
+    return await this.updateById(id, {
+      is_deleted: true,
     });
   }
 

@@ -5,10 +5,8 @@ import { Attributes, FindOptions } from "sequelize";
 export interface ICategoryRepository {
   createCategory(data: Partial<CategoryAttributes>): Promise<Category>;
   fetchAllCategories(
-    page: number,
-    limit: number,
     options: any
-  ): Promise<IPaginationResponse<Category>>;
+  ): Promise<Category[]>;
   findByCategoryId(id: string | number): Promise<Category | null>;
   editCategory(
     id: string | number,

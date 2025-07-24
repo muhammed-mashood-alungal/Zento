@@ -36,13 +36,9 @@ export class SubCategoryController implements ISubCategoryController {
   ): Promise<any> {
     try {
       const { category_id } = req.params;
-      const { page = 1, limit = 10 } = req.query;
-
       const subCategories =
         await this.subCategoryService.fetchAllSubCategoriesofCategory(
-          Number(category_id),
-          Number(page),
-          Number(limit)
+          Number(category_id)
         );
 
       successResponse(
@@ -77,7 +73,7 @@ export class SubCategoryController implements ISubCategoryController {
         res,
         StatusCodes.OK,
         RESPONSE_MESSAGES.SUB_CATEGORY_FETCHED,
-        {subCategory}
+        { subCategory }
       );
     } catch (error) {
       next(error);

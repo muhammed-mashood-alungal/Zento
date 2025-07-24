@@ -35,11 +35,7 @@ export class CategoryController implements ICategoryController {
     next: NextFunction
   ): Promise<any> {
     try {
-      const { page = 1, limit = 10 } = req.query;
-      const categories = await this.categoryService.fetchAllCategories(
-        Number(page),
-        Number(limit)
-      );
+      const categories = await this.categoryService.fetchAllCategories();
 
       successResponse(
         res,
