@@ -25,9 +25,7 @@ export class SubCategoryService {
   }
 
   async fetchAllSubCategoriesofCategory(
-    category_id: number,
-    page: number,
-    limit: number
+    category_id: number
   ): Promise<SubCategory[]> {
     return await this.subCategoryRepository.fetchAllSubCategoriesofCategory(
       category_id,
