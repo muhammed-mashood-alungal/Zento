@@ -1,8 +1,9 @@
-export interface CategoryAttributes {
+
+export interface Category {
   id: number;
   name: string;
   description: string;
   status: string;
-  created_at: Date;
-  updated_at: Date;
 }
+
+export interface CategoryFormData extends Omit<Category, "id"> {}

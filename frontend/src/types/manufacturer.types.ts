@@ -1,8 +1,8 @@
-export interface ManufacturerAttributes {
+export interface Manufacturer {
   id: number;
   name: string;
   description: string;
-  status: 'active' | 'inactive';
-  created_at: Date;
-  updated_at: Date;
+  status: "active" | "inactive";
 }
+
+export interface ManufacturerFormData extends Omit<Manufacturer, "id"> {}

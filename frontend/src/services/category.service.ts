@@ -1,11 +1,11 @@
 import { AxiosError } from "axios";
 import { cetagoryInstance } from "../api/axios-instance";
-import { type CategoryAttributes } from "../types/category.types";
+import { type Category } from "../types/category.types";
 
 export const categoryServices = {
   createCategory: async (
-    categoryData: CategoryAttributes
-  ): Promise<CategoryAttributes> => {
+    categoryData: Category
+  ): Promise<Category> => {
     try {
       const response = await cetagoryInstance.post("/create", categoryData);
       return response.data.newCategory;
@@ -18,7 +18,7 @@ export const categoryServices = {
     }
   },
 
-  fetchAllCategories: async (): Promise<CategoryAttributes[]> => {
+  fetchAllCategories: async (): Promise<Category[]> => {
     try {
       const response = await cetagoryInstance.get("/");
       return response.data.categories;
@@ -31,7 +31,7 @@ export const categoryServices = {
     }
   },
 
-  findByCategoryId: async (id: string): Promise<CategoryAttributes> => {
+  findByCategoryId: async (id: string): Promise<Category> => {
     try {
       const response = await cetagoryInstance.get(`/${id}`);
       return response.data.category;
@@ -46,8 +46,8 @@ export const categoryServices = {
 
   editCategory: async (
     id: string,
-    categoryData: Partial<CategoryAttributes>
-  ): Promise<CategoryAttributes> => {
+    categoryData: Partial<Category>
+  ): Promise<Category> => {
     try {
       const response = await cetagoryInstance.put(`/update/${id}`, categoryData);
       return response.data.updatedCategory;

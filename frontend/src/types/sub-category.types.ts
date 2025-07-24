@@ -1,9 +1,11 @@
-export interface SubCategoryAttributes {
+
+export interface SubCategory {
   id: number;
+  categoryId: number;
   name: string;
   description: string;
   status: string;
-  category_id: number;
-  created_at: Date;
-  updated_at: Date;
 }
+
+
+export interface SubCategoryFormData extends Omit<SubCategory, "id"> {}

@@ -1,11 +1,11 @@
 import { AxiosError } from "axios";
-import type { BranchAttributes } from "../types/branch.types";
+import type { Branch, BranchFormData } from "../types/branch.types";
 import { branchInstance } from "../api/axios-instance";
 
 export const branchServices = {
   createBranch: async (
-    branchData: BranchAttributes
-  ): Promise<BranchAttributes> => {
+    branchData: BranchFormData
+  ): Promise<Branch> => {
     try {
       const response = await branchInstance.post("/create", branchData);
       return response.data.newBranch;
@@ -17,7 +17,7 @@ export const branchServices = {
     }
   },
 
-  getAllBranches: async (): Promise<BranchAttributes[]> => {
+  getAllBranches: async (): Promise<Branch[]> => {
     try {
       const response = await branchInstance.get(`/`);
       return response.data;
@@ -29,7 +29,7 @@ export const branchServices = {
     }
   },
 
-  getBranchById: async (id: number): Promise<BranchAttributes> => {
+  getBranchById: async (id: number): Promise<Branch> => {
     try {
       const response = await branchInstance.get(`/${id}`);
       return response.data.branch;
@@ -42,8 +42,8 @@ export const branchServices = {
 
   updateBranch: async (
     id: number,
-    branchData: BranchAttributes
-  ): Promise<BranchAttributes> => {
+    branchData: BranchFormData
+  ): Promise<Branch> => {
     try {
       const response = await branchInstance.put(`/update/${id}`, branchData);
       return response.data.updatedBranch;

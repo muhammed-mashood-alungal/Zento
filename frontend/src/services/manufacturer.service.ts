@@ -1,11 +1,11 @@
 import { AxiosError } from "axios";
-import { type ManufacturerAttributes } from "../types/manufacturer.types";
+import { type Manufacturer } from "../types/manufacturer.types";
 import { manufacturerInstance } from "../api/axios-instance";
 
 export const manufacturerServices = {
   createManufacturer: async (
-    manufacturerData: ManufacturerAttributes
-  ): Promise<ManufacturerAttributes> => {
+    manufacturerData: Manufacturer
+  ): Promise<Manufacturer> => {
     try {
       const response = await manufacturerInstance.post("/create", manufacturerData);
       return response.data.manufacturer;
@@ -18,7 +18,7 @@ export const manufacturerServices = {
     }
   },
 
-  getManufacturerById: async (id: number): Promise<ManufacturerAttributes> => {
+  getManufacturerById: async (id: number): Promise<Manufacturer> => {
     try {
       const response = await manufacturerInstance.get(`/${id}`);
       return response.data.manufacturer;
@@ -33,8 +33,8 @@ export const manufacturerServices = {
 
   updateManufacturer: async (
     id: number,
-    updates: Partial<ManufacturerAttributes>
-  ): Promise<ManufacturerAttributes> => {
+    updates: Partial<Manufacturer>
+  ): Promise<Manufacturer> => {
     try {
       const response = await manufacturerInstance.put(`/update/${id}`, updates);
       return response.data.updatedManufacturer;
@@ -60,7 +60,7 @@ export const manufacturerServices = {
     }
   },
 
-  getAllManufacturers: async (): Promise<{ data: ManufacturerAttributes[]; total: number }> => {
+  getAllManufacturers: async (): Promise<{ data: Manufacturer[]; total: number }> => {
     try {
       const response = await manufacturerInstance.get(`/`);
       return response.data;
@@ -76,7 +76,7 @@ export const manufacturerServices = {
   changeManufacturerStatus: async (
     id: number,
     status: boolean
-  ): Promise<ManufacturerAttributes> => {
+  ): Promise<Manufacturer> => {
     try {
       const response = await manufacturerInstance.patch(`/${id}/status`, { status });
       return response.data.updatedManufacturer;

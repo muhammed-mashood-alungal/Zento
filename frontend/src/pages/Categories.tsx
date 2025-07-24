@@ -3,12 +3,6 @@ import {
   Box,
   Typography,
   Button,
-  TextField,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  Grid,
   Breadcrumbs,
   Link,
 } from '@mui/material';
@@ -16,34 +10,10 @@ import { Add as AddIcon, ArrowBack as ArrowBackIcon } from '@mui/icons-material'
 import { useForm, Controller } from 'react-hook-form';
 import BaseModal from '../components/common/BaseModal';
 import CardGrid, { type CardItem } from '../components/common/CardGrid';
+import CategoryForm from '../components/category/CategoryForm';
+import type { Category, CategoryFormData } from '../types/category.types';
+import type { SubCategory, SubCategoryFormData } from '../types/sub-category.types';
 
-interface Category {
-  id: number;
-  name: string;
-  description: string;
-  status: string;
-}
-
-interface SubCategory {
-  id: number;
-  categoryId: number;
-  name: string;
-  description: string;
-  status: string;
-}
-
-interface CategoryFormData {
-  name: string;
-  description: string;
-  status: string;
-}
-
-interface SubCategoryFormData {
-  name: string;
-  description: string;
-  status: string;
-  categoryId: number;
-}
 
 const Categories: React.FC = () => {
   const [categories, setCategories] = useState<Category[]>([
@@ -315,57 +285,7 @@ const Categories: React.FC = () => {
         onCancel={() => setModalOpen(false)}
         submitText={editingItem ? 'Update' : 'Create'}
       >
-        <Grid container spacing={3}>
-          <Grid item xs={12}>
-            <Controller
-              name="name"
-             // control={modalType === 'category' ? categoryForm.control : subCategoryForm.control}
-              rules={{ required: 'Name is required' }}
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  label={modalType === 'category' ? 'Category Name' : 'Subcategory Name'}
-                  fullWidth
-                  error={!!(modalType === 'category' ? categoryForm.formState.errors.name : subCategoryForm.formState.errors.name)}
-                  helperText={modalType === 'category' ? categoryForm.formState.errors.name?.message : subCategoryForm.formState.errors.name?.message}
-                />
-              )}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <Controller
-              name="description"
-             // control={modalType === 'category' ? categoryForm.control : subCategoryForm.control}
-              rules={{ required: 'Description is required' }}
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  label="Description"
-                  fullWidth
-                  multiline
-                  rows={3}
-                  error={!!(modalType === 'category' ? categoryForm.formState.errors.description : subCategoryForm.formState.errors.description)}
-                  helperText={modalType === 'category' ? categoryForm.formState.errors.description?.message : subCategoryForm.formState.errors.description?.message}
-                />
-              )}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <Controller
-              name="status"
-            //  control={modalType === 'category' ? categoryForm.control : subCategoryForm.control}
-              render={({ field }) => (
-                <FormControl fullWidth>
-                  <InputLabel>Status</InputLabel>
-                  <Select {...field} label="Status">
-                    <MenuItem value="active">Active</MenuItem>
-                    <MenuItem value="inactive">Inactive</MenuItem>
-                  </Select>
-                </FormControl>
-              )}
-            />
-          </Grid>
-        </Grid>
+       <CategoryForm modalType={modalType} categoryForm={categoryForm} subCategoryForm={subCategoryForm} />
       </BaseModal>
     </Box>
   );

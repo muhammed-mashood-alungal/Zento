@@ -12,23 +12,12 @@ import { Add as AddIcon } from "@mui/icons-material";
 import { useForm, Controller } from "react-hook-form";
 import BaseModal from "../components/common/BaseModal";
 import CardGrid, { type CardItem } from "../components/common/CardGrid";
-
-interface Branch {
-  id: number;
-  name: string;
-  location: string;
-  pincode: string;
-  code: string;
-  isOpen: boolean;
-}
-
-interface BranchFormData {
-  name: string;
-  location: string;
-  pincode: string;
-  code: string;
-  isOpen: boolean;
-}
+import type { Branch, BranchFormData } from "../types/branch.types";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { branchSchema } from "../schemas/branch.schema";
+import BranchForm from "../components/branch/BranchForm";
+import { branchServices } from "../services/branches.service";
+import { SnackbarUtils } from "../utils/snackbar.util";
 
 const Branches: React.FC = () => {
   const [branches, setBranches] = useState<Branch[]>([
@@ -75,6 +64,7 @@ const Branches: React.FC = () => {
     reset,
     formState: { errors },
   } = useForm<BranchFormData>({
+    resolver: yupResolver(branchSchema),
     defaultValues: {
       name: "",
       location: "",
@@ -111,21 +101,36 @@ const Branches: React.FC = () => {
     }
   };
 
-  const handleDelete = (item: CardItem) => {
-    setBranches(branches.filter((b) => b.id.toString() !== item.id.toString()));
+  const handleDelete = async (item: CardItem) => {
+    try {
+      setBranches(
+        branches.filter((b) => b.id.toString() !== item.id.toString())
+      );
+      await branchServices.deleteBranch(Number(item.id));
+    } catch (error: unknown) {
+      SnackbarUtils.error(error as string);
+    }
   };
 
-  const onSubmit = (data: BranchFormData) => {
+  const onSubmit = async (data: BranchFormData) => {
     if (editingBranch) {
-      setBranches(
-        branches.map((b) => (b.id === editingBranch.id ? { ...b, ...data } : b))
-      );
+      try {
+        await branchServices.updateBranch(editingBranch.id, data);
+        setBranches(
+          branches.map((b) =>
+            b.id === editingBranch.id ? { ...b, ...data } : b
+          )
+        );
+      } catch (error: unknown) {
+        SnackbarUtils.error(error as string);
+      }
     } else {
-      const newBranch: Branch = {
-        id: Math.max(...branches.map((b) => b.id), 0) + 1,
-        ...data,
-      };
-      setBranches([...branches, newBranch]);
+      try {
+        const newBranch = await branchServices.createBranch(data);
+        setBranches([...branches, newBranch]);
+      } catch (error: unknown) {
+        SnackbarUtils.error(error as string);
+      }
     }
     setModalOpen(false);
     reset();
@@ -182,90 +187,7 @@ const Branches: React.FC = () => {
         onCancel={() => setModalOpen(false)}
         submitText={editingBranch ? "Update" : "Create"}
       >
-        <Grid container spacing={3}>
-          <Grid item xs={12} sm={6}>
-            <Controller
-              name="name"
-              control={control}
-              rules={{ required: "Branch name is required" }}
-              render={({ field }: any) => (
-                <TextField
-                  {...field}
-                  label="Branch Name"
-                  fullWidth
-                  error={!!errors.name}
-                  helperText={errors.name?.message}
-                />
-              )}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Controller
-              name="code"
-              control={control}
-              rules={{ required: "Branch code is required" }}
-              render={({ field }: any) => (
-                <TextField
-                  {...field}
-                  label="Branch Code"
-                  fullWidth
-                  error={!!errors.code}
-                  helperText={errors.code?.message}
-                />
-              )}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Controller
-              name="location"
-              control={control}
-              rules={{ required: "Location is required" }}
-              render={({ field }: any) => (
-                <TextField
-                  {...field}
-                  label="Location"
-                  fullWidth
-                  error={!!errors.location}
-                  helperText={errors.location?.message}
-                />
-              )}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Controller
-              name="pincode"
-              control={control}
-              rules={{ required: "Pincode is required" }}
-              render={({ field }: any) => (
-                <TextField
-                  {...field}
-                  label="Pincode"
-                  fullWidth
-                  error={!!errors.pincode}
-                  helperText={errors.pincode?.message}
-                />
-              )}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <Controller
-              name="isOpen"
-              control={control}
-              render={({ field }: { field: any }) => (
-                <FormControlLabel
-                  control={
-                    <Switch
-                      checked={field.value}
-                      onChange={field.onChange}
-                      color="primary"
-                    />
-                  }
-                  label="Branch is Open"
-                />
-              )}
-            />
-          </Grid>
-        </Grid>
+        <BranchForm errors={errors} control={control} />
       </BaseModal>
     </Box>
   );
