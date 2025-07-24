@@ -1,16 +1,21 @@
 import { AxiosError } from "axios";
-import { type Manufacturer } from "../types/manufacturer.types";
+import { type Manufacturer, type ManufacturerFormData } from "../types/manufacturer.types";
 import { manufacturerInstance } from "../api/axios-instance";
 
 export const manufacturerServices = {
   createManufacturer: async (
-    manufacturerData: Manufacturer
+    manufacturerData: ManufacturerFormData
   ): Promise<Manufacturer> => {
     try {
+      console.log('Createing')
+      console.log(manufacturerData)
       const response = await manufacturerInstance.post("/create", manufacturerData);
+      console.log(response)
       return response.data.manufacturer;
     } catch (error: unknown) {
+
       const err = error as AxiosError<{ error: string }>;
+      console.log(err)
       const errorMessage =
         err.response?.data?.error ||
         "Create Manufacturer Failed. Please try again.";
@@ -60,7 +65,7 @@ export const manufacturerServices = {
     }
   },
 
-  getAllManufacturers: async (): Promise<{ data: Manufacturer[]; total: number }> => {
+  getAllManufacturers: async (): Promise<Manufacturer[]> => {
     try {
       const response = await manufacturerInstance.get(`/`);
       return response.data;

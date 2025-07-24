@@ -13,6 +13,7 @@ export class SubCategory
   declare name: string;
   declare description: string;
   declare status: string;
+  declare is_deleted : boolean ;
   declare category_id: number;
   declare created_at: Date;
   declare updated_at: Date;
@@ -44,6 +45,10 @@ SubCategory.init(
     category_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
+    },
+    is_deleted :{
+      type: DataTypes.BOOLEAN,
+      defaultValue : false
     },
     created_at: {
       type: DataTypes.DATE,

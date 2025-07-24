@@ -31,8 +31,10 @@ export class VendorRepository
   ): Promise<Vendor | null> {
     return await this.updateById(id, vendor);
   }
-  async deleteVendor(id: number): Promise<number> {
-    return await this.deleteById(id);
+  async deleteVendor(id: number): Promise<Vendor> {
+    return await this.updateById(id,{
+      is_deleted : true
+    });
   }
 
   async isVendorEmailExist(email: string): Promise<boolean> {

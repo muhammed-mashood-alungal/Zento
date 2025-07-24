@@ -21,7 +21,7 @@ import {
   Store as StoreIcon,
 } from "@mui/icons-material";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useLayout } from "../../contexts/layout.context";
+import { useLayout } from "../../contexts/LayoutContext";
 
 const drawerWidth = 280;
 

@@ -18,9 +18,14 @@ export class ManufacturerService implements IManufacturerService {
   async createManufacturer(
     manufacturer: ManufacturerCreationAttributes
   ): Promise<Manufacturer | null> {
-    const isExist = await this.manufacturerRepository.isManufacturerExist(manufacturer.name)
-    if(isExist){
-      throw createHttpsError(StatusCodes.CONFLICT,RESPONSE_MESSAGES.MANUFACTURER_EXISTS)
+    const isExist = await this.manufacturerRepository.isManufacturerExist(
+      manufacturer.name
+    );
+    if (isExist) {
+      throw createHttpsError(
+        StatusCodes.CONFLICT,
+        RESPONSE_MESSAGES.MANUFACTURER_EXISTS
+      );
     }
     return await this.manufacturerRepository.createManufacturer(manufacturer);
   }
@@ -34,20 +39,14 @@ export class ManufacturerService implements IManufacturerService {
   ): Promise<Manufacturer> {
     return this.manufacturerRepository.updateManufacturer(id, updates);
   }
-  async deleteManufacturer(id: number): Promise<number> {
+  async deleteManufacturer(id: number): Promise<Manufacturer> {
     return this.manufacturerRepository.deleteManufacturer(id);
   }
 
   async getAllManufacturers(
-    page: number,
-    limit: number,
     options?: any
-  ): Promise<IPaginationResponse<Manufacturer>> {
-    return this.manufacturerRepository.fetchAllManufacturers(
-      page,
-      limit,
-      options
-    );
+  ): Promise<Manufacturer[]> {
+    return this.manufacturerRepository.fetchAllManufacturers(options);
   }
 
   async changeManufacturerStatus(

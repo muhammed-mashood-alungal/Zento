@@ -101,15 +101,15 @@ export class VendorController implements IVendorController {
   ): Promise<void> {
     try {
       const vendorId = parseInt(req.params.id);
-      const deletedCount = await this.vendorService.deleteVendor(vendorId);
-      if (deletedCount === 0) {
+      const deleted= await this.vendorService.deleteVendor(vendorId);
+      if (!deleted) {
         res.status(StatusCodes.NOT_FOUND).json({
           message: RESPONSE_MESSAGES.VENDOR_NOT_FOUND,
         });
         return;
       }
       successResponse(res, StatusCodes.OK, RESPONSE_MESSAGES.VENDOR_DELETED, {
-        deletedCount,
+        deleted,
       });
     } catch (error) {
       next(error);

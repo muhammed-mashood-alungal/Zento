@@ -104,8 +104,8 @@ export class CategoryController implements ICategoryController {
   ): Promise<any> {
     try {
       const { id } = req.params;
-      const deletedCount = await this.categoryService.deleteCategory(id);
-      if (deletedCount === 0) {
+      const deleted = await this.categoryService.deleteCategory(id);
+      if (!deleted) {
         return res.status(StatusCodes.NOT_FOUND).json({
           message: RESPONSE_MESSAGES.CATEGORY_NOT_FOUND,
         });

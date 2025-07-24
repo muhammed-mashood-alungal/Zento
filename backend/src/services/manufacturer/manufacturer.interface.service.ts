@@ -3,7 +3,6 @@ import {
   ManufacturerAttributes,
   ManufacturerCreationAttributes,
 } from "@/models";
-import { IPaginationResponse } from "@/types/pagination.types";
 
 export interface IManufacturerService {
   createManufacturer(
@@ -14,11 +13,8 @@ export interface IManufacturerService {
     id: number,
     updates: Partial<ManufacturerAttributes>
   ): Promise<Manufacturer>;
-  deleteManufacturer(id: number): Promise<number>;
-  getAllManufacturers(
-    page: number,
-    limit: number
-  ): Promise<IPaginationResponse<Manufacturer>>;
+  deleteManufacturer(id: number): Promise<Manufacturer>;
+  getAllManufacturers(): Promise<Manufacturer[]>;
   changeManufacturerStatus(
     id: number,
     status: string

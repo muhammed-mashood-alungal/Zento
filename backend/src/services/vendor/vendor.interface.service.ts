@@ -12,5 +12,5 @@ export interface IVendorService {
     id: number,
     vendor: Partial<VendorCreationAttributes>
   ): Promise<Vendor | null>;
-  deleteVendor(id: number): Promise<number>;
+  deleteVendor(id: number): Promise<Vendor>;
 }

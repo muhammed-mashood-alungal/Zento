@@ -39,7 +39,7 @@ export class SubCategoryService {
   async getSubCategoryById(id: number): Promise<SubCategory | null> {
     return await this.subCategoryRepository.findBySubCategoryId(id);
   }
-  async deleteSubCategory(id: number): Promise<number> {
+  async deleteSubCategory(id: number): Promise<SubCategory> {
     return await this.subCategoryRepository.deleteSubCategory(id);
   }
 }

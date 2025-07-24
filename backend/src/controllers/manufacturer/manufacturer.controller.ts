@@ -15,6 +15,7 @@ export class ManufacturerController implements IManufacturerController {
   ): Promise<void> {
     try {
       const manufacturerData = req.body;
+      console.log(manufacturerData)
       const newManufacturer = await this.manufacturerService.createManufacturer(
         manufacturerData
       );
@@ -97,10 +98,10 @@ export class ManufacturerController implements IManufacturerController {
   ): Promise<void> {
     try {
       const manufacturerId = parseInt(req.params.id);
-      const deletedCount = await this.manufacturerService.deleteManufacturer(
+      const deleted = await this.manufacturerService.deleteManufacturer(
         manufacturerId
       );
-      if (deletedCount === 0) {
+      if (deleted) {
         res.status(StatusCodes.NOT_FOUND).json({
           message: RESPONSE_MESSAGES.MANUFACTURER_NOT_FOUND,
         });
@@ -110,7 +111,7 @@ export class ManufacturerController implements IManufacturerController {
         res,
         StatusCodes.OK,
         RESPONSE_MESSAGES.MANUFACTURER_DELETED,
-        { deletedCount }
+        { deleted }
       );
     } catch (error) {
       next(error);
@@ -122,17 +123,12 @@ export class ManufacturerController implements IManufacturerController {
     next: NextFunction
   ): Promise<void> {
     try {
-      const page = parseInt(req.query.page as string) || 1;
-      const limit = parseInt(req.query.limit as string) || 10;
-      const manufacturers = await this.manufacturerService.getAllManufacturers(
-        page,
-        limit
-      );
+      const manufacturers = await this.manufacturerService.getAllManufacturers();
       successResponse(
         res,
         StatusCodes.OK,
         RESPONSE_MESSAGES.MANUFACTURERS_FETCHED,
-        manufacturers
+        {manufacturers}
       );
     } catch (error) {
       next(error);

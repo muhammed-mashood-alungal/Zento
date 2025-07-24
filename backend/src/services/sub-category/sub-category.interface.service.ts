@@ -15,5 +15,5 @@ export interface ISubCategoryService {
     limit: number
   ): Promise<IPaginationResponse<SubCategory>>;
   getSubCategoryById(id: number): Promise<SubCategory | null>;
-  deleteSubCategory(id: number): Promise<number>;
+  deleteSubCategory(id: number): Promise<SubCategory>;
 }

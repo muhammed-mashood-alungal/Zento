@@ -31,22 +31,19 @@ export class ManufacturerRepository
     return await this.updateById(id, manufacturer);
   }
 
-  async deleteManufacturer(id: number): Promise<number> {
-    return await this.deleteById(id);
+  async deleteManufacturer(id: number): Promise<Manufacturer> {
+    return await this.updateById(id, {
+      is_deleted: true,
+    });
   }
 
-
-  async fetchAllManufacturers(
-    page: number,
-    limit: number,
-    options: any
-  ): Promise<IPaginationResponse<Manufacturer>> {
-    return await this.paginate(page, limit, options);
+  async fetchAllManufacturers(options: any): Promise<Manufacturer[]> {
+    return await this.findAll({ ...options, where: { is_deleted: false } });
   }
 
   async changeManufacturerStatus(
     id: number,
-    status: 'active' | 'inactive'
+    status: "active" | "inactive"
   ): Promise<Manufacturer | null> {
     const manufacturer = await this.updateById(id, { status });
 
@@ -57,6 +54,6 @@ export class ManufacturerRepository
   }
 
   async isManufacturerExist(name: string): Promise<boolean> {
-    return await this.count({where : {name }}) != 0
+    return (await this.count({ where: { name } })) != 0;
   }
 }

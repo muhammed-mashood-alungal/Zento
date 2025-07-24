@@ -49,7 +49,7 @@ export class CategoryServices implements ICategoryServices {
   async deleteCategory(
     id: string | number,
     options?: FindOptions<Attributes<Category>>
-  ): Promise<number> {
+  ): Promise<Category> {
     return await this.categoryRepository.deleteCategory(id, options);
   }
 }

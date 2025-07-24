@@ -1,48 +1,26 @@
 import React, { useState } from "react";
-import {
-  Box,
-  Typography,
-  Button,
-} from "@mui/material";
+import { Box, Typography, Button } from "@mui/material";
 import { Add as AddIcon } from "@mui/icons-material";
 import { useForm } from "react-hook-form";
 import BaseModal from "../components/common/BaseModal";
 import CardGrid, { type CardItem } from "../components/common/CardGrid";
 import ManufactureForm from "../components/manufacturer/ManufactureForm";
-import type { Manufacturer, ManufacturerFormData } from "../types/manufacturer.types";
-
+import type {
+  Manufacturer,
+  ManufacturerFormData,
+} from "../types/manufacturer.types";
+import ConfirmModal from "../components/common/ConfirmModal";
+import { manufacturerServices } from "../services/manufacturer.service";
+import { SnackbarUtils } from "../utils/snackbar.util";
+import { useMasterData } from "../contexts/master-data.context";
 
 const Manufacturers: React.FC = () => {
-  const [manufacturers, setManufacturers] = useState<Manufacturer[]>([
-    {
-      id: 1,
-      name: "Apple Inc.",
-      description: "Consumer electronics and software company",
-      status: "active",
-    },
-    {
-      id: 2,
-      name: "Dell Technologies",
-      description: "Computer technology company",
-      status: "active",
-    },
-    {
-      id: 3,
-      name: "HP Inc.",
-      description: "Information technology company",
-      status: "active",
-    },
-    {
-      id: 4,
-      name: "Lenovo Group",
-      description: "Multinational technology company",
-      status: "inactive",
-    },
-  ]);
+  const {manufacturers ,setManufacturers} = useMasterData()
 
   const [modalOpen, setModalOpen] = useState(false);
   const [editingManufacturer, setEditingManufacturer] =
     useState<Manufacturer | null>(null);
+  const [deletingManufacturer, setDeletingManufacturer] = useState("");
 
   const {
     control,
@@ -82,26 +60,57 @@ const Manufacturers: React.FC = () => {
     }
   };
 
-  const handleDelete = (item: CardItem) => {
-    setManufacturers(
-      manufacturers.filter((m) => m.id.toString() !== item.id.toString())
-    );
+  const onDeleteClick = (item: CardItem) => {
+    setDeletingManufacturer(item.id.toString());
   };
 
-  const onSubmit = (data: ManufacturerFormData) => {
-    if (editingManufacturer) {
+  const handleDelete = async () => {
+    try {
+      await manufacturerServices.deleteManufacturer(
+        Number(deletingManufacturer)
+      );
       setManufacturers(
-        manufacturers.map((m) =>
-          m.id === editingManufacturer.id ? { ...m, ...data } : m
+        manufacturers.filter(
+          (m) => m.id.toString() !== deletingManufacturer.toString()
         )
       );
-    } else {
-      const newManufacturer: Manufacturer = {
-        id: Math.max(...manufacturers.map((m) => m.id), 0) + 1,
-        ...data,
-      };
-      setManufacturers([...manufacturers, newManufacturer]);
+      setDeletingManufacturer("");
+      SnackbarUtils.success("Manufacturer Deleted!");
+    } catch (error: unknown) {
+      SnackbarUtils.error(error as string);
     }
+  };
+
+  const onSubmit = async (data: ManufacturerFormData) => {
+    if (editingManufacturer) {
+      try {
+        await manufacturerServices.updateManufacturer(
+          editingManufacturer.id,
+          data
+        );
+        setManufacturers(
+          manufacturers.map((m) =>
+            m.id === editingManufacturer.id ? { ...m, ...data } : m
+          )
+        );
+        SnackbarUtils.success("Manufacturer Updated!");
+      } catch (error: unknown) {
+        SnackbarUtils.error(error as string);
+        return;
+      }
+    } else {
+      try {
+        const newManufacturer = await manufacturerServices.createManufacturer(
+          data
+        );
+        setManufacturers([...manufacturers, newManufacturer]);
+        SnackbarUtils.success("New Manufacturer Created!");
+      } catch (error: unknown) {
+        SnackbarUtils.error(error as string);
+        return;
+      }
+    }
+
     setModalOpen(false);
     reset();
   };
@@ -139,7 +148,7 @@ const Manufacturers: React.FC = () => {
       <CardGrid
         items={cardItems}
         onEdit={handleEdit}
-        onDelete={handleDelete}
+        onDelete={onDeleteClick}
         emptyMessage="No manufacturers found. Add your first manufacturer!"
       />
 
@@ -155,6 +164,12 @@ const Manufacturers: React.FC = () => {
       >
         <ManufactureForm errors={errors} control={control} />
       </BaseModal>
+      <ConfirmModal
+        open={Boolean(deletingManufacturer)}
+        onClose={() => setDeletingManufacturer("")}
+        message={"Are you sure you want to delete this branch?"}
+        onOk={handleDelete}
+      ></ConfirmModal>
     </Box>
   );
 };

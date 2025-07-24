@@ -12,6 +12,7 @@ export class Vendor
   declare phone: string;
   declare email: string;
   declare gst_number: string;
+  declare is_deleted : boolean;
   declare manufacturer_id: number;
   declare created_at: Date;
   declare updated_at: Date;
@@ -39,6 +40,10 @@ Vendor.init(
       validate: {
         isEmail: true,
       },
+    },
+    is_deleted :{
+       type : DataTypes.BOOLEAN,
+       defaultValue : false
     },
     gst_number: {
       type: DataTypes.STRING,

@@ -14,15 +14,11 @@ export interface IManufacturerRepository {
     id: number,
     updates: Partial<ManufacturerAttributes>
   ): Promise<Manufacturer | null>;
-  deleteManufacturer(id: number): Promise<number>;
-  fetchAllManufacturers(
-    page: number,
-    limit: number,
-    options: any
-  ): Promise<IPaginationResponse<Manufacturer>>;
+  deleteManufacturer(id: number): Promise<Manufacturer>;
+  fetchAllManufacturers(options: any): Promise<Manufacturer[]>;
   changeManufacturerStatus(
     id: number,
     status: string
-  ): Promise<Manufacturer | null>; 
-  isManufacturerExist(name : string) : Promise<boolean>
+  ): Promise<Manufacturer | null>;
+  isManufacturerExist(name: string): Promise<boolean>;
 }

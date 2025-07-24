@@ -15,7 +15,7 @@ import {
   Notifications as NotificationsIcon,
   AccountCircle as AccountIcon,
 } from "@mui/icons-material";
-import { useLayout } from "../../contexts/layout.context";
+import { useLayout } from "../../contexts/LayoutContext";
 
 const Header: React.FC = () => {
   const theme = useTheme();

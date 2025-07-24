@@ -18,6 +18,6 @@ export interface ICategoryRepository {
   deleteCategory(
     id: string | number,
     options?: FindOptions<Attributes<Category>>
-  ): Promise<number>;
+  ): Promise<Category>;
   isCategoryExists(name : string) : Promise<boolean>
 }

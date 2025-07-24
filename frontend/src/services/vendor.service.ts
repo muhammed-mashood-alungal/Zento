@@ -1,11 +1,11 @@
 import { AxiosError } from "axios";
-import { type VendorAttributes } from "../types/vendor.types";
+import { type Vendor, type VendorFormData } from "../types/vendor.types";
 import { vendorInstance } from "../api/axios-instance";
 
 export const vendorServices = {
   createVendor: async (
-    vendorData: VendorAttributes
-  ): Promise<VendorAttributes> => {
+    vendorData: VendorFormData
+  ): Promise<Vendor> => {
     try {
       const response = await vendorInstance.post("/create", vendorData);
       return response.data.vendor;
@@ -18,7 +18,7 @@ export const vendorServices = {
   },
 
   fetchAllVendors: async (
-  ): Promise<{ data: VendorAttributes[]; total: number }> => {
+  ): Promise<{ data: Vendor[]; total: number }> => {
     try {
       const response = await vendorInstance.get('/');
       return response.data;
@@ -30,7 +30,7 @@ export const vendorServices = {
     }
   },
 
-  findByVendorId: async (id: number): Promise<VendorAttributes> => {
+  findByVendorId: async (id: number): Promise<Vendor> => {
     try {
       const response = await vendorInstance.get(`/${id}`);
       return response.data.vendor;
@@ -44,8 +44,8 @@ export const vendorServices = {
 
   editVendor: async (
     id: number,
-    updates: Partial<VendorAttributes>
-  ): Promise<VendorAttributes> => {
+    updates: Partial<VendorFormData>
+  ): Promise<Vendor> => {
     try {
       const response = await vendorInstance.put(`/update/${id}`, updates);
       return response.data.updatedVendor;

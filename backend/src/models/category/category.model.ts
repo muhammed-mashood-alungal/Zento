@@ -11,6 +11,7 @@ export class Category
 {
   declare id: number;
   declare name: string;
+  declare  is_deleted: boolean; 
   declare description: string;
   declare status: string;
   declare created_at: Date;
@@ -40,6 +41,10 @@ Category.init(
         isIn: [["active", "inactive"]],
       },
       defaultValue: "active",
+    },
+    is_deleted :{
+      type : DataTypes.BOOLEAN,
+      defaultValue : false
     },
     created_at: {
       type: DataTypes.DATE,

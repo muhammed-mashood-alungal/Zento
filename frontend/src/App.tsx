@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ThemeProvider, CssBaseline } from "@mui/material";
 import { darkTheme } from "./theme/theme";
-import { LayoutProvider } from "./contexts/layout.context";
+import { LayoutProvider } from "./contexts/LayoutContext";
 import Layout from "./components/layout/Layout";
 import Dashboard from "./pages/Dashboard";
 import Branches from "./pages/Branches";

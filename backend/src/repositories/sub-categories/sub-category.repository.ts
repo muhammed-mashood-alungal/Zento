@@ -36,8 +36,10 @@ export class SubCategoryRepository
   ): Promise<SubCategory | null> {
     return await this.updateById(id, subCategory);
   }
-  async deleteSubCategory(id: number): Promise<number> {
-    return await this.deleteById(id);
+  async deleteSubCategory(id: number): Promise<SubCategory> {
+    return await this.updateById(id,{
+      is_deleted : true
+    });
   }
   async isSubCategoryExist(category_id : number ,name: string): Promise<boolean> {
     return (await this.count({ where: { name  , category_id} })) != 0;

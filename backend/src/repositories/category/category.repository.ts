@@ -39,8 +39,10 @@ export class CategoryRepository
   async deleteCategory(
     id: string | number,
     options?: FindOptions<Attributes<Category>>
-  ): Promise<number> {
-    return await this.deleteById(id, options);
+  ): Promise<Category> {
+    return await this.updateById(id, {
+      is_deleted: true,
+    },options);
   }
 
   async isCategoryExists(name: string): Promise<boolean> {

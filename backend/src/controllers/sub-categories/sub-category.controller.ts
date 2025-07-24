@@ -126,7 +126,7 @@ export class SubCategoryController implements ISubCategoryController {
         Number(id)
       );
 
-      if (deletedCount === 0) {
+      if (!deletedCount) {
         return res.status(StatusCodes.NOT_FOUND).json({
           message: RESPONSE_MESSAGES.SUB_CATEGORY_NOT_FOUND,
         });

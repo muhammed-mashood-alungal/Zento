@@ -39,7 +39,7 @@ export class VendorServices implements IVendorService {
   ): Promise<Vendor | null> {
     return this.vendorRepository.updateVendor(id, vendor);
   }
-  async deleteVendor(id: number): Promise<number> {
+  async deleteVendor(id: number): Promise<Vendor> {
     return this.vendorRepository.deleteVendor(id);
   }
 }

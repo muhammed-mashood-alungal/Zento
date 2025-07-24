@@ -3,6 +3,7 @@ export interface SubCategoryAttributes {
   name: string;
   description: string;
   status: string;
+  is_deleted:boolean
   category_id: number;
   created_at: Date;
   updated_at: Date;

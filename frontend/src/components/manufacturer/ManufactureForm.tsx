@@ -4,8 +4,8 @@ import { Controller } from "react-hook-form"
 function ManufactureForm({control , errors} : any) {
   return (
     <>
-     <Grid container spacing={3}>
-          <Grid item xs={12}>
+     <Grid container spacing={3} mt={1}>
+          <Grid item xs={12} >
             <Controller
               name="name"
               control={control}

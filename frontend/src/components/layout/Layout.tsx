@@ -3,7 +3,7 @@ import { Box, Toolbar, useTheme, useMediaQuery } from "@mui/material";
 import { Outlet } from "react-router-dom";
 import Header from "./Header";
 import Sidebar from "./Sidebar";
-import { useLayout } from "../../contexts/layout.context";
+import { useLayout } from "../../contexts/LayoutContext";
 
 const Layout: React.FC = () => {
   const theme = useTheme();

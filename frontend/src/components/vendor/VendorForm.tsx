@@ -5,7 +5,7 @@ import type { Manufacturer } from "../../types/manufacturer.types"
 function VendorForm({errors , control , manufacturers} : any) {
   return (
     <>
-      <Grid container spacing={3}>
+      <Grid container spacing={3} mt={1} >
           <Grid item xs={12} sm={6}>
             <Controller
               name="contact_person"

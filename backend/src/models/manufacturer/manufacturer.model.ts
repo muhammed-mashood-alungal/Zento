@@ -12,7 +12,8 @@ export class Manufacturer
   declare id: number;
   declare name: string;
   declare description: string;
-  declare status: 'active' | 'inactive';
+  declare status: "active" | "inactive";
+  declare is_deleted: boolean;
   declare created_at: Date;
   declare updated_at: Date;
 }
@@ -27,7 +28,7 @@ Manufacturer.init(
     name: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique:true
+      unique: true,
     },
     description: {
       type: DataTypes.STRING,
@@ -40,6 +41,10 @@ Manufacturer.init(
         isIn: [["active", "inactive"]],
       },
       defaultValue: "active",
+    },
+    is_deleted: {
+      type: DataTypes.STRING,
+      defaultValue: false,
     },
     created_at: {
       type: DataTypes.DATE,
