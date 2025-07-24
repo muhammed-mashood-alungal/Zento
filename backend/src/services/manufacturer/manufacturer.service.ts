@@ -21,6 +21,7 @@ export class ManufacturerService implements IManufacturerService {
     const isExist = await this.manufacturerRepository.isManufacturerExist(
       manufacturer.name
     );
+    console.log(isExist)
     if (isExist) {
       throw createHttpsError(
         StatusCodes.CONFLICT,

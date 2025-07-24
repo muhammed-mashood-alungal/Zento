@@ -37,7 +37,7 @@ export class VendorController implements IVendorController {
         res,
         StatusCodes.OK,
         RESPONSE_MESSAGES.VENDORS_FETCHED,
-        vendors
+        {vendors}
       );
     } catch (error) {
       next(error);
@@ -97,13 +97,16 @@ export class VendorController implements IVendorController {
   ): Promise<void> {
     try {
       const vendorId = parseInt(req.params.id);
+      console.log('DELETING ++++++++++++++++++++++++++++++++++++'+vendorId)
       const deleted = await this.vendorService.deleteVendor(vendorId);
+      console.log('=========================================',deleted)
       if (!deleted) {
         res.status(StatusCodes.NOT_FOUND).json({
           message: RESPONSE_MESSAGES.VENDOR_NOT_FOUND,
         });
         return;
       }
+
       successResponse(res, StatusCodes.OK, RESPONSE_MESSAGES.VENDOR_DELETED, {
         deleted,
       });

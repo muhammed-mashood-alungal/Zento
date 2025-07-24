@@ -12,12 +12,16 @@ import { branchServices } from "../services/branches.service";
 import { SnackbarUtils } from "../utils/snackbar.util";
 import { manufacturerServices } from "../services/manufacturer.service";
 import type { Manufacturer } from "../types/manufacturer.types";
+import { vendorServices } from "../services/vendor.service";
+import type { Vendor } from "../types/vendor.types";
 
 type masterContextType = {
   branches: Branch[];
   setBranches: Dispatch<SetStateAction<Branch[]>>;
   manufacturers: Manufacturer[];
   setManufacturers: Dispatch<SetStateAction<Manufacturer[]>>;
+  vendors: Vendor[];
+  setVendors: Dispatch<SetStateAction<Vendor[]>>;
 };
 const masterDataContext = createContext<masterContextType | undefined>(
   undefined
@@ -32,6 +36,7 @@ export const MasterDataContextProvider: React.FC<MasterDataProviderProps> = ({
 }) => {
   const [branches, setBranches] = useState<Branch[]>([]);
   const [manufacturers, setManufacturers] = useState<Manufacturer[]>([]);
+  const [vendors, setVendors] = useState<Vendor[]>([]);
   const fetchBranches = async () => {
     try {
       const branches = await branchServices.getAllBranches();
@@ -48,15 +53,31 @@ export const MasterDataContextProvider: React.FC<MasterDataProviderProps> = ({
       SnackbarUtils.error("Something Went Wrong while fetching Branches");
     }
   };
+  const fetchVendors = async () => {
+    try {
+      const vendors = await vendorServices.fetchAllVendors();
+      setVendors(vendors);
+    } catch (error) {
+      SnackbarUtils.error("Something Went Wrong while fetching Branches");
+    }
+  };
 
   useEffect(() => {
     fetchBranches();
     fetchManufacturers();
+    fetchVendors();
   }, []);
 
   return (
     <masterDataContext.Provider
-      value={{ branches, setBranches, manufacturers, setManufacturers }}
+      value={{
+        branches,
+        setBranches,
+        manufacturers,
+        setManufacturers,
+        vendors,
+        setVendors,
+      }}
     >
       {children}
     </masterDataContext.Provider>

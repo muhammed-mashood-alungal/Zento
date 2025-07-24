@@ -68,7 +68,7 @@ export const manufacturerServices = {
   getAllManufacturers: async (): Promise<Manufacturer[]> => {
     try {
       const response = await manufacturerInstance.get(`/`);
-      return response.data;
+      return response.data.manufacturers;
     } catch (error: unknown) {
       const err = error as AxiosError<{ error: string }>;
       const errorMessage =

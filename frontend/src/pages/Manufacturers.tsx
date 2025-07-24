@@ -13,6 +13,8 @@ import ConfirmModal from "../components/common/ConfirmModal";
 import { manufacturerServices } from "../services/manufacturer.service";
 import { SnackbarUtils } from "../utils/snackbar.util";
 import { useMasterData } from "../contexts/master-data.context";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { manufacturerSchema } from "../schemas/manufacturer.schema";
 
 const Manufacturers: React.FC = () => {
   const {manufacturers ,setManufacturers} = useMasterData()
@@ -28,6 +30,7 @@ const Manufacturers: React.FC = () => {
     reset,
     formState: { errors },
   } = useForm<ManufacturerFormData>({
+    resolver : yupResolver(manufacturerSchema),
     defaultValues: {
       name: "",
       description: "",

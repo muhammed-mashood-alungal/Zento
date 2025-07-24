@@ -10,42 +10,16 @@ import type { Vendor, VendorFormData } from "../types/vendor.types";
 import { SnackbarUtils } from "../utils/snackbar.util";
 import { vendorServices } from "../services/vendor.service";
 import ConfirmModal from "../components/common/ConfirmModal";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { vendorSchema } from "../schemas/vendor.schema";
+import { useMasterData } from "../contexts/master-data.context";
 
 const Vendors: React.FC = () => {
-  const [manufacturers] = useState<Pick<Manufacturer, "id" | "name">[]>([
-    { id: 1, name: "Apple Inc." },
-    { id: 2, name: "Dell Technologies" },
-    { id: 3, name: "HP Inc." },
-    { id: 4, name: "Lenovo Group" },
-  ]);
+  
 
-  const [vendors, setVendors] = useState<Vendor[]>([
-    {
-      id: 1,
-      contact_person: "John Smith",
-      phone: "+1-555-0123",
-      email: "john.smith@techsupply.com",
-      gst_number: "GST123456789",
-      manufacturer_id: 1,
-    },
-    {
-      id: 2,
-      contact_person: "Sarah Johnson",
-      phone: "+1-555-0456",
-      email: "sarah.j@dellpartner.com",
-      gst_number: "GST987654321",
-      manufacturer_id: 2,
-    },
-    {
-      id: 3,
-      contact_person: "Mike Wilson",
-      phone: "+1-555-0789",
-      email: "mike.wilson@hpreseller.com",
-      gst_number: "GST456789123",
-      manufacturer_id: 3,
-    },
-  ]);
+  const {manufacturers }= useMasterData()
 
+  const {vendors , setVendors} = useMasterData()
   const [modalOpen, setModalOpen] = useState(false);
   const [editingVendor, setEditingVendor] = useState<Vendor | null>(null);
   const [deletingVendor, setDeletingVendor] = useState("");
@@ -55,6 +29,7 @@ const Vendors: React.FC = () => {
     reset,
     formState: { errors },
   } = useForm<VendorFormData>({
+    resolver : yupResolver(vendorSchema),
     defaultValues: {
       contact_person: "",
       phone: "",
@@ -97,12 +72,12 @@ const Vendors: React.FC = () => {
 
   const handleDelete = async () => {
     try {
+      await vendorServices.deleteVendor(Number(deletingVendor));
       setVendors(
         vendors.filter((v) => v.id.toString() !== deletingVendor.toString())
       );
       setDeletingVendor("");
       SnackbarUtils.success("Vendor Deleted!");
-      await vendorServices.deleteVendor(Number(deletingVendor));
     } catch (error: unknown) {
       SnackbarUtils.error(error as string);
     }
@@ -187,7 +162,7 @@ const Vendors: React.FC = () => {
       <CardGrid
         items={cardItems}
         onEdit={handleEdit}
-        onDelete={handleDelete}
+        onDelete={onDeleteClick}
         emptyMessage="No vendors found. Add your first vendor!"
       />
 

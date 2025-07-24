@@ -98,10 +98,11 @@ export class ManufacturerController implements IManufacturerController {
   ): Promise<void> {
     try {
       const manufacturerId = parseInt(req.params.id);
+      console.log('DELETING+++++++++++++++++++++++++++++++++++++++++=',manufacturerId)
       const deleted = await this.manufacturerService.deleteManufacturer(
         manufacturerId
       );
-      if (deleted) {
+      if (!deleted) {
         res.status(StatusCodes.NOT_FOUND).json({
           message: RESPONSE_MESSAGES.MANUFACTURER_NOT_FOUND,
         });

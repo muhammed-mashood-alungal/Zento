@@ -62,7 +62,6 @@ const Branches: React.FC = () => {
   };
 
   const onDeleteClick = (item: CardItem) => {
-    console.log('deleteclicked' , item,item.id.toString())
     setDeletingBranch(item.id.toString());
   };
 

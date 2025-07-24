@@ -13,6 +13,8 @@ import type {
   SubCategory,
   SubCategoryFormData,
 } from "../types/sub-category.types";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { categorySchema } from "../schemas/category.schema";
 
 const Categories: React.FC = () => {
   const [categories, setCategories] = useState<Category[]>([
@@ -72,6 +74,7 @@ const Categories: React.FC = () => {
   );
 
   const categoryForm = useForm<CategoryFormData>({
+    resolver : yupResolver(categorySchema),
     defaultValues: {
       name: "",
       description: "",

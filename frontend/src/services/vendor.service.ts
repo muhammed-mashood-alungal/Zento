@@ -18,10 +18,10 @@ export const vendorServices = {
   },
 
   fetchAllVendors: async (
-  ): Promise<{ data: Vendor[]; total: number }> => {
+  ): Promise<Vendor[]> => {
     try {
       const response = await vendorInstance.get('/');
-      return response.data;
+      return response.data.vendors;
     } catch (error: unknown) {
       const err = error as AxiosError<{ error: string }>;
       const errorMessage =
