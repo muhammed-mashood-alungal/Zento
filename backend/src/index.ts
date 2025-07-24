@@ -12,13 +12,14 @@ import {
 import cookieParser from "cookie-parser";
 import { errorHandler } from "@/middleware";
 import { env } from "@/config";
-
+import cors from "cors";
 dotenv.config();
 
 const app = express();
 
-
 const PORT = env.PORT || 5000;
+
+app.use(cors("*"));
 connectDB();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
