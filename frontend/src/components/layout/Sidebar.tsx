@@ -1,3 +1,4 @@
+// 
 import React from 'react';
 import {
   Drawer,
@@ -14,13 +15,11 @@ import {
 } from '@mui/material';
 import {
   Dashboard as DashboardIcon,
-  Inventory as InventoryIcon,
-  Computer as ComputerIcon,
-  Storage as StorageIcon,
-  People as PeopleIcon,
-  Assignment as AssignmentIcon,
-  Settings as SettingsIcon,
   Analytics as AnalyticsIcon,
+  Business as BusinessIcon,
+  Category as CategoryIcon,
+  PrecisionManufacturing as ManufacturingIcon,
+  Store as StoreIcon,
 } from '@mui/icons-material';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useLayout } from '../../contexts/LayoutContext';
@@ -29,13 +28,11 @@ const drawerWidth = 280;
 
 const navigationItems = [
   { text: 'Dashboard', icon: <DashboardIcon />, path: '/' },
-  { text: 'Assets', icon: <InventoryIcon />, path: '/assets' },
-  { text: 'Hardware', icon: <ComputerIcon />, path: '/hardware' },
-  { text: 'Software', icon: <StorageIcon />, path: '/software' },
-  { text: 'Users', icon: <PeopleIcon />, path: '/users' },
-  { text: 'Assignments', icon: <AssignmentIcon />, path: '/assignments' },
+  { text: 'Branches', icon: <BusinessIcon />, path: '/branches' },
+  { text: 'Categories', icon: <CategoryIcon />, path: '/categories' },
+  { text: 'Manufacturers', icon: <ManufacturingIcon />, path: '/manufacturers' },
+  { text: 'Vendors', icon: <StoreIcon />, path: '/vendors' },
   { text: 'Reports', icon: <AnalyticsIcon />, path: '/reports' },
-  { text: 'Settings', icon: <SettingsIcon />, path: '/settings' },
 ];
 
 const Sidebar: React.FC = () => {
@@ -54,14 +51,7 @@ const Sidebar: React.FC = () => {
 
   const drawer = (
     <Box sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-      <Box sx={{ p: 3, borderBottom: '1px solid', borderColor: 'divider' }}>
-        <Typography variant="h5" sx={{ fontWeight: 700, color: 'primary.main' }}>
-          AssetManager
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          Pro Asset Management
-        </Typography>
-      </Box>
+      
       
       <List sx={{ flexGrow: 1, px: 1, py: 2 }}>
         {navigationItems.map((item) => (

@@ -5,6 +5,10 @@ import { LayoutProvider } from './contexts/LayoutContext';
 import Layout from './components/layout/Layout';
 import Dashboard from './pages/Dashboard';
 import Assets from './pages/Assets';
+import Branches from './pages/Branches';
+import Categories from './pages/Categories';
+import Manufacturers from './pages/Manufacturers';
+import Vendors from './pages/Vendors';
 
 function App() {
   return (
@@ -16,12 +20,10 @@ function App() {
             <Route path="/" element={<Layout />}>
               <Route index element={<Dashboard />} />
               <Route path="assets" element={<Assets />} />
-              {/* <Route path="hardware" element={<Hardware />} />
-              <Route path="software" element={<Software />} />
-              <Route path="users" element={<Users />} />
-              <Route path="assignments" element={<Assignments />} />
-              <Route path="reports" element={<Reports />} />
-              <Route path="settings" element={<Settings />} /> */}
+              <Route path="branches" element={<Branches />} />
+               <Route path="categories" element={<Categories />} />
+               <Route path="manufacturers" element={<Manufacturers />} />
+              <Route path="vendors" element={<Vendors />} />
             </Route>
           </Routes>
         </Router>
