@@ -28,8 +28,8 @@ type masterContextType = {
   setVendors: Dispatch<SetStateAction<Vendor[]>>;
   categories: Category[];
   setCategories: Dispatch<SetStateAction<Category[]>>;
-  subCategories: SubCategory[];
-  setSubCategories: Dispatch<SetStateAction<SubCategory[]>>;
+ // subCategories: SubCategory[];
+ // setSubCategories: Dispatch<SetStateAction<SubCategory[]>>;
 };
 const masterDataContext = createContext<masterContextType | undefined>(
   undefined
@@ -46,7 +46,7 @@ export const MasterDataContextProvider: React.FC<MasterDataProviderProps> = ({
   const [manufacturers, setManufacturers] = useState<Manufacturer[]>([]);
   const [vendors, setVendors] = useState<Vendor[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
-  const [subCategories, setSubCategories] = useState<SubCategory[]>([]);
+//  const [subCategories, setSubCategories] = useState<SubCategory[]>([]);
 
   const fetchBranches = async () => {
     try {
@@ -81,14 +81,16 @@ export const MasterDataContextProvider: React.FC<MasterDataProviderProps> = ({
       for (let category of contegories) {
         const sub = await subCategoryServices.getAllSubCategories(category.id);
         sub_arr = [...sub_arr, ...sub];
+        category.sub_categories = [...category.sub_categories || [] , ...sub_arr]
+        sub_arr =[]
       }
       setCategories(contegories);
-      setSubCategories(sub_arr);
+     // setSubCategories(sub_arr);
     } catch (error) {
-      SnackbarUtils.error("Something Went Wrong while fetching Branches");
+      console.log(error)
+      SnackbarUtils.error("Something Went Wrong while fetching Categories");
     }
   };
-
 
   useEffect(() => {
     fetchBranches();
@@ -108,8 +110,8 @@ export const MasterDataContextProvider: React.FC<MasterDataProviderProps> = ({
         setVendors,
         categories,
         setCategories,
-        subCategories,
-        setSubCategories
+       // subCategories,
+      //  setSubCategories,
       }}
     >
       {children}

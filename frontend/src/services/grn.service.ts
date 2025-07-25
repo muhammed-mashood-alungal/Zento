@@ -1,9 +1,15 @@
 import { AxiosError } from "axios";
-import type { GRNAttributes } from "../types/grn.types";
+import type {
+  GRNAttributes,
+  GRNCreatePayload,
+  GRNHeaderCreationAttributes,
+  GRNResponseAttributes,
+} from "../types/grn.types";
 import { grnInstance } from "../api/axios-instance";
+import type { IPaginationResponse } from "../types/common.types";
 
 export const grnServices = {
-  createGRN: async (grnData: GRNAttributes): Promise<GRNAttributes> => {
+  createGRN: async (grnData: GRNCreatePayload): Promise<GRNAttributes> => {
     try {
       const response = await grnInstance.post("/create", grnData);
       return response.data.grn;
@@ -15,7 +21,11 @@ export const grnServices = {
     }
   },
 
-  fetchAllGRNs: async (page = 1, limit = 10, options = {}): Promise<any> => {
+  fetchAllGRNs: async (
+    page = 1,
+    limit = 10,
+    options = {}
+  ): Promise<IPaginationResponse<GRNResponseAttributes>> => {
     try {
       const response = await grnInstance.get("/", {
         params: {
@@ -24,7 +34,7 @@ export const grnServices = {
           options: JSON.stringify(options),
         },
       });
-      return response.data;
+      return response.data.grns;
     } catch (error: unknown) {
       const err = error as AxiosError<{ error: string }>;
       const errorMessage =

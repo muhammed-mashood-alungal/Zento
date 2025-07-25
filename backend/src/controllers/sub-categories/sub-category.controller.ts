@@ -104,7 +104,7 @@ export class SubCategoryController implements ISubCategoryController {
         res,
         StatusCodes.OK,
         RESPONSE_MESSAGES.SUB_CATEGORY_UPDATED,
-        updatedSubCategory
+        {updatedSubCategory}
       );
     } catch (error) {
       next(error);

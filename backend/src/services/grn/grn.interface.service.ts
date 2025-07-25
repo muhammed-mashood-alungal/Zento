@@ -1,4 +1,4 @@
-import { GRNAttributes, GRNCreationAttributes } from "@/models";
+import { GRNAttributes, GRNCreationAttributes, GRNResponseAttributes } from "@/models";
 import { IPaginationResponse } from "@/types";
 
 export interface IGRNService {
@@ -8,7 +8,7 @@ export interface IGRNService {
     page: number,
     limit: number,
     options?: any
-  ): Promise<IPaginationResponse<GRNAttributes>>;
+  ): Promise<IPaginationResponse<GRNResponseAttributes>>;
   updateGRN(
     id: number,
     grnData: Partial<GRNCreationAttributes>

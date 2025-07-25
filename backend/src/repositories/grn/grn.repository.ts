@@ -1,13 +1,10 @@
 import {
   Asset,
-  AssetAttributes,
-  AssetCreationAttributes,
-  Branch,
-  BranchAttributes,
   GRNAttributes,
   GRNCreationAttributes,
   GRNHeader,
   GRNLineItems,
+  GRNResponseAttributes,
 } from "@/models";
 import { sequelize } from "@/config";
 import { IPaginationResponse } from "@/types";
@@ -17,12 +14,10 @@ import { IGRNRepository } from "./grn.interface.repository";
 export class GrnRepository implements IGRNRepository {
   private grnHeaderRepo: typeof GRNHeader;
   private grnItemRepo: typeof GRNLineItems;
-  private asset: typeof Asset;
 
   constructor() {
     this.grnHeaderRepo = GRNHeader;
     this.grnItemRepo = GRNLineItems;
-    this.asset = Asset;
   }
 
   async createGRN(grnData: GRNCreationAttributes): Promise<GRNAttributes> {
@@ -73,21 +68,21 @@ export class GrnRepository implements IGRNRepository {
     page: number,
     limit: number,
     options?: any
-  ): Promise<IPaginationResponse<GRNAttributes>> {
+  ): Promise<IPaginationResponse<GRNResponseAttributes>> {
     const offset = (page - 1) * limit;
 
     const whereClause = {};
 
-    if (options?.vendorId) {
+    if (options?.vendor_id) {
       whereClause["vendor_id"] = options.vendorId;
     }
-    if (options?.branchId) {
+    if (options?.branch_id) {
       whereClause["branch_id"] = options.branchId;
     }
     if (options?.status) {
       whereClause["status"] = options.status;
     }
-    if (options?.grnNumber) {
+    if (options?.grn_number) {
       whereClause["grn_number"] = {
         [Op.like]: `%${options.grnNumber}%`,
       };
@@ -113,9 +108,10 @@ export class GrnRepository implements IGRNRepository {
         limit,
         offset,
       });
+    console.log(data);
 
     return {
-      data: data as GRNAttributes[],
+      data: data as GRNResponseAttributes[],
       pagination: {
         page,
         limit,

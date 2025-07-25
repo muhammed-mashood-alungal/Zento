@@ -17,15 +17,13 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { categorySchema } from "../schemas/category.schema";
 import { categoryServices } from "../services/category.service";
 import { SnackbarUtils } from "../utils/snackbar.util";
-import { number } from "yup";
 import { subCategoryServices } from "../services/sub-category.service";
 import { subCategorySchema } from "../schemas/sub-category.schema";
 import ConfirmModal from "../components/common/ConfirmModal";
 import { useMasterData } from "../contexts/master-data.context";
 
 const Categories: React.FC = () => {
-  const { categories, setCategories, subCategories, setSubCategories } =
-    useMasterData();
+  const { categories, setCategories } = useMasterData();
 
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(
     null
@@ -99,9 +97,10 @@ const Categories: React.FC = () => {
   };
 
   const handleEditSubCategory = (item: CardItem) => {
-    const subCategory = subCategories.find(
-      (sc) => sc.id.toString() === item.id.toString()
-    );
+    const subCategory = selectedCategory?.sub_categories?.find((sc) => {
+      return sc.id.toString() === item.id.toString();
+    });
+
     if (subCategory) {
       setModalType("subcategory");
       setEditingItem(subCategory);
@@ -127,16 +126,12 @@ const Categories: React.FC = () => {
           (c) => c.id.toString() !== deletingItem?.id.toString()
         )
       );
-      setSubCategories(
-        subCategories.filter(
-          (sc) => sc.category_id.toString() !== deletingItem?.id.toString()
-        )
-      );
+
       SnackbarUtils.success("Category Deleted !");
     } catch (error) {
       SnackbarUtils.error("Some error while deleting");
     }
-    setDeletingItem(null)
+    setDeletingItem(null);
   };
 
   const handleDeleteSubCategory = async () => {
@@ -145,16 +140,26 @@ const Categories: React.FC = () => {
         Number(selectedCategory?.id),
         Number(deletingItem?.id)
       );
-      setSubCategories(
-        subCategories.filter(
-          (sc) => sc.id.toString() !== deletingItem?.id.toString()
-        )
-      );
-       SnackbarUtils.success("Category Deleted !");
+      const updatedCategories = categories.map((category) => {
+        if (category.id == selectedCategory?.id) {
+          const updatedCategory = {
+            ...category,
+            sub_categories: category.sub_categories?.filter(
+              (sc) => sc.id != deletingItem?.id
+            ),
+          };
+          setSelectedCategory(updatedCategory);
+          return updatedCategory;
+        } else {
+          return category;
+        }
+      });
+      setCategories(updatedCategories);
+      SnackbarUtils.success("Category Deleted !");
     } catch (error) {
       SnackbarUtils.error("Some error while deleting");
     }
-    setDeletingItem(null)
+    setDeletingItem(null);
   };
 
   const handleViewCategory = (item: CardItem) => {
@@ -195,24 +200,47 @@ const Categories: React.FC = () => {
   const onSubmitSubCategory = async (data: SubCategoryFormData) => {
     if (editingItem && modalType === "subcategory") {
       try {
-        await subCategoryServices.updateSubCategory(
+        const updatedSubCategory = await subCategoryServices.updateSubCategory(
           data.category_id,
           editingItem.id,
           data
         );
-        setSubCategories(
-          subCategories.map((sc) =>
-            sc.id === editingItem.id ? { ...sc, ...data } : sc
-          )
-        );
+        const updatedCategories = categories.map((category) => {
+          if (category.id == data.category_id) {
+            const updatedCategory = {
+              ...category,
+              sub_categories: category.sub_categories?.map((sc) =>
+                sc.id == editingItem.id ? updatedSubCategory : sc
+              ),
+            };
+            setSelectedCategory(updatedCategory);
+            return updatedCategory;
+          } else {
+            return category;
+          }
+        });
+        setCategories(updatedCategories);
         SnackbarUtils.success("SubCategory Updated Successfully");
       } catch (error) {}
     } else {
       try {
+        console.log(data)
         const newSubCategory = await subCategoryServices.createSubCategory(
           data
         );
-        setSubCategories([...subCategories, newSubCategory]);
+        const updatedCategories = categories.map((category) => {
+          if (category.id == selectedCategory?.id) {
+            const updatedCategory = {
+              ...category,
+              sub_categories: [...category.sub_categories!, newSubCategory],
+            };
+            setSelectedCategory(updatedCategory);
+            return updatedCategory;
+          } else {
+            return category;
+          }
+        });
+        setCategories(updatedCategories);
         SnackbarUtils.success("SubCategory Created Successfully");
       } catch (error) {}
     }
@@ -228,22 +256,31 @@ const Categories: React.FC = () => {
     metadata: [
       {
         label: "Subcategories",
-        value: subCategories
-          .filter((sc) => sc.category_id === category.id)
-          .length.toString(),
+        value: (category?.sub_categories?.length || 0).toString(),
       },
     ],
   }));
 
-  const subCategoryCardItems: CardItem[] = selectedCategory
-    ? subCategories
-        .filter((sc) => sc.category_id === selectedCategory.id)
-        .map((subCategory) => ({
-          id: subCategory.id,
-          title: subCategory.name,
-          description: subCategory.description,
-          status: subCategory.status,
-        }))
+  // const subCategoryCardItems: CardItem[] = selectedCategory
+  //   ? subCategories
+  //       .filter((sc) => sc.category_id === selectedCategory.id)
+  //       .map((subCategory) => ({
+  //         id: subCategory.id,
+  //         title: subCategory.name,
+  //         description: subCategory.description,
+  //         status: subCategory.status,
+  //       }))
+  //   : [];
+  const subCategoryCardItems: CardItem[] = selectedCategory?.sub_categories
+    ?.length
+    ? selectedCategory?.sub_categories.map((sc) => {
+        return {
+          id: sc.id,
+          title: sc.name,
+          description: sc.description,
+          status: sc.status,
+        };
+      })
     : [];
 
   return (

@@ -14,6 +14,7 @@ export class SubCategoryRepository
   async createSubCategory(
     subCategory: SubCategoryCreationAttributes
   ): Promise<SubCategory> {
+    console.log(subCategory)
     return this.create(subCategory);
   }
 
@@ -40,6 +41,6 @@ export class SubCategoryRepository
     });
   }
   async isSubCategoryExist(category_id : number ,name: string): Promise<boolean> {
-    return (await this.count({ where: { name  , category_id} })) != 0;
+    return (await this.count({ where: { name  , category_id , is_deleted : false} })) != 0;
   }
 }

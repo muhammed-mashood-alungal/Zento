@@ -1,4 +1,4 @@
-import { GRNAttributes, GRNCreationAttributes } from "@/models";
+import { GRNAttributes, GRNCreationAttributes, GRNResponseAttributes } from "@/models";
 import { IGRNService } from "./grn.interface.service";
 import { IPaginationResponse } from "@/types";
 import { IGRNRepository } from "@/repositories";
@@ -27,7 +27,7 @@ export class GrnService implements IGRNService {
     page: number,
     limit: number,
     options?: any
-  ): Promise<IPaginationResponse<GRNAttributes>> {
+  ): Promise<IPaginationResponse<GRNResponseAttributes>> {
     return await this.grnRepository.fetchAllGRNs(page, limit, options);
   }
 

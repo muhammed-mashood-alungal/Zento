@@ -1,5 +1,5 @@
 
-import { GRNAttributes, GRNCreationAttributes } from "@/models";
+import { GRNAttributes, GRNCreationAttributes, GRNResponseAttributes } from "@/models";
 import { IPaginationResponse } from "@/types";
 
 export interface IGRNRepository {
@@ -8,7 +8,7 @@ export interface IGRNRepository {
     page: number,
     limit: number,
     options?: any
-  ): Promise<IPaginationResponse<GRNAttributes>>;
+  ): Promise<IPaginationResponse<GRNResponseAttributes>>;
   findByGRNId(id: number): Promise<GRNAttributes | null>;
   updateGRN(
     id: number,

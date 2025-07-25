@@ -11,19 +11,19 @@ export class Branch
   declare location: string;
   declare pincode: string;
   declare code: string;
-  declare is_open: boolean;
+  declare is_open: boolean; 
   declare is_deleted: boolean;
   declare created_at: Date;
   declare updated_at: Date;
 }
-
+ 
 Branch.init(
   {
     id: {
-      type: DataTypes.INTEGER,
-      primaryKey: true,
+      type: DataTypes.INTEGER, 
+      primaryKey: true, 
       autoIncrement: true,
-    },
+    }, 
     name: {
       type: DataTypes.STRING,
       allowNull: false,

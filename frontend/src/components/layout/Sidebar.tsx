@@ -19,6 +19,7 @@ import {
   Category as CategoryIcon,
   PrecisionManufacturing as ManufacturingIcon,
   Store as StoreIcon,
+  Note,
 } from "@mui/icons-material";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useLayout } from "../../contexts/LayoutContext";
@@ -35,7 +36,7 @@ const navigationItems = [
     path: "/manufacturers",
   },
   { text: "Vendors", icon: <StoreIcon />, path: "/vendors" },
-  { text: "Reports", icon: <AnalyticsIcon />, path: "/reports" },
+  { text: "Grn", icon: <Note />, path: "/grn" },
 ];
 
 const Sidebar: React.FC = () => {

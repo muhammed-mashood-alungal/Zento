@@ -41,7 +41,7 @@ export class GRNController implements GRNController {
         res,
         StatusCodes.OK,
         RESPONSE_MESSAGES.GRNS_FETCHED,
-        grns
+        {grns}
       );
     } catch (error) {
       next(error);

@@ -1,4 +1,4 @@
-import { Branch, GRNHeader, GRNLineItems, SubCategory, Vendor } from "@/models";
+import { Branch, Category, GRNHeader, GRNLineItems, SubCategory, Vendor } from "@/models";
 
 GRNHeader.hasMany(GRNLineItems, {
     foreignKey : 'grn_header_id',
@@ -36,4 +36,12 @@ Branch.hasMany(GRNHeader, {
     as: 'grns'
 });
 
+// Category.hasMany(SubCategory,{
+//     foreignKey:'sub_category_id',
+//     as :'sub_categories'
+// })
 
+// SubCategory.belongsTo(Category , {
+//     foreignKey : 'sub_category_id',
+//     as:'category'
+// })

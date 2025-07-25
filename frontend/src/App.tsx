@@ -8,6 +8,8 @@ import Branches from "./pages/Branches";
 import Categories from "./pages/Categories";
 import Manufacturers from "./pages/Manufacturers";
 import Vendors from "./pages/Vendors";
+import GRNList from "./pages/GRNList";
+import GRNForm from "./pages/GRNForm";
 
 function App() {
   return (
@@ -22,6 +24,9 @@ function App() {
               <Route path="categories" element={<Categories />} />
               <Route path="manufacturers" element={<Manufacturers />} />
               <Route path="vendors" element={<Vendors />} />
+              <Route path="/grn" element={<GRNList />} />
+              <Route path="/grn/create" element={<GRNForm />} />
+              <Route path="/grn/edit/:id" element={<GRNForm />} />
             </Route>
           </Routes>
         </Router>
