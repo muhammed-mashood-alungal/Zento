@@ -9,7 +9,7 @@ export interface IGRNRepository {
     limit: number,
     options?: any
   ): Promise<IPaginationResponse<GRNResponseAttributes>>;
-  findByGRNId(id: number): Promise<GRNAttributes | null>;
+  findByGRNId(id: number): Promise<GRNResponseAttributes | null>;
   updateGRN(
     id: number,
     grnData: Partial<GRNCreationAttributes>

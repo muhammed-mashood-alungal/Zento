@@ -49,7 +49,7 @@ export class GrnRepository implements IGRNRepository {
     }
   }
 
-  async findByGRNId(id: number): Promise<GRNAttributes | null> {
+  async findByGRNId(id: number): Promise<GRNResponseAttributes | null> {
     const grn: unknown = await this.grnHeaderRepo.findByPk(id, {
       include: [
         {
@@ -60,8 +60,10 @@ export class GrnRepository implements IGRNRepository {
         "branch",
       ],
     });
+    console.log('_-----------------------------------------------')
+    console.log(grn)
 
-    return grn as GRNAttributes | null;
+    return grn as GRNResponseAttributes | null;
   }
 
   async fetchAllGRNs(

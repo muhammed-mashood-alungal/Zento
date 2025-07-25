@@ -7,7 +7,7 @@ import { v4 as uuid } from "uuid";
 export class GrnService implements IGRNService {
   constructor(private grnRepository: IGRNRepository) {}
 
-  async findGRNById(id: number): Promise<GRNAttributes | null> {
+  async findGRNById(id: number): Promise<GRNResponseAttributes | null> {
     return await this.grnRepository.findByGRNId(id);
   }
 

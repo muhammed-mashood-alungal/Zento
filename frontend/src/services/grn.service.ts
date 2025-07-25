@@ -43,7 +43,7 @@ export const grnServices = {
     }
   },
 
-  findGRNById: async (id: number): Promise<GRNAttributes> => {
+  findGRNById: async (id: number): Promise<GRNResponseAttributes> => {
     try {
       const response = await grnInstance.get(`/${id}`);
       return response.data.grn;
@@ -57,7 +57,7 @@ export const grnServices = {
 
   updateGRN: async (
     id: number,
-    grnData: GRNAttributes
+    grnData: GRNCreatePayload
   ): Promise<GRNAttributes> => {
     try {
       const response = await grnInstance.put(`/update/${id}`, grnData);

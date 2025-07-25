@@ -20,9 +20,8 @@ import {
   NavigateNext as NavigateNextIcon,
 } from "@mui/icons-material";
 import { useNavigate, useParams } from "react-router-dom";
-import { useForm, Controller } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
 import { SnackbarUtils } from "../utils/snackbar.util";
 import { grnServices } from "../services/grn.service";
 import GRNHeaderForm from "../components/GRN/GRNHeaderForm";
@@ -39,6 +38,44 @@ const GRNForm: React.FC = () => {
     []
   );
 
+  useEffect(() => {
+    console.log(lineItems);
+  }, [lineItems]);
+  const [mode, setMode] = useState<"submit" | "draft" | "">("");
+
+  useEffect(() => {
+    if (isEdit && id) {
+      fetchGRNById(id);
+    } else {
+      fetchGRNNumber();
+    }
+  }, [id]);
+
+  const fetchGRNById = async (id: string) => {
+    try {
+      const data = await grnServices.findGRNById(Number(id));
+      reset({
+        grn_number: data.grn_number,
+        grn_date: new Date(data.grn_date).toISOString().slice(0, 10),
+        vendor_id: data.vendor?.id,
+        branch_id: data.branch?.id,
+        invoice_number: data.invoice_number || "",
+        total_amount: data.total_amount,
+      });
+      setLineItems(
+        data.line_items.map((item) => ({
+          ...item,
+          category_id: item.category_id,
+          id: item?.id?.toString() || Date.now().toString(),
+        })) || []
+      );
+      setMode(data.mode);
+    } catch (err) {
+      console.log(err);
+      SnackbarUtils.error("Failed to fetch GRN");
+    }
+  };
+
   const fetchGRNNumber = async () => {
     try {
       const grnNumber = await grnServices.generateGRNNumber();
@@ -47,10 +84,6 @@ const GRNForm: React.FC = () => {
       SnackbarUtils.error("Something Went Wrong while Generating GRN Number");
     }
   };
-
-  useEffect(() => {
-    fetchGRNNumber();
-  }, []);
 
   const {
     control,
@@ -79,6 +112,7 @@ const GRNForm: React.FC = () => {
       clearErrors();
       return true;
     } catch (err: any) {
+      console.log(err);
       clearErrors();
       err.inner.forEach((validationError: any) => {
         setError(validationError.path, {
@@ -147,6 +181,7 @@ const GRNForm: React.FC = () => {
   };
 
   const handleDraftManually = async () => {
+    console.log("HANDLE DRAFT");
     clearErrors();
     const values = getValues();
     await onSaveDraft(values);
@@ -155,10 +190,11 @@ const GRNForm: React.FC = () => {
   const onSaveDraft = async (data: GRNFormData) => {
     try {
       const isValidLines = validateLineItems(lineItems);
+      console.log(isValidLines);
       if (!isValidLines) return;
 
       clearErrors();
-      setLineItems([]);
+      setLineItemsErr([]);
 
       const payload = {
         mode: "draft" as const,
@@ -170,15 +206,23 @@ const GRNForm: React.FC = () => {
           invoice_number: data.invoice_number || undefined,
           total_amount: calculateTotals().total || undefined,
         },
-        line_items: lineItems.map(({ id, ...item }) => ({
-          ...item,
-          grn_header_id: undefined,
-        })),
+        line_items:
+          lineItems?.map(({ id, ...item }) => ({
+            ...item,
+            grn_header_id: undefined,
+          })) || [],
       };
-      await grnServices.createGRN(payload);
+      console.log(payload);
+      if (isEdit) {
+        await grnServices.updateGRN(Number(id), payload);
+      } else {
+        await grnServices.createGRN(payload);
+      }
+
       SnackbarUtils.success("GRN saved as draft!");
       navigate("/grn");
     } catch (error) {
+      console.log(error);
       SnackbarUtils.error("Failed to save draft");
     }
   };
@@ -186,6 +230,10 @@ const GRNForm: React.FC = () => {
   const validateLineItems = (items: LineItem[]) => {
     const errors: Record<string, string>[] = [];
 
+    if (items.length === 0) {
+      SnackbarUtils.error("At least one line item is required.");
+      return false;
+    }
     let isValid = true;
 
     for (let i = 0; i < items.length; i++) {
@@ -230,7 +278,7 @@ const GRNForm: React.FC = () => {
 
   const onSubmit = async (data: GRNFormData) => {
     try {
-      setLineItems([]);
+      setLineItemsErr([]);
       const isValid = await validateForSubmit(data);
       const isValidLines = validateLineItems(lineItems);
       if (!(isValid && isValidLines)) return;
@@ -245,13 +293,18 @@ const GRNForm: React.FC = () => {
           invoice_number: data.invoice_number,
           total_amount: calculateTotals().total,
         },
-        line_items: lineItems.map(({ id, ...item }) => ({
+        line_items: lineItems?.map(({ id, ...item }) => ({
           ...item,
           grn_header_id: undefined,
         })),
       };
-      await grnServices.createGRN(payload);
-      SnackbarUtils.success("GRN submitted successfully!");
+      if (isEdit) {
+        await grnServices.updateGRN(Number(id), payload);
+        SnackbarUtils.success("GRN Updated successfully!");
+      } else {
+        await grnServices.createGRN(payload);
+        SnackbarUtils.success("GRN submitted successfully!");
+      }
       navigate("/grn");
     } catch (error) {
       SnackbarUtils.error("Failed to submit GRN");
@@ -381,22 +434,28 @@ const GRNForm: React.FC = () => {
           >
             Cancel
           </Button>
-          <Button
-            variant="outlined"
-            startIcon={<RefreshIcon />}
-            onClick={handleReset}
-            sx={{ borderRadius: 2 }}
-          >
-            Reset
-          </Button>
-          <Button
-            variant="outlined"
-            startIcon={<SaveIcon />}
-            onClick={handleSubmit(handleDraftManually)}
-            sx={{ borderRadius: 2 }}
-          >
-            Save Draft
-          </Button>
+          {!(isEdit && mode == "submit") && (
+            <Button
+              variant="outlined"
+              startIcon={<RefreshIcon />}
+              onClick={handleReset}
+              sx={{ borderRadius: 2 }}
+            >
+              Reset
+            </Button>
+          )}
+          {mode !== "submit" && (
+            <Button
+              variant="outlined"
+              startIcon={<SaveIcon />}
+              type="button"
+              onClick={handleSubmit(handleDraftManually)}
+              sx={{ borderRadius: 2 }}
+            >
+              Save Draft
+            </Button>
+          )}
+
           <Button
             variant="contained"
             startIcon={<SendIcon />}

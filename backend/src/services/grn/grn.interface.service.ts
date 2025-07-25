@@ -2,7 +2,7 @@ import { GRNAttributes, GRNCreationAttributes, GRNResponseAttributes } from "@/m
 import { IPaginationResponse } from "@/types";
 
 export interface IGRNService {
-  findGRNById(id: number): Promise<GRNAttributes | null>;
+  findGRNById(id: number): Promise<GRNResponseAttributes | null>;
   createGRN(grnData: GRNCreationAttributes): Promise<GRNAttributes>;
   fetchAllGRNs(
     page: number,

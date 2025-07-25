@@ -106,7 +106,7 @@ const GRNList: React.FC = () => {
     setSelectedGRN(grn as GRNResponseAttributes);
   };
 
-  const cardItems: CardItem[] = grns?.map((grn, idx) => ({
+  const cardItems: CardItem[] = grns?.map((grn) => ({
     id: grn.id,
     title: grn.grn_number,
     subtitle: grn.vendor?.contact_person || "N/A",

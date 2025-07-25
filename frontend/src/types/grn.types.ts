@@ -42,6 +42,7 @@ export interface GRNLineItemAttributes {
   total_amount: number;
   grn_header_id: number;
   sub_category_id: number;
+  category_id:number;
   created_at: Date;
   updated_at: Date;
 }
