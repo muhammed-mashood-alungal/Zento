@@ -14,49 +14,7 @@ import {
   Grid,
 } from "@mui/material";
 
-interface Vendor {
-  id: number;
-  name: string;
-}
-
-interface Branch {
-  id: number;
-  name: string;
-}
-
-interface GRNLineItemAttributes {
-  id: number;
-  name: string;
-  quantity: number;
-  unit_price: number;
-  tax_percentage: number;
-  taxable_amount: number;
-  total_amount: number;
-  grn_header_id: number;
-  sub_category_id: number;
-  created_at: Date;
-  updated_at: Date;
-}
-
-interface GRNResponseAttributes {
-  id: number;
-  grn_number: string;
-  grn_date: Date;
-  invoice_number: string;
-  vendor: Vendor;
-  branch: Branch;
-  total_amount: number;
-  mode: "submit" | "draft";
-  created_at: Date;
-  updated_at: Date;
-  line_items: GRNLineItemAttributes[];
-}
-
-interface GRNDetailsProps {
-  grn: GRNResponseAttributes;
-}
-
-const GRNView: React.FC<GRNDetailsProps> = ({ grn }) => {
+const GRNView: React.FC<any> = ({ grn }) => {
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat("en-IN", {
       style: "currency",
@@ -190,7 +148,7 @@ const GRNView: React.FC<GRNDetailsProps> = ({ grn }) => {
             },
           }}
         >
-          {grn.line_items.length > 0 ?  (
+          {grn.line_items.length > 0 ? (
             <Table stickyHeader>
               <TableHead>
                 <TableRow>
@@ -213,7 +171,7 @@ const GRNView: React.FC<GRNDetailsProps> = ({ grn }) => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {grn.line_items?.map((item) => (
+                {grn.line_items?.map((item: any) => (
                   <TableRow key={item.id} hover>
                     <TableCell>
                       <Typography variant="body2" sx={{ fontWeight: 500 }}>
@@ -237,7 +195,7 @@ const GRNView: React.FC<GRNDetailsProps> = ({ grn }) => {
                 ))}
               </TableBody>
             </Table>
-          )  : null}
+          ) : null}
         </TableContainer>
       </Box>
 

@@ -14,7 +14,6 @@ import {
 } from "@mui/material";
 import {
   Dashboard as DashboardIcon,
-  Analytics as AnalyticsIcon,
   Business as BusinessIcon,
   Category as CategoryIcon,
   PrecisionManufacturing as ManufacturingIcon,

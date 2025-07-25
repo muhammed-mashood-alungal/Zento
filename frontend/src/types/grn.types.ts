@@ -86,3 +86,10 @@ export interface GRNResponseAttributes {
   line_items: GRNLineItemAttributes[];
 }
 
+export interface ReportFilters {
+  from?: string;
+  to?: string;
+  vendor_id?: number | string;
+  branch_id?: number | string;
+}
+

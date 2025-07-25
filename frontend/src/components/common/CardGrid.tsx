@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   Grid,
   Card,
@@ -8,13 +8,12 @@ import {
   Chip,
   IconButton,
   useTheme,
-  useMediaQuery,
-} from '@mui/material';
+} from "@mui/material";
 import {
   Edit as EditIcon,
   Delete as DeleteIcon,
   Visibility as ViewIcon,
-} from '@mui/icons-material';
+} from "@mui/icons-material";
 
 export interface CardItem {
   id: string | number;
@@ -22,7 +21,10 @@ export interface CardItem {
   subtitle?: string;
   description?: string;
   status?: string;
-  badges?: Array<{ label: string; color?: 'primary' | 'secondary' | 'success' | 'error' | 'warning' | 'info' }>;
+  badges?: Array<{
+    label: string;
+    color?: "primary" | "secondary" | "success" | "error" | "warning" | "info";
+  }>;
   metadata?: Array<{ label: string; value: string }>;
 }
 
@@ -41,24 +43,23 @@ const CardGrid: React.FC<CardGridProps> = ({
   onDelete,
   onView,
   loading = false,
-  emptyMessage = 'No items found',
+  emptyMessage = "No items found",
 }) => {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const getStatusColor = (status?: string) => {
-    if (!status) return 'default';
+    if (!status) return "default";
     switch (status.toLowerCase()) {
-      case 'active':
-      case 'open':
-        return 'success';
-      case 'inactive':
-      case 'closed':
-        return 'error';
-      case 'pending':
-        return 'warning';
+      case "active":
+      case "open":
+        return "success";
+      case "inactive":
+      case "closed":
+        return "error";
+      case "pending":
+        return "warning";
       default:
-        return 'primary';
+        return "primary";
     }
   };
 
@@ -67,12 +68,33 @@ const CardGrid: React.FC<CardGridProps> = ({
       <Grid container spacing={3}>
         {[...Array(6)].map((_, index) => (
           <Grid item xs={12} sm={6} md={4} lg={3} key={index}>
-            <Card sx={{ height: 200, backgroundColor: 'background.paper' }}>
+            <Card sx={{ height: 200, backgroundColor: "background.paper" }}>
               <CardContent>
-                <Box sx={{ animation: 'pulse 1.5s ease-in-out infinite' }}>
-                  <Box sx={{ height: 20, bgcolor: 'grey.700', borderRadius: 1, mb: 2 }} />
-                  <Box sx={{ height: 16, bgcolor: 'grey.700', borderRadius: 1, mb: 1 }} />
-                  <Box sx={{ height: 16, bgcolor: 'grey.700', borderRadius: 1, width: '70%' }} />
+                <Box sx={{ animation: "pulse 1.5s ease-in-out infinite" }}>
+                  <Box
+                    sx={{
+                      height: 20,
+                      bgcolor: "grey.700",
+                      borderRadius: 1,
+                      mb: 2,
+                    }}
+                  />
+                  <Box
+                    sx={{
+                      height: 16,
+                      bgcolor: "grey.700",
+                      borderRadius: 1,
+                      mb: 1,
+                    }}
+                  />
+                  <Box
+                    sx={{
+                      height: 16,
+                      bgcolor: "grey.700",
+                      borderRadius: 1,
+                      width: "70%",
+                    }}
+                  />
                 </Box>
               </CardContent>
             </Card>
@@ -86,11 +108,11 @@ const CardGrid: React.FC<CardGridProps> = ({
     return (
       <Box
         sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
           minHeight: 200,
-          textAlign: 'center',
+          textAlign: "center",
         }}
       >
         <Typography variant="h6" color="text.secondary">
@@ -106,25 +128,32 @@ const CardGrid: React.FC<CardGridProps> = ({
         <Grid item xs={12} sm={6} md={4} lg={3} key={item.id}>
           <Card
             sx={{
-              height: '100%',
-              display: 'flex',
-              flexDirection: 'column',
-              transition: 'all 0.2s ease-in-out',
-              '&:hover': {
-                transform: 'translateY(-4px)',
+              height: "100%",
+              display: "flex",
+              flexDirection: "column",
+              transition: "all 0.2s ease-in-out",
+              "&:hover": {
+                transform: "translateY(-4px)",
                 boxShadow: theme.shadows[8],
               },
-              cursor: onView ? 'pointer' : 'default',
+              cursor: onView ? "pointer" : "default",
             }}
             onClick={onView ? () => onView(item) : undefined}
           >
             <CardContent sx={{ flexGrow: 1, p: 3 }}>
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2 }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "flex-start",
+                  mb: 2,
+                }}
+              >
                 <Typography
                   variant="h6"
                   sx={{
-                    fontWeight: 'bold',
-                    fontSize: '1.1rem',
+                    fontWeight: "bold",
+                    fontSize: "1.1rem",
                     lineHeight: 1.3,
                     flex: 1,
                     mr: 1,
@@ -132,7 +161,7 @@ const CardGrid: React.FC<CardGridProps> = ({
                 >
                   {item.title}
                 </Typography>
-                <Box sx={{ display: 'flex', gap: 0.5 }}>
+                <Box sx={{ display: "flex", gap: 0.5 }}>
                   {onView && (
                     <IconButton
                       size="small"
@@ -140,7 +169,7 @@ const CardGrid: React.FC<CardGridProps> = ({
                         e.stopPropagation();
                         onView(item);
                       }}
-                      sx={{ color: 'text.secondary' }}
+                      sx={{ color: "text.secondary" }}
                     >
                       <ViewIcon fontSize="small" />
                     </IconButton>
@@ -152,7 +181,7 @@ const CardGrid: React.FC<CardGridProps> = ({
                         e.stopPropagation();
                         onEdit(item);
                       }}
-                      sx={{ color: 'primary.main' }}
+                      sx={{ color: "primary.main" }}
                     >
                       <EditIcon fontSize="small" />
                     </IconButton>
@@ -164,7 +193,7 @@ const CardGrid: React.FC<CardGridProps> = ({
                         e.stopPropagation();
                         onDelete(item);
                       }}
-                      sx={{ color: 'error.main' }}
+                      sx={{ color: "error.main" }}
                     >
                       <DeleteIcon fontSize="small" />
                     </IconButton>
@@ -176,7 +205,7 @@ const CardGrid: React.FC<CardGridProps> = ({
                 <Typography
                   variant="body2"
                   color="text.secondary"
-                  sx={{ mb: 1, fontWeight: 'medium' }}
+                  sx={{ mb: 1, fontWeight: "medium" }}
                 >
                   {item.subtitle}
                 </Typography>
@@ -188,10 +217,10 @@ const CardGrid: React.FC<CardGridProps> = ({
                   color="text.secondary"
                   sx={{
                     mb: 2,
-                    display: '-webkit-box',
+                    display: "-webkit-box",
                     WebkitLineClamp: 2,
-                    WebkitBoxOrient: 'vertical',
-                    overflow: 'hidden',
+                    WebkitBoxOrient: "vertical",
+                    overflow: "hidden",
                     lineHeight: 1.4,
                   }}
                 >
@@ -202,11 +231,21 @@ const CardGrid: React.FC<CardGridProps> = ({
               {item.metadata && item.metadata.length > 0 && (
                 <Box sx={{ mb: 2 }}>
                   {item.metadata.map((meta, index) => (
-                    <Box key={index} sx={{ display: 'flex', justifyContent: 'space-between', mb: 0.5 }}>
+                    <Box
+                      key={index}
+                      sx={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        mb: 0.5,
+                      }}
+                    >
                       <Typography variant="caption" color="text.secondary">
                         {meta.label}:
                       </Typography>
-                      <Typography variant="caption" sx={{ fontWeight: 'medium' }}>
+                      <Typography
+                        variant="caption"
+                        sx={{ fontWeight: "medium" }}
+                      >
                         {meta.value}
                       </Typography>
                     </Box>
@@ -214,7 +253,9 @@ const CardGrid: React.FC<CardGridProps> = ({
                 </Box>
               )}
 
-              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, mt: 'auto' }}>
+              <Box
+                sx={{ display: "flex", flexWrap: "wrap", gap: 1, mt: "auto" }}
+              >
                 {item.status && (
                   <Chip
                     label={item.status}
@@ -228,7 +269,7 @@ const CardGrid: React.FC<CardGridProps> = ({
                     key={index}
                     label={badge.label}
                     size="small"
-                    color={badge.color || 'primary'}
+                    color={badge.color || "primary"}
                     variant="outlined"
                   />
                 ))}

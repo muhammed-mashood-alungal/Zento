@@ -1,10 +1,13 @@
 import {
   Asset,
+  Branch,
   GRNAttributes,
   GRNCreationAttributes,
   GRNHeader,
   GRNLineItems,
   GRNResponseAttributes,
+  ReportFilters,
+  Vendor,
 } from "@/models";
 import { sequelize } from "@/config";
 import { IPaginationResponse } from "@/types";
@@ -60,8 +63,6 @@ export class GrnRepository implements IGRNRepository {
         "branch",
       ],
     });
-    console.log('_-----------------------------------------------')
-    console.log(grn)
 
     return grn as GRNResponseAttributes | null;
   }
@@ -110,7 +111,6 @@ export class GrnRepository implements IGRNRepository {
         limit,
         offset,
       });
-    console.log(data);
 
     return {
       data: data as GRNResponseAttributes[],
@@ -190,4 +190,28 @@ export class GrnRepository implements IGRNRepository {
 
     return grn as GRNAttributes | null;
   }
+
+  async findFilteredGRNs(filters:ReportFilters):Promise<GRNHeader[]> {
+    const where: any = {};
+    if (filters.from && filters.to) {
+      where.grn_date = {
+        [Op.between]: [new Date(filters.from), new Date(filters.to)],
+      };
+    }
+
+    if (filters.vendor_id) where.vendor_id = filters.vendor_id;
+    if (filters.branch_id) where.branch_id = filters.branch_id;
+
+
+    where.mode = 'submit'
+    return this.grnHeaderRepo.findAll({
+      where,
+      include: [
+        { model: Vendor, attributes: ["contact_person"] },
+        { model: Branch, attributes: ["name"] },
+      ],
+      order: [["grn_date", "DESC"]],
+    });
+  }
+
 }

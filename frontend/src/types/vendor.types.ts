@@ -2,7 +2,6 @@
 export interface Vendor {
   id: number;
   contact_person: string;
-  name : string;
   phone: string;
   email: string;
   gst_number: string;

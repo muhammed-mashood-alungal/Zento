@@ -71,7 +71,6 @@ const GRNForm: React.FC = () => {
       );
       setMode(data.mode);
     } catch (err) {
-      console.log(err);
       SnackbarUtils.error("Failed to fetch GRN");
     }
   };
@@ -112,7 +111,6 @@ const GRNForm: React.FC = () => {
       clearErrors();
       return true;
     } catch (err: any) {
-      console.log(err);
       clearErrors();
       err.inner.forEach((validationError: any) => {
         setError(validationError.path, {
@@ -181,7 +179,6 @@ const GRNForm: React.FC = () => {
   };
 
   const handleDraftManually = async () => {
-    console.log("HANDLE DRAFT");
     clearErrors();
     const values = getValues();
     await onSaveDraft(values);
@@ -190,7 +187,6 @@ const GRNForm: React.FC = () => {
   const onSaveDraft = async (data: GRNFormData) => {
     try {
       const isValidLines = validateLineItems(lineItems);
-      console.log(isValidLines);
       if (!isValidLines) return;
 
       clearErrors();

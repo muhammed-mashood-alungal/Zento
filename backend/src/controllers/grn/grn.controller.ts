@@ -3,8 +3,9 @@ import { IGRNService } from "@/services";
 import { successResponse } from "@/utils";
 import { NextFunction, Request, Response } from "express";
 import { StatusCodes } from "http-status-codes";
+import { IGRNController } from "./grn.interface.controller";
 
-export class GRNController implements GRNController {
+export class GRNController implements IGRNController {
   constructor(private grnService: IGRNService) {}
 
   async findGRNById(
@@ -37,12 +38,9 @@ export class GRNController implements GRNController {
         Number(limit),
         options
       );
-      successResponse(
-        res,
-        StatusCodes.OK,
-        RESPONSE_MESSAGES.GRNS_FETCHED,
-        {grns}
-      );
+      successResponse(res, StatusCodes.OK, RESPONSE_MESSAGES.GRNS_FETCHED, {
+        grns,
+      });
     } catch (error) {
       next(error);
     }
@@ -105,6 +103,27 @@ export class GRNController implements GRNController {
         RESPONSE_MESSAGES.GRN_NUMBER_CREATED,
         { grnNumber }
       );
+    } catch (error) {
+      next(error);
+    }
+  }
+  async generateGRNRegisterReport(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> {
+    try {
+      const filters = {
+        from: req.query.from ? new Date(String(req.query.from)) : undefined,
+        to: req.query.to ? new Date(String(req.query.to)) : undefined,
+        vendor_id: req.query.vendor_id
+          ? Number(req.query.vendor_id)
+          : undefined,
+        branch_id: req.query.branch_id
+          ? Number(req.query.branch_id)
+          : undefined,
+      };
+      await this.grnService.generateReport(filters, res);
     } catch (error) {
       next(error);
     }

@@ -55,7 +55,6 @@ export const subCategoryServices = {
         `/update/${categoryId}/${subCategoryId}`,
         updates
       );
-      console.log(response.data)
       return response.data.updatedSubCategory;
     } catch (error: unknown) {
       const err = error as AxiosError<{ error: string }>;

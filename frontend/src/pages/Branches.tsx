@@ -47,7 +47,9 @@ const Branches: React.FC = () => {
   };
 
   const handleEdit = (item: CardItem) => {
-    const branch = branches?.find((b) => b.id.toString() === item.id.toString());
+    const branch = branches?.find(
+      (b) => b.id.toString() === item.id.toString()
+    );
     if (branch) {
       setEditingBranch(branch);
       reset({
@@ -67,7 +69,6 @@ const Branches: React.FC = () => {
 
   const handleDelete = async () => {
     try {
-      console.log("Handling deltee")
       setBranches(
         branches?.filter((b) => b.id.toString() !== deletingBranch.toString())
       );

@@ -27,6 +27,6 @@ grnRouter.put(
 );
 grnRouter.delete("/delete/:id", grnController.deleteGRN.bind(grnController));
 grnRouter.post('/generate-grn-number', grnController.generateGRNNumber.bind(grnController))
-
+grnRouter.post("/report/export", grnController.generateGRNRegisterReport.bind(grnController));
 
 export { grnRouter };

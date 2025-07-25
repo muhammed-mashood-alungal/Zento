@@ -1,31 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Box, Typography, Button } from "@mui/material";
-import { Add as AddIcon, FileDownload, Upload } from "@mui/icons-material";
+import { Add as AddIcon, FileDownload } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import CardGrid, { type CardItem } from "../components/common/CardGrid";
 import ConfirmModal from "../components/common/ConfirmModal";
 import { SnackbarUtils } from "../utils/snackbar.util";
-import type {
-  GRNAttributes,
-  GRNHeaderAttributes,
-  GRNResponseAttributes,
-} from "../types/grn.types";
+import type { GRNResponseAttributes } from "../types/grn.types";
 import { grnServices } from "../services/grn.service";
-import { OpenInNew } from "@mui/icons-material";
 import BaseModal from "../components/common/BaseModal";
 import GRNView from "../components/GRN/GRNView";
-
-interface GRN {
-  id: number;
-  grn_number: string;
-  supplier_name: string;
-  po_number: string;
-  received_date: string;
-  total_amount: number;
-  status: "draft" | "submitted" | "approved" | "rejected";
-  items_count: number;
-  created_by: string;
-}
+import GRNReportDownload from "../components/GRN/GRNReportDownalodModal";
 
 const GRNList: React.FC = () => {
   const navigate = useNavigate();
@@ -36,6 +20,7 @@ const GRNList: React.FC = () => {
   const [selectedGRN, setSelectedGRN] = useState<GRNResponseAttributes | null>(
     null
   );
+  const [isFilterModalOPen, setIsFilterModalOpen] = useState(false);
   const limit = 8;
 
   async function fetchGRNS() {
@@ -45,7 +30,6 @@ const GRNList: React.FC = () => {
         limit
       );
       setCurrentPage(pagination.page);
-      console.log(data, pagination);
       setTotalPages(pagination.totalPages);
       setGrns(data);
     } catch (error) {
@@ -57,8 +41,6 @@ const GRNList: React.FC = () => {
     fetchGRNS();
   }, [currentPage]);
 
-  // Mock GRN data - replace with actual data from context/API
-
   const handleCreateNew = () => {
     navigate("/grn/create");
   };
@@ -67,31 +49,23 @@ const GRNList: React.FC = () => {
     navigate(`/grn/edit/${item.id}`);
   };
 
-  const onDeleteClick = (item: CardItem) => {
-    setDeletingGRN(item.id.toString());
-  };
-
   const handleDelete = async () => {
     try {
-      console.log("Deleting GRN");
       setGrns(grns.filter((g) => g.id.toString() !== deletingGRN.toString()));
       setDeletingGRN("");
       SnackbarUtils.success("GRN Deleted Successfully!");
-      // Add actual delete API call here
     } catch (error: unknown) {
       SnackbarUtils.error(error as string);
     }
   };
-
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case "submit":
-        return "primary";
-      case "draft":
-        return "warning";
-      default:
-        return "default";
-    }
+  const onDownload = async (filters: any) => {
+    const payload = {
+      from: filters.from,
+      to: filters.to,
+      vendor_id: filters.vendorId,
+      branch_id: filters.branchId,
+    };
+    await grnServices.download(payload);
   };
 
   const formatCurrency = (amount: number) => {
@@ -146,18 +120,13 @@ const GRNList: React.FC = () => {
         <Box sx={{ display: "flex", gap: 1, flexWrap: "wrap" }}>
           <Button
             variant="outlined"
-            startIcon={<Upload />}
-            sx={{ borderRadius: 2 }}
-          >
-            Import
-          </Button>
-          <Button
-            variant="outlined"
             startIcon={<FileDownload />}
             sx={{ borderRadius: 2 }}
+            onClick={() => setIsFilterModalOpen(true)}
           >
-            Export
+            Export Excel
           </Button>
+         
           <Button
             variant="contained"
             startIcon={<AddIcon />}
@@ -199,8 +168,12 @@ const GRNList: React.FC = () => {
         </Button>
       </Box>
 
-      <BaseModal open={Boolean(selectedGRN)} onClose={()=>setSelectedGRN(null)} title="GRN Details">
-      {selectedGRN && <GRNView grn={selectedGRN} />}
+      <BaseModal
+        open={Boolean(selectedGRN)}
+        onClose={() => setSelectedGRN(null)}
+        title="GRN Details"
+      >
+        {selectedGRN && <GRNView grn={selectedGRN} />}
       </BaseModal>
 
       <ConfirmModal
@@ -209,6 +182,14 @@ const GRNList: React.FC = () => {
         message="Are you sure you want to delete this GRN? This action cannot be undone."
         onOk={handleDelete}
       />
+
+      <BaseModal
+        open={isFilterModalOPen}
+        onClose={() => setIsFilterModalOpen(false)}
+        title="Download Report"
+      >
+        <GRNReportDownload onDownload={onDownload} />
+      </BaseModal>
     </Box>
   );
 };

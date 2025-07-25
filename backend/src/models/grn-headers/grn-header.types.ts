@@ -49,3 +49,11 @@ export interface GRNResponseAttributes {
   updated_at: Date;
   line_items: GRNLineItemAttributes[];
 }
+
+
+export interface ReportFilters {
+  from?: string;
+  to?: string;
+  vendor_id?: number;
+  branch_id?: number;
+}

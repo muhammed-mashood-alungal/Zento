@@ -1,5 +1,5 @@
 
-import { GRNAttributes, GRNCreationAttributes, GRNResponseAttributes } from "@/models";
+import { GRNAttributes, GRNCreationAttributes, GRNHeader, GRNResponseAttributes, ReportFilters } from "@/models";
 import { IPaginationResponse } from "@/types";
 
 export interface IGRNRepository {
@@ -16,4 +16,5 @@ export interface IGRNRepository {
   ): Promise<GRNAttributes | null>;
   deleteGRN(id: number): Promise<number>;
   findGRNByNumber(grn_number : string) : Promise<GRNAttributes>
+   findFilteredGRNs(filters:ReportFilters):any
 }

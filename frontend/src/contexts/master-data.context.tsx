@@ -28,8 +28,6 @@ type masterContextType = {
   setVendors: Dispatch<SetStateAction<Vendor[]>>;
   categories: Category[];
   setCategories: Dispatch<SetStateAction<Category[]>>;
- // subCategories: SubCategory[];
- // setSubCategories: Dispatch<SetStateAction<SubCategory[]>>;
 };
 const masterDataContext = createContext<masterContextType | undefined>(
   undefined
@@ -85,9 +83,7 @@ export const MasterDataContextProvider: React.FC<MasterDataProviderProps> = ({
         sub_arr =[]
       }
       setCategories(contegories);
-     // setSubCategories(sub_arr);
     } catch (error) {
-      console.log(error)
       SnackbarUtils.error("Something Went Wrong while fetching Categories");
     }
   };
@@ -110,8 +106,6 @@ export const MasterDataContextProvider: React.FC<MasterDataProviderProps> = ({
         setVendors,
         categories,
         setCategories,
-       // subCategories,
-      //  setSubCategories,
       }}
     >
       {children}

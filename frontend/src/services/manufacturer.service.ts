@@ -7,15 +7,11 @@ export const manufacturerServices = {
     manufacturerData: ManufacturerFormData
   ): Promise<Manufacturer> => {
     try {
-      console.log('Createing')
-      console.log(manufacturerData)
       const response = await manufacturerInstance.post("/create", manufacturerData);
-      console.log(response)
       return response.data.manufacturer;
     } catch (error: unknown) {
 
       const err = error as AxiosError<{ error: string }>;
-      console.log(err)
       const errorMessage =
         err.response?.data?.error ||
         "Create Manufacturer Failed. Please try again.";

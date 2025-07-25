@@ -22,7 +22,7 @@ import {
   Upload as UploadIcon,
   FileDownload as DownloadIcon,
 } from "@mui/icons-material";
-import type { LineItem, LineItemErrors } from "../../types/grn.types";
+import type { LineItem, } from "../../types/grn.types";
 import { useMasterData } from "../../contexts/master-data.context";
 import type { SubCategory } from "../../types/sub-category.types";
 import { useState } from "react";

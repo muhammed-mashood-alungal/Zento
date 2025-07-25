@@ -14,7 +14,6 @@ export class SubCategoryRepository
   async createSubCategory(
     subCategory: SubCategoryCreationAttributes
   ): Promise<SubCategory> {
-    console.log(subCategory)
     return this.create(subCategory);
   }
 

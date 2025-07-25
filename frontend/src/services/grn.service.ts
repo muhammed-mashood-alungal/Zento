@@ -2,11 +2,11 @@ import { AxiosError } from "axios";
 import type {
   GRNAttributes,
   GRNCreatePayload,
-  GRNHeaderCreationAttributes,
   GRNResponseAttributes,
 } from "../types/grn.types";
 import { grnInstance } from "../api/axios-instance";
 import type { IPaginationResponse } from "../types/common.types";
+import { saveAs } from "file-saver";
 
 export const grnServices = {
   createGRN: async (grnData: GRNCreatePayload): Promise<GRNAttributes> => {
@@ -93,4 +93,37 @@ export const grnServices = {
       throw new Error(errorMessage);
     }
   },
+  download: async (filters: any): Promise<void> => {
+  try {
+    const query = new URLSearchParams({
+      ...(filters.from && { from: new Date(filters.from).toISOString() }),
+      ...(filters.to && { to: new Date(filters.to).toISOString() }),
+      ...(filters.vendor_id && { vendor_id: String(filters.vendor_id) }),
+      ...(filters.branch_id && { branch_id: String(filters.branch_id) }),
+    }).toString();
+
+    const res = await grnInstance.post(
+      `/report/export?${query}`, 
+      { filters },
+      {
+        responseType: "blob",
+      }
+    );
+
+    const blob = new Blob([res?.data!], {
+      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    });
+
+    const now = new Date();
+    const fileName = `GRN_Report_${now.toISOString().split("T")[0]}.xlsx`;
+    saveAs(blob, fileName);
+  } catch (error: unknown) {
+    const err = error as AxiosError<{ error: string }>;
+    const errorMessage =
+      err.response?.data?.error ||
+      "Generate GRN Number Failed. Please try again.";
+    throw new Error(errorMessage);
+  }
+},
+
 };

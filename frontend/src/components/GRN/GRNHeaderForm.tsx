@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { Controller } from "react-hook-form";
 import type { FormProps } from "../../types/form.types";
-import type { GRNFormData, GRNHeaderCreationAttributes } from "../../types/grn.types";
+import type { GRNFormData } from "../../types/grn.types";
 import { useMasterData } from "../../contexts/master-data.context";
 
 function GRNHeaderForm({
