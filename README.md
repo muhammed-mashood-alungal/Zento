@@ -1,73 +1,71 @@
-# My MERN App
+# 🧾 Asset Management System
 
-This is a MERN (MongoDB, Express, React, Node.js) application structured with separate folders for the frontend and backend. The project utilizes Vite for the React frontend and follows the MVC architecture with TypeScript.
+A full-stack web application to streamline and digitize the management of organizational assets—ranging from IT hardware and software to general inventory. The system provides tools for tracking asset lifecycles, managing vendor and branch data, processing Goods Receipt Notes (GRNs), and generating detailed reports.
 
-## Project Structure
+---
 
+## 📘 Project Summary
+
+This system is designed to help organizations efficiently track their assets from acquisition to retirement. It includes features for:
+
+- Adding and managing assets
+- Vendor and branch management
+- GRN (Goods Receipt Note) creation and processing
+- Generating Excel reports with filter options (date, vendor, branch)
+
+---
+
+## 🏗️ Application Architecture
+
+The project is structured using a modular architecture with a focus on maintainability and scalability.
+
+- **Frontend:** React with TypeScript
+- **Backend:** Node.js (TypeScript) with Express.js
+- **Database:** MySQL
+- **Architecture Pattern:** MVC combined with Repository pattern
+- **Containerization:** Docker + Docker Compose for simplified backend deployment
+
+---
+
+## 🔧 Technology Stack
+
+### Frontend
+- React.js + TypeScript
+- Tailwind CSS
+- Axios
+- React Hook Form + Yup
+- MUI (for UI components)
+
+### Backend
+- Node.js + Express.js (TypeScript)
+- MySQL + Sequelize ORM
+- JWT-based authentication (if applicable)
+- ExcelJS (for Excel report exports)
+- Docker
+
+---
+
+
+## ⚙️ Backend Setup (Docker)
+
+> The backend is fully containerized for easy setup and testing.
+
+### Steps:
+
+```bash
+# Clone the repo
+git clone https://github.com/muhammed-mashood-alungal/Hopchat.git
+cd Hopchat
+
+# Start backend and MySQL via Docker
+docker-compose up --build
 ```
-my-mern-app
-├── backend
-│   ├── src
-│   │   ├── controllers
-│   │   ├── models
-│   │   ├── routes
-│   │   ├── services
-│   │   ├── app.ts
-│   │   └── types
-│   ├── package.json
-│   ├── tsconfig.json
-│   └── README.md
-├── frontend
-│   ├── src
-│   │   ├── components
-│   │   ├── pages
-│   │   └── main.tsx
-│   ├── index.html
-│   ├── package.json
-│   ├── tsconfig.json
-│   └── README.md
-└── README.md
+## 💻 Frontend Setup
+React app runs separately using Vite
+
+```bash
+# Clone the repo
+cd frontend
+npm install
+npm run dev
 ```
-
-## Backend Setup
-
-1. Navigate to the `backend` directory:
-   ```bash
-   cd backend
-   ```
-
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-
-3. Start the backend server:
-   ```bash
-   npm run start
-   ```
-
-## Frontend Setup
-
-1. Navigate to the `frontend` directory:
-   ```bash
-   cd frontend
-   ```
-
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-
-3. Start the frontend application:
-   ```bash
-   npm run dev
-   ```
-
-## Features
-
-- **Backend**: Built with Express and TypeScript, following the MVC architecture.
-- **Frontend**: Developed using React with Vite for fast development and hot module replacement.
-
-## Contributing
-
-Feel free to fork the repository and submit pull requests for any improvements or features you'd like to add.
